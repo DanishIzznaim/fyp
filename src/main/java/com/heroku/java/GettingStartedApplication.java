@@ -26,6 +26,26 @@ public class GettingStartedApplication {
         return "index";
     }
 
+    @GetMapping("/login")
+    public String login() {
+        return "login";
+    }
+
+    @GetMapping("/homepageadmin")
+    public String homepageadmin() {
+        return "admin/homepageadmin";
+    }
+
+    @GetMapping("/staffpage")
+    public String staffpage() {
+        return "admin/staffpage";
+    }
+
+    @GetMapping("/createstaff")
+    public String createstaff() {
+        return "admin/createstaff";
+    }
+
     @GetMapping("/database")
     String database(Map<String, Object> model) {
         try (Connection connection = dataSource.getConnection()) {
