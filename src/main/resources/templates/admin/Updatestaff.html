@@ -12,27 +12,27 @@
 </head>
 
   <body>
-    <div class="container-fluid" style="width: 87%">
-        <div class="offset-2" style="margin-top: 15%;">
-          <div class="card col-12 mt-2 ">
+    <div class="container-fluid" style="width: 170%">
+        <div class="offset-1" style="margin-top: 8%;">
+          <div class="card col-12">
               <div class="card-body">
-              <h2 class="text-center">Update Staff Account</h2>
+              <h2 class="text-center">Update Security Account</h2>
                   <form  
                   class="p-3"  
                   method="post"  
-                  th:action="@{/Updatesecurity}"  
-                  modelAttribute="Updatesecurity" 
-                  th:object="(${UpdateSecurity})" 
+                  th:action="@{/Updatestaff}"  
+                  modelAttribute="Updatestaff" 
+                  th:object="(${Updatestaff})" 
                   >
 
-                  <input type="hidden" th:value="${security.id}" name="id">
+                  <input type="hidden" th:value="${staff.id}" name="id">
                   <div class="col-12 mt-3"> 
-                    <label for="InputSecurityName">Security Name</label> 
+                    <label for="InputstaffName">staff Name</label> 
                     <input type="text"  
                         class="form-control"  
-                        id="InputSecurityName"    
+                        id="InputstaffName"    
                         name="name"
-                        th:value="${security.name}"
+                        th:value="${staff.name}"
                     > 
                   </div> 
 
@@ -42,7 +42,7 @@
                         class="form-control" 
                         id="InputAddress"  
                         name="address"
-                        th:value="${security.address}"
+                        th:value="${staff.address}"
                     > 
                   </div>
 
@@ -53,7 +53,7 @@
                         id="InputEmail"  
                         aria-describedby="addressHelp"  
                         name="email"
-                        th:value="${security.email}"
+                        th:value="${staff.email}"
                     >
                   </div>
 
@@ -66,19 +66,19 @@
                         aria-describedby="usernameHelp" 
                         placeholder="0123456789" 
                         name="phone"
-                        th:value="${security.phone}"
+                        th:value="${staff.phone}"
                     > 
                     </div>
                   </div>
                    
                   <div class="row mt-3">  
                     <div class="col"> 
-                      <label for="Inputic">Security IC</label> 
+                      <label for="Inputic">staff IC</label> 
                       <input type="number"  
                         class="form-control"  
                         id="Inputic" 
                         name="icnumber"
-                        th:value="${security.icnumber}"
+                        th:value="${staff.icnumber}"
                        > 
                     </div>
                   </div>
@@ -92,7 +92,7 @@
                         aria-describedby="phonenumberHelp"  
                         placeholder="example: johndoe"  
                         name="username"
-                        th:value="${security.username}"> 
+                        th:value="${staff.username}"> 
                     </div> 
 
                     <div class="col"> 
@@ -101,7 +101,7 @@
                         class="form-control"      
                         placeholder="#####"  
                         name="password"
-                        th:value="${security.password}"> 
+                        th:value="${staff.password}"> 
                     </div> 
                   </div> 
   

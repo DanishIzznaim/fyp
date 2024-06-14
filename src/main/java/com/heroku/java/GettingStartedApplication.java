@@ -6,10 +6,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import com.heroku.java.model.Staff;
 
-import com.heroku.java.DAO.LoginDAO;
 import jakarta.servlet.http.HttpSession;
 
 import javax.sql.DataSource;
@@ -33,53 +34,44 @@ public class GettingStartedApplication {
     public String index() {
         return "index";
     }
-
-    @GetMapping("/login") 
-    public String login(HttpSession session) { 
-            return "login"; 
-    }
-    @PostMapping("/login")
-    public String login(HttpSession session, @RequestParam("username") String username,
-                    @RequestParam("password") String password, Model model) {
-    try {
-        LoginDAO loginDAO = new LoginDAO(dataSource);
-        
-        boolean isSecurity = loginDAO.checkSecurity(username, password);
-        boolean isAdmin = loginDAO.checkAdmin(username, password);
-        
-        if (isSecurity) {
-            session.setAttribute("username", username);
-            return "redirect:/Homepagesecurity"; // Replace with the appropriate security home page URL
-        } else if (isAdmin) {
-            
-            session.setAttribute("username", username);
-            return "redirect:/Homepageadmin";
-        } else {
-            System.out.println("Invalid username or password");
-            model.addAttribute("error", true); 
-            return "login"; 
-        }
-    } catch (SQLException e) {
-        e.printStackTrace();
-        model.addAttribute("error", true); 
-        return "login";
-    }
-}
-
     @GetMapping("/Homepageadmin")
     public String Homepageadmin() {
         return "admin/Homepageadmin";
     }
 
-    @GetMapping("/Homepagesecurity")
-    public String Homepagesecurity() {
-        return "admin/Homepagesecurity";
+    @GetMapping("/homepagesecurity")
+    public String homepagesecurity() {
+        return "security/homepagesecurity";
     }
 
     @GetMapping("/Profileadmin")
     public String Profileadmin() {
         return "admin/Profileadmin";
     }
+
+
+    @GetMapping("/listPayroll")
+    public String listPayroll() {
+        return "admin/listPayroll";
+    }
+
+    @GetMapping("/test")
+    public String test() {
+        return "admin/test";
+    }
+
+    @GetMapping("/attendance")
+    public String attendance() {
+        return "security/attendance";
+    }
+
+    @GetMapping("/payslip")
+    public String payslip() {
+        return "security/payslip";
+    }
+
+
+
 
     @GetMapping("/database")
     String database(Map<String, Object> model) {

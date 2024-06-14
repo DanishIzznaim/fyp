@@ -1,6 +1,7 @@
 package com.heroku.java.model;
 
-public class Security {
+public class Staff {
+    
     private int id ;
     private String name;
     private String address;
@@ -9,11 +10,25 @@ public class Security {
     private String username;
     private String password;
     private String icnumber;
-
-    public Security() {
+    private String role;
+    
+    public Staff() {
     }
 
-    public Security(int id, String name, String address, String email, int phone, String username, String password,
+    public Staff(int id, String name, String address, String email, int phone, String username, String password,
+            String icnumber, String role) {
+        this.id = id;
+        this.name = name;
+        this.address = address;
+        this.email = email;
+        this.phone = phone;
+        this.username = username;
+        this.password = password;
+        this.icnumber = icnumber;
+        this.role = role;
+    }
+
+    public Staff(int id, String name, String address, String email, int phone, String username, String password,
             String icnumber) {
         this.id = id;
         this.name = name;
@@ -23,6 +38,11 @@ public class Security {
         this.username = username;
         this.password = password;
         this.icnumber = icnumber;
+    }
+    public Staff(String username, String password, String role) {
+        this.username = username;
+        this.password = password;
+        this.role = role;
     }
 
     public int getId() {
@@ -89,4 +109,13 @@ public class Security {
         this.icnumber = icnumber;
     }
 
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+    
+    
 }

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" th:replace="~{fragments/homeadminlayout :: homeadminlayout (~{::body},'admin/Updateschedule')}">
+<head>
+  <title>TPS Security</title>
+  <link rel="stylesheet" href="stylesheets/homepageadmin.css">
+  <link th:href="@{https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css}" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+</head>
+<body>
+  <div class="container-fluid" style="width: 170%">
+    <div class="offset-2" style="margin-top: 8%;">
+      <div class="card col-12">
+        <div class="card-body">
+          <h2 class="text-center">Update Schedule Details</h2>
+          <form class="p-3" 
+                method="post" 
+                th:action="@{/Updateschedule}" 
+                modelAttribute="Updateschedule" 
+                th:object="${schedule}"
+            >
+            <input type="hidden" th:value="${schedule.scheduleid}" name="scheduleid">
+
+            <div class="col-12 mt-3">
+              <label for="InputScheduleName">Schedule Name</label>
+              <select class="form-select" id="InputScheduleName" name="schedulename">
+                <option value="January" th:selected="${'January' == schedule.schedulename}">January</option>
+                <option value="February" th:selected="${'February' == schedule.schedulename}">February</option>
+                <option value="March" th:selected="${'March' == schedule.schedulename}">March</option>
+                <option value="April" th:selected="${'April' == schedule.schedulename}">April</option>
+                <option value="May" th:selected="${'May' == schedule.schedulename}">May</option>
+                <option value="June" th:selected="${'June' == schedule.schedulename}">June</option>
+                <option value="July" th:selected="${'July' == schedule.schedulename}">July</option>
+                <option value="August" th:selected="${'August' == schedule.schedulename}">August</option>
+                <option value="September" th:selected="${'September' == schedule.schedulename}">September</option>
+                <option value="October" th:selected="${'October' == schedule.schedulename}">October</option>
+                <option value="November" th:selected="${'November' == schedule.schedulename}">November</option>
+                <option value="December" th:selected="${'December' == schedule.schedulename}">December</option>
+              </select>
+            </div>
+
+            <div class="col-12 mt-3">
+              <label for="InputDescription">Description</label>
+              <select class="form-select" id="InputDescription" name="description">
+                <option value="Week 1" th:selected="${'Week 1' == schedule.description}">Week 1</option>
+                <option value="Week 2" th:selected="${'Week 2' == schedule.description}">Week 2</option>
+                <option value="Week 3" th:selected="${'Week 3' == schedule.description}">Week 3</option>
+                <option value="Week 4" th:selected="${'Week 4' == schedule.description}">Week 4</option>
+              </select>
+            </div>
+
+            <div class="col-12 mt-3">
+              <label for="InputStartDate">Start Date:</label>
+              <input type="date" class="form-control" id="InputStartDate" name="startdate" th:value="${schedule.startdate}">
+            </div>
+
+            <div class="col-12 mt-3">
+              <label for="InputEndDate">End Date:</label>
+              <input type="date" class="form-control" id="InputEndDate" name="enddate" th:value="${schedule.enddate}">
+            </div>
+            <button type="submit" class="btn btn-secondary col-10 mx-5 mt-4" style="margin-bottom: 10px;">Update</button>
+            
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
