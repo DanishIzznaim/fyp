@@ -11,12 +11,13 @@ public class Staff {
     private String password;
     private String icnumber;
     private String role;
+    private Assign assign;
     
     public Staff() {
     }
 
     public Staff(int id, String name, String address, String email, int phone, String username, String password,
-            String icnumber, String role) {
+            String icnumber, String role, Assign assign) {
         this.id = id;
         this.name = name;
         this.address = address;
@@ -26,6 +27,7 @@ public class Staff {
         this.password = password;
         this.icnumber = icnumber;
         this.role = role;
+        this.assign = assign;
     }
 
     public Staff(int id, String name, String address, String email, int phone, String username, String password,
@@ -38,6 +40,7 @@ public class Staff {
         this.username = username;
         this.password = password;
         this.icnumber = icnumber;
+
     }
     public Staff(String username, String password, String role) {
         this.username = username;
@@ -115,6 +118,14 @@ public class Staff {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public Assign getAssign() {
+        return assign;
+    }
+
+    public void setAssign(Assign assign) {
+        this.assign = assign;
     }
     
     

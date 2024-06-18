@@ -61,11 +61,13 @@ public class AssignDAO {
         return assign;
     }
 
-    public List<Assign> listassign() throws SQLException {
+    public List<Assign> listassigns() throws SQLException {
         List<Assign> assignlist = new ArrayList<>();
 
         try (Connection connection = dataSource.getConnection()) {
-            String sql = "SELECT * FROM assign ";
+            String sql = "SELECT a.*, s.staffname AS staff_name " + 
+                         "FROM assign a " +
+                         "JOIN staff s ON a.id = s.id";
             PreparedStatement statement = connection.prepareStatement(sql);
             ResultSet resultSet = statement.executeQuery();
 
@@ -81,6 +83,7 @@ public class AssignDAO {
                 assign.setDt5(resultSet.getString("dt5"));
                 assign.setDt6(resultSet.getString("dt6"));
                 assign.setDt7(resultSet.getString("dt7"));
+                assign.setName(resultSet.getString("staff_name")); // Setting staff name
 
                 
                 
@@ -149,20 +152,20 @@ public class AssignDAO {
     //     }
     // }
 
-    // //delete schedule
-    // public void deleteschedule(int scheduleId) throws SQLException {
-    //     try (Connection connection = dataSource.getConnection()) {
-    //         String sql = "DELETE FROM schedule WHERE scheduleid=?";
-    //         PreparedStatement statement = connection.prepareStatement(sql);
-    //         statement.setInt(1, scheduleId);
+    // //delete assign
+    public void deleteassign(int assignId) throws SQLException {
+        try (Connection connection = dataSource.getConnection()) {
+            String sql = "DELETE FROM assign WHERE assignid=?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, assignId);
 
-    //         statement.executeUpdate();
-    //         connection.close();
-    //     } catch (SQLException e) {
-    //         e.printStackTrace();
-    //         throw e;
-    //     }
-    // }
+            statement.executeUpdate();
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw e;
+        }
+    }
     
     
 }

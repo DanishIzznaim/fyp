@@ -50,11 +50,26 @@ private final DataSource dataSource;
     }
     //Add schedule//
     @GetMapping("/Addassign")
-    public String Addassign(HttpSession session, Staff staff,Model model) {
+    public String Addassign(HttpSession session, Model model, @RequestParam("scheduleid") int scheduleid) {
         StaffDAO staffDAO = new StaffDAO(dataSource);
         try {
             List<Staff> stafflist = staffDAO.Liststaff();
-            model.addAttribute("staffs", stafflist);
+            // List<Assign> assignList = assignDAO.listassign();
+            // List<Staff> results = new ArrayList<>();
+
+            // for (Staff staff : stafflist) {
+            //     for (Assign assign : assignList) {
+            //         if (assign.getStaff()== null || assign.getStaff().getId() == staff.getId() ) {
+            //             Assign newAssign = new Assign();
+            //             newAssign.setId(assign.getId());
+            //             newAssign.setStaff(staff);
+            //             results.add(newAssign);
+            //         }
+            //     }
+            // }
+            model.addAttribute("assigns", stafflist);
+            // model.addAttribute("assigns", results);
+            model.addAttribute("scheduleid", scheduleid);
         } catch (SQLException e) {
             e.printStackTrace();
             // Handle the exception or display an error message as per your requirement
@@ -64,15 +79,81 @@ private final DataSource dataSource;
     }
 
     @PostMapping("/Addassign")
-    public String Addassign(@ModelAttribute("assign") Assign assign) {
+    public String addAssign(@ModelAttribute("assigns") Assign assigns, @RequestParam("scheduleid") int scheduleid) {
+        AssignDAO assignDAO = new AssignDAO(dataSource);
+        Assign assign = new Assign();
+        assign.setId(assigns.getId());
+        assign.setScheduleid(scheduleid);
+        assign.setDt1(assigns.getDt1());
+        assign.setDt2(assigns.getDt2());
+        assign.setDt3(assigns.getDt3());
+        assign.setDt4(assigns.getDt4());
+        assign.setDt5(assigns.getDt5());
+        assign.setDt6(assigns.getDt6());
+        assign.setDt7(assigns.getDt7());
         try {
             assignDAO.AddAssign(assign);
-            // Redirect to a success page or another appropriate page
-            return "redirect:/Listassign";
+            //Redirect to a success page or another appropriate page
+            return "redirect:/listassigns";
         } catch (SQLException e) {
             e.printStackTrace();
             // Handle database exception
             return "admin/Addassign";
+        }
+        // return "admin/Addassign";
+    }
+
+    @GetMapping("/listassigns")
+    public String listassigns(HttpSession session, Assign assign,Model model) {
+      AssignDAO assignDAO = new AssignDAO(dataSource);
+      try {
+          List<Assign> assignlist = assignDAO.listassigns();
+          model.addAttribute("assigns", assignlist);
+      } catch (SQLException e) {
+          e.printStackTrace();
+          return "error";
+      }
+
+    return "admin/listassigns";
+    }
+
+    //Update schedule//
+    // @GetMapping("/Updateassign")
+    // public String Updateassign(@RequestParam("scheduleid") int scheduleId,Model model) {
+    //   try {
+    //     ScheduleDAO scheduleDAO = new ScheduleDAO(dataSource);
+    //     Schedule schedule = scheduleDAO.getscheduleByScheduleid(scheduleId);
+    //     model.addAttribute("schedule", schedule);
+    //     return "admin/Updateschedule";
+    //   } catch (SQLException e) {
+    //     e.printStackTrace();
+    //     System.out.println("damn error bro");
+    //     return "error";
+    // }
+    // }
+
+    // @PostMapping("/Updateschedule")
+    // public String Updateschedule(@ModelAttribute("Updateschedule") Schedule schedule) {
+    //     try {
+    //         ScheduleDAO scheduleDAO = new ScheduleDAO(dataSource);
+    //         scheduleDAO.updateschedule(schedule);
+    //     } catch (SQLException e) {
+    //         e.printStackTrace();
+    //         System.out.println("Damn error BRO!");
+    //     }
+    //     return "redirect:/listschedules"; // Replace with the appropriate redirect URL after updating the schedule details
+    // }
+
+    //  //Delete the assign//
+     @PostMapping("/Deleteassign")
+    public String Deleteschedule(@RequestParam("assignid") int assignId) {
+        try {
+            assignDAO.deleteassign(assignId);
+            return "redirect:/listassigns";
+        } catch (SQLException e) {
+            System.out.println("Error deleting assign: " + e.getMessage());
+            e.printStackTrace();
+            return "error";
         }
     }
 }
