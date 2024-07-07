@@ -39,20 +39,24 @@ public class GettingStartedApplication {
         return "admin/Homepageadmin";
     }
 
-    @GetMapping("/homepagesecurity")
-    public String homepagesecurity() {
-        return "security/homepagesecurity";
-    }
-
     @GetMapping("/Profileadmin")
     public String Profileadmin() {
         return "admin/Profileadmin";
     }
 
+    @GetMapping("/listattendance")
+    public String listattendance() {
+        return "admin/listattendance";
+    }
 
-    @GetMapping("/listPayroll")
-    public String listPayroll() {
-        return "admin/listPayroll";
+    @GetMapping("/listpayroll")
+    public String listpayroll() {
+        return "admin/listpayroll";
+    }
+
+    @GetMapping("/calculatepayroll")
+    public String calculatepayroll() {
+        return "admin/calculatepayroll";
     }
 
     @GetMapping("/test")
@@ -60,9 +64,29 @@ public class GettingStartedApplication {
         return "admin/test";
     }
 
+    @GetMapping("/homepagesecurity")
+    public String homepagesecurity() {
+        return "security/homepagesecurity";
+    }
+
+    @GetMapping("/schedule")
+    public String schedule() {
+        return "security/schedule";
+    }
+
     @GetMapping("/attendance")
     public String attendance() {
         return "security/attendance";
+    }
+
+    @GetMapping("/listattendancestaff")
+    public String listattendancestaff() {
+        return "security/listattendancestaff";
+    }
+
+    @GetMapping("/Updateattendance")
+    public String Updateattendance() {
+        return "admin/Updateattendance";
     }
 
     @GetMapping("/payslip")

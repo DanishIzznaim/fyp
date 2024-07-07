@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en" th:replace="~{fragments/homeadminlayoutsecond :: homeadminlayoutsecond (~{::body},'admin/Addassign')}">
-<html>
 <head>
     <title>TPS Security</title>
     <link rel="stylesheet" href="stylesheets/homepageadmin.css">
@@ -16,12 +15,7 @@
         <i class="bi bi-arrow-left"></i> Back 
     </a>
     <h2>Assign Shift</h2>
-    <form 
-        class="p-3" 
-        method="post" 
-        th:action="@{/Addassign}" 
-        th:object="${assigns}">
-        
+    <form class="p-3" method="post" th:action="@{/Addassign}">
         <div class="table-responsive mt-4">
             <table class="table table-bordered table-hover">
                 <thead class="thead-light">
@@ -40,13 +34,13 @@
                 <tbody>
                     <tr th:each="assign : ${assigns}">
                         <td>
-                            <p th:text="${assign.id}" th:name="id"></p>
-                            <input type="hidden" th:name="id" th:value="${assign.id}"/>
-                            <input type="hidden" th:name="scheduleid" th:value="${scheduleid}"/>
+                            <p th:text="${assign.id}"></p>
+                            <input type="hidden" name="id" th:value="${assign.id}"/>
+                            <input type="hidden" name="scheduleid" th:value="${scheduleid}"/>
                         </td>
-                        <td th:text="${assign.name}" name="staffName" readonly></td>
+                        <td th:text="${assign.name}"></td>
                         <td>
-                            <select class="form-select" name="dt1">
+                            <select class="form-select" th:name="'dt1_' + ${assign.id}">
                                 <option disabled selected>Select Time</option>
                                 <option th:value="'08:00 - 20:00'" th:text="'08:00 - 20:00'"></option>
                                 <option th:value="'20:00 - 08:00'" th:text="'20:00 - 08:00'"></option>
@@ -54,7 +48,7 @@
                             </select>
                         </td>
                         <td>
-                            <select class="form-select" th:name="dt2">
+                            <select class="form-select" th:name="'dt2_' + ${assign.id}">
                                 <option disabled selected>Select Time</option>
                                 <option th:value="'08:00 - 20:00'" th:text="'08:00 - 20:00'"></option>
                                 <option th:value="'20:00 - 08:00'" th:text="'20:00 - 08:00'"></option>
@@ -62,7 +56,7 @@
                             </select>
                         </td>
                         <td>
-                            <select class="form-select" th:name="dt3">
+                            <select class="form-select" th:name="'dt3_' + ${assign.id}">
                                 <option disabled selected>Select Time</option>
                                 <option th:value="'08:00 - 20:00'" th:text="'08:00 - 20:00'"></option>
                                 <option th:value="'20:00 - 08:00'" th:text="'20:00 - 08:00'"></option>
@@ -70,7 +64,7 @@
                             </select>
                         </td>
                         <td>
-                            <select class="form-select" th:name="dt4">
+                            <select class="form-select" th:name="'dt4_' + ${assign.id}">
                                 <option disabled selected>Select Time</option>
                                 <option th:value="'08:00 - 20:00'" th:text="'08:00 - 20:00'"></option>
                                 <option th:value="'20:00 - 08:00'" th:text="'20:00 - 08:00'"></option>
@@ -78,7 +72,7 @@
                             </select>
                         </td>
                         <td>
-                            <select class="form-select" th:name="dt5">
+                            <select class="form-select" th:name="'dt5_' + ${assign.id}">
                                 <option disabled selected>Select Time</option>
                                 <option th:value="'08:00 - 20:00'" th:text="'08:00 - 20:00'"></option>
                                 <option th:value="'20:00 - 08:00'" th:text="'20:00 - 08:00'"></option>
@@ -86,7 +80,7 @@
                             </select>
                         </td>
                         <td>
-                            <select class="form-select" th:name="dt6">
+                            <select class="form-select" th:name="'dt6_' + ${assign.id}">
                                 <option disabled selected>Select Time</option>
                                 <option th:value="'08:00 - 20:00'" th:text="'08:00 - 20:00'"></option>
                                 <option th:value="'20:00 - 08:00'" th:text="'20:00 - 08:00'"></option>
@@ -94,7 +88,7 @@
                             </select>
                         </td>
                         <td>
-                            <select class="form-select" th:name="dt7">
+                            <select class="form-select" th:name="'dt7_' + ${assign.id}">
                                 <option disabled selected>Select Time</option>
                                 <option th:value="'08:00 - 20:00'" th:text="'08:00 - 20:00'"></option>
                                 <option th:value="'20:00 - 08:00'" th:text="'20:00 - 08:00'"></option>
@@ -103,9 +97,6 @@
                         </td>
                     </tr>
                 </tbody>
-                <!-- <div class="mt-3 text-end">
-                    <button type="submit" class="btn btn-success mb-3">SAVE</button>
-                </div> -->
             </table>
             <div class="mt-3 text-end">
                 <button type="submit" class="btn btn-success mb-3">SAVE</button>

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/homesecuritylayout :: homesecuritylayout (~{::body},'security/schedule')}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schedule</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.0/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <!-- Custom styles -->
+    <style>
+        body {
+            padding-top: 56px; /* Adjust for fixed navbar */
+            background-color: #ecf0f1;
+        }
+        .schedule-card {
+            margin-bottom: 20px;
+            border: none;
+            border-radius: 8px;
+            background-color: #ffffff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .schedule-card .card-header {
+            background-color: #e74c3c;
+            color: #ffffff;
+            font-weight: bold;
+            border-radius: 8px 8px 0 0;
+        }
+        .schedule-card .list-group-item {
+            background-color: #ffffff;
+            color: #34495e;
+        }
+        .schedule-card .list-group-item strong {
+            color: #e74c3c;
+        }
+        .shift-table {
+            margin-top: 20px;
+            background-color: #ffffff;
+            border: none;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .shift-table .card-header {
+            background-color: #e74c3c;
+            color: #ffffff;
+            font-weight: bold;
+            border-radius: 8px 8px 0 0;
+        }
+        .shift-table table {
+            margin-bottom: 0;
+        }
+        .shift-table th, .shift-table td {
+            text-align: center;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container mt-5">
+    <!-- Schedule details card -->
+    <div class="card schedule-card">
+        <div class="card-header text-center">
+            Schedule Details
+        </div>
+        <div class="card-body">
+            <h5 class="card-title text-center">Schedule Information</h5>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item"><strong>Month:</strong> May</li>
+                <li class="list-group-item"><strong>Week:</strong> 1</li>
+                <li class="list-group-item"><strong>Start Date:</strong> 1/5/2024</li>
+                <li class="list-group-item"><strong>End Date:</strong> 7/5/2024</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Space between schedule and shifts -->
+    <div style="margin-bottom: 20px;"></div>
+
+    <!-- Shifts table -->
+    <div class="card shift-table">
+        <div class="card-header text-center">
+            Shifts
+        </div>
+        <div class="card-body">
+            <table class="table table-bordered">
+                <thead class="table-light">
+                    <tr>
+                        <th scope="col">Staff Name</th>
+                        <th scope="col">Monday</th>
+                        <th scope="col">Tuesday</th>
+                        <th scope="col">Wednesday</th>
+                        <th scope="col">Thursday</th>
+                        <th scope="col">Friday</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Example rows (replace with dynamic data if using server-side rendering) -->
+                    <tr>
+                        <td>John Doe</td>
+                        <td>Morning</td>
+                        <td>Afternoon</td>
+                        <td>Evening</td>
+                        <td>Day Off</td>
+                        <td>Morning</td>
+                    </tr>
+                    <tr>
+                        <td>Jane Smith</td>
+                        <td>Day Off</td>
+                        <td>Morning</td>
+                        <td>Afternoon</td>
+                        <td>Evening</td>
+                        <td>Day Off</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap JS and dependencies -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.0/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

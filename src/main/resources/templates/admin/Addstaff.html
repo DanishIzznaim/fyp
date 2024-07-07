@@ -1,8 +1,7 @@
 <!DOCTYPE html>
-<html lang="en" th:replace="~{fragments/homeadminlayout :: homeadminlayout (~{::body},'admin/Addsecurity')}">
+<html lang="en" th:replace="~{fragments/homeadminlayoutsecond :: homeadminlayoutsecond (~{::body},'admin/Addsecurity')}">
 <head>
     <title>TPS Security</title>
-    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> -->
     <link rel="stylesheet" href="stylesheets/homepageadmin.css">
     <link th:href="@{https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css}" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
@@ -10,8 +9,8 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </head>
 <body>
-    <div class="container-fluid" style="width: 170%">
-        <div class="offset-2" style="margin-top: 8%;">
+    <div class="container-fluid" style="width: 70%">
+        <div class="offset-0.5" style="margin-top: 8%;">
             <div class="card col-12">
                 <div class="card-body">
                     <h2 class="text-center">Create Staff Account</h2>
@@ -28,27 +27,33 @@
 
                         <div class="col-12 mt-3"> 
                             <label for="InputEmail">Email</label> 
-                            <input type="email" class="form-control" id="InputEmail" aria-describedby="addressHelp" name="email" required> 
+                            <input type="email" class="form-control" id="InputEmail" aria-describedby="emailHelp" name="email" required>
+                            <small id="emailHelp">Please enter a valid email address (name@example.com)</small>
                         </div>
 
                         <div class="row mt-3">  
+                            <div class="col-2"> 
+                                <label for="InputCountryCode">Code</label> 
+                                <input type="text" class="form-control" id="InputCountryCode" value="+60" readonly> 
+                            </div>
                             <div class="col"> 
                                 <label for="Inputphone">Phone Number</label> 
-                                <input type="number" class="form-control" id="Inputphone" aria-describedby="usernameHelp" placeholder="0123456789" name="phone" required> 
+                                <input type="text" class="form-control" id="Inputphone" aria-describedby="phonenumberHelp" name="phone" required> 
+                                <!-- <small id="phoneHelp">Enter the remaining phone number digits (e.g., 123456789 or 1234567890)</small>  -->
                             </div>
-                        </div>
 
                         <div class="row mt-3">  
                             <div class="col"> 
                                 <label for="Inputic">Security IC</label> 
-                                <input type="number" class="form-control" id="Inputic" name="icnumber" required> 
+                                <input type="text" class="form-control" id="Inputic" aria-describedby="icHelp" name="icnumber" required> 
+                                <small id="icHelp">Enter the 12-digit IC number without dashes (-)</small> 
                             </div>
                         </div>
 
                         <div class="row mt-3"> 
                             <div class="col"> 
                                 <label for="InputUsername">Username</label> 
-                                <input type="text" class="form-control" id="InputUsername" aria-describedby="phonenumberHelp" placeholder="example: johndoe" name="username" required> 
+                                <input type="text" class="form-control" id="InputUsername" aria-describedby="usernameHelp" placeholder="example: johndoe" name="username" required> 
                             </div> 
 
                             <div class="col"> 
@@ -57,12 +62,19 @@
                             </div>
                         </div>
 
-                        <button type="submit" class="btn btn-secondary col-10 mx-5 mt-4" style="margin-bottom: 10px;">Create</button> 
+                        <div class="row mt-4">
+                            <div class="col text-center">
+                                <button type="submit" class="btn btn-primary col-5 mx-2">Create</button>
+                                <a href="/Liststaff" class="btn btn-primary col-5 mx-2">Cancel</a>
+                            </div>
+                        </div>
+                        
                     </form> 
                 </div>
             </div>
         </div>
     </div>
+
     <script>
         function validateEmail() {
             const email = document.getElementById('InputEmail').value;
@@ -79,19 +91,30 @@
             return true;
         }
 
-        // function validateAddress() {
-        //     const address = document.getElementById('InputAddress').value;
-        //     const addressPattern = /^[0-9]+ .+, \d{5}, [A-Za-z ]+, [A-Za-z ]+$/;
-        //     if (!addressPattern.test(address)) {
-        //         alert('Please enter a valid address format: Building Number/Street Name, Postcode, City, State.');
-        //         return false;
-        //     }
-        //     return true;
-        // }
+        function validatePhone() {
+            const phone = document.getElementById('Inputphone').value;
+            const phonePattern = /^\d{9,10}$/;
+            if (!phonePattern.test(phone)) {
+                alert('Please enter a valid phone number with 9 to 10 digits (without spaces or special characters).');
+                return false;
+            }
+            return true;
+        }
 
-        // function validateForm() {
-        //     return validateEmail() && validateAddress();
-        // }
+        function validateICNumber() {
+            const icNumber = document.getElementById('Inputic').value;
+            const icPattern = /^\d{12}$/;
+            if (!icPattern.test(icNumber)) {
+                alert('Please enter a valid 12-digit IC number without dashes (-).');
+                return false;
+            }
+            return true;
+        }
+
+        function validateForm() {
+            return validateEmail() && validatePhone() && validateICNumber();
+            // Add more validation functions if needed and return true only if all validations pass.
+        }
     </script>
 </body>
 </html>

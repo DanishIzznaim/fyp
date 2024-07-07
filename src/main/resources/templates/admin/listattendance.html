@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en" th:replace="~{fragments/homeadminlayoutsecond :: homeadminlayoutsecond (~{::body},'admin/listschedules')}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>List Attendance</title>
+    <!-- Bootstrap 5 CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
+    <!-- DataTables CSS for Bootstrap 5 -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.4/css/dataTables.bootstrap5.min.css">
+</head>
+
+<body>
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-6">
+                <a href="javascript:history.back()" class="btn btn-outline-secondary mb-3">
+                    <i class="fas fa-arrow-left"></i> 
+                </a>
+            </div>
+            <!-- <div class="col-md-6 text-end">
+                <a href="/Addschedule" class="btn btn-outline-primary">+ NEW SCHEDULE</a>
+            </div> -->
+        </div>
+
+        <table id="example" class="table table-bordered table-hover" style="width:100%">
+            <thead>
+                <tr>
+                    <th>Staff Name</th>
+                    <th>Attendance Date</th>
+                    <th>Sign-in Time</th>
+                    <th>Sign-out Time</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>John Doe</td>
+                    <td>2024-07-01</td>
+                    <td>08:00 AM</td>
+                    <td>05:00 PM</td>
+                    <td>Present</td>
+                    <td>
+                        <div class="btn-group" role="group" aria-label="Action buttons">
+                            <a  href="/Updateattendance" class="btn btn-success">
+                            <i class="fas fa-pencil icon"></i> 
+                            </a>
+                        
+                        <!-- Remove button -->
+                            <button type="button" class="btn btn-danger">
+                            <i class="fas fa-trash icon"></i>  
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Jane Smith</td>
+                    <td>2024-07-01</td>
+                    <td>09:00 AM</td>
+                    <td>06:00 PM</td>
+                    <td>Present</td>
+                    <td>
+                        <div class="btn-group" role="group" aria-label="Action buttons">
+                            <a  class="btn btn-success">
+                            <i class="fas fa-pencil icon"></i> 
+                            </a>
+                        
+                        <!-- Remove button -->
+                            <button type="button" class="btn btn-danger">
+                            <i class="fas fa-trash icon"></i>  
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Michael Brown</td>
+                    <td>2024-07-01</td>
+                    <td>08:30 AM</td>
+                    <td>05:30 PM</td>
+                    <td>Absent</td>
+                    <td>
+                        <div class="btn-group" role="group" aria-label="Action buttons">
+                            <a  class="btn btn-success">
+                            <i class="fas fa-pencil icon"></i> 
+                            </a>
+                        
+                        <!-- Remove button -->
+                            <button type="button" class="btn btn-danger">
+                            <i class="fas fa-trash icon"></i>  
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Emily Johnson</td>
+                    <td>2024-07-01</td>
+                    <td>07:45 AM</td>
+                    <td>04:45 PM</td>
+                    <td>Present</td>
+                    <td>
+                        <div class="btn-group" role="group" aria-label="Action buttons">
+                            <a  class="btn btn-success">
+                            <i class="fas fa-pencil icon"></i> 
+                            </a>
+                        
+                        <!-- Remove button -->
+                            <button type="button" class="btn btn-danger">
+                            <i class="fas fa-trash icon"></i>  
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>William Lee</td>
+                    <td>2024-07-01</td>
+                    <td>10:00 AM</td>
+                    <td>07:00 PM</td>
+                    <td>Present</td>
+                    <td>
+                        <div class="btn-group" role="group" aria-label="Action buttons">
+                            <a  class="btn btn-success">
+                            <i class="fas fa-pencil icon"></i> 
+                            </a>
+                        
+                        <!-- Remove button -->
+                            <button type="button" class="btn btn-danger">
+                            <i class="fas fa-trash icon"></i>  
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Linda Taylor</td>
+                    <td>2024-07-01</td>
+                    <td>08:15 AM</td>
+                    <td>05:15 PM</td>
+                    <td>Absent</td>
+                    <td>
+                        <div class="btn-group" role="group" aria-label="Action buttons">
+                            <a  class="btn btn-success">
+                            <i class="fas fa-pencil icon"></i> 
+                            </a>
+                        
+                        <!-- Remove button -->
+                            <button type="button" class="btn btn-danger">
+                            <i class="fas fa-trash icon"></i>  
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>David Wilson</td>
+                    <td>2024-07-01</td>
+                    <td>09:30 AM</td>
+                    <td>06:30 PM</td>
+                    <td>Present</td>
+                    <td>
+                        <div class="btn-group" role="group" aria-label="Action buttons">
+                            <a  class="btn btn-success">
+                            <i class="fas fa-pencil icon"></i> 
+                            </a>
+                        
+                        <!-- Remove button -->
+                            <button type="button" class="btn btn-danger">
+                            <i class="fas fa-trash icon"></i>  
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Sarah Davis</td>
+                    <td>2024-07-01</td>
+                    <td>08:45 AM</td>
+                    <td>05:45 PM</td>
+                    <td>Present</td>
+                    <td>
+                        <div class="btn-group" role="group" aria-label="Action buttons">
+                            <a  class="btn btn-success">
+                            <i class="fas fa-pencil icon"></i> 
+                            </a>
+                        
+                        <!-- Remove button -->
+                            <button type="button" class="btn btn-danger">
+                            <i class="fas fa-trash icon"></i>  
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Bootstrap 5 JS and Dependencies -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <!-- DataTables JS for Bootstrap 5 -->
+    <script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.4/js/dataTables.bootstrap5.min.js"></script>
+    <!-- Custom JavaScript -->
+    <script>
+        $(document).ready(function() {
+            $('#example').DataTable({
+                "lengthMenu": [ [4, 8, 12, -1], [4, 8, 12, "All"] ], // Entries per page dropdown
+                "pageLength": 4, // Default number of rows per page
+                "order": [], // Disable initial sorting (if needed)
+                "searching": false, // Disable the search box
+                "language": {
+                    "paginate": {
+                        "previous": "&laquo;", // Previous page button
+                        "next": "&raquo;" // Next page button
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

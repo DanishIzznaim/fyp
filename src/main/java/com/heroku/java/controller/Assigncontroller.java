@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
 
@@ -79,29 +80,35 @@ private final DataSource dataSource;
     }
 
     @PostMapping("/Addassign")
-    public String addAssign(@ModelAttribute("assigns") Assign assigns, @RequestParam("scheduleid") int scheduleid) {
-        AssignDAO assignDAO = new AssignDAO(dataSource);
-        Assign assign = new Assign();
-        assign.setId(assigns.getId());
-        assign.setScheduleid(scheduleid);
-        assign.setDt1(assigns.getDt1());
-        assign.setDt2(assigns.getDt2());
-        assign.setDt3(assigns.getDt3());
-        assign.setDt4(assigns.getDt4());
-        assign.setDt5(assigns.getDt5());
-        assign.setDt6(assigns.getDt6());
-        assign.setDt7(assigns.getDt7());
-        try {
-            assignDAO.AddAssign(assign);
-            //Redirect to a success page or another appropriate page
-            return "redirect:/listassigns";
-        } catch (SQLException e) {
-            e.printStackTrace();
-            // Handle database exception
-            return "admin/Addassign";
+    public String addAssign(@RequestParam("id") List<Integer> ids, @RequestParam("scheduleid") int scheduleid, HttpServletRequest request) {
+    AssignDAO assignDAO = new AssignDAO(dataSource);
+    try {
+        for (Integer id : ids) {
+            Assign assign = new Assign();
+            assign.setId(id);
+            assign.setScheduleid(scheduleid);
+
+            // Retrieve the data for dt1 to dt7 for this specific staff member
+            assign.setDt1(request.getParameter("dt1_" + id));
+            assign.setDt2(request.getParameter("dt2_" + id));
+            assign.setDt3(request.getParameter("dt3_" + id));
+            assign.setDt4(request.getParameter("dt4_" + id));
+            assign.setDt5(request.getParameter("dt5_" + id));
+            assign.setDt6(request.getParameter("dt6_" + id));
+            assign.setDt7(request.getParameter("dt7_" + id));
+
+            assignDAO.AddAssign(assign); // Insert into database for this specific staff member
         }
-        // return "admin/Addassign";
+        // Redirect to a success page or another appropriate page
+        return "redirect:/listassigns";
+            } catch (SQLException e) {
+                e.printStackTrace();
+        // Handle database exception
+                return "admin/Addassign";
+            }
     }
+
+
 
     @GetMapping("/listassigns")
     public String listassigns(HttpSession session, Assign assign,Model model) {

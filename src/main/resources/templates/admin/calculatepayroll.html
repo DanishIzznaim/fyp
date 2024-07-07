@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" th:replace="~{fragments/homesecuritylayout :: homesecuritylayout (~{::body},'security/homepagesecurity')}">
+<html lang="en" th:replace="~{fragments/homeadminlayoutsecond :: homeadminlayoutsecond (~{::body},'admin/calculatepayroll')}">
 <head>
     <title>TPS Security</title>
     <link th:href="@{https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css}" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
@@ -23,28 +23,32 @@
         <div class="offset-0.5" style="margin-top: 15%;">
           <div class="card col-12">
             <div class="card-body">
-              <h2 class="text-center">Sign Attendance</h2>
+              <h2 class="text-center">Calculate Payroll</h2>
               <form>
                 <div class="col-12 mt-3">
                     <label for="employee_name">Staff Name</label>
                     <input type="text" id="employee_name" name="employee_name" required class="form-control">
                 </div>
                 <div class="col-12 mt-3">
-                    <label for="attendance_date">Attendance Date</label>
+                    <label for="attendance_date">Month</label>
                     <input type="date" id="attendance_date" name="attendance_date" required class="form-control">
                 </div>
                 <div class="col-12 mt-3">
-                    <label for="signin_time">Sign-in Time</label>
+                    <label for="signin_time">Hours Worked</label>
                     <input type="time" id="signin_time" name="signin_time" required class="form-control">
                 </div>
                 <div class="col-12 mt-3">
-                    <label for="signout_time">Sign-out Time</label>
+                    <label for="signout_time">Hourly Rate</label>
+                    <input type="time" id="signout_time" name="signout_time" required class="form-control">
+                </div>
+                <div class="col-12 mt-3">
+                    <label for="signout_time">Total Pay</label>
                     <input type="time" id="signout_time" name="signout_time" required class="form-control">
                 </div>
                 <div class="row mt-4">
                   <div class="col text-center">
-                    <button type="submit" class="btn btn-primary col-5 mx-2">Sign Attendance</button>
-                    <a href="/listattendancestaff" class="btn btn-primary col-5 mx-2">Cancel</a>
+                    <button type="submit" class="btn btn-primary col-5 mx-2">Calculate</button>
+                    <a href="/listpayroll" class="btn btn-primary col-5 mx-2">Cancel</a>
                   </div>
                 </div>
               </form>

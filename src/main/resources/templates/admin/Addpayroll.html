@@ -7,30 +7,12 @@
   <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 </head>
 <body>
-  <div class="container-fluid" style="width: 70%">
-    <div class="offset-0.5" style="margin-top: 15%;">
+  <div class="container-fluid" style="width: 50%">
+    <div class="offset-0.5" style="margin-top: 8%;">
       <div class="card col-12">
         <div class="card-body">
           <h2 class="text-center">Create New Schedule</h2>
-          <form class="p-3" method="post" th:action="@{/Addschedule}" modelAttribute="Addschedule" th:object="(${schedule})">
-            <div class="col-12 mt-3">
-              <label for="InputScheduleName">Month:</label>
-              <select class="form-select" id="InputScheduleName" name="schedulename" required>
-                <option value="" disabled selected>Select Month</option>
-                <option value="January">January</option>
-                <option value="February">February</option>
-                <option value="March">March</option>
-                <option value="April">April</option>
-                <option value="May">May</option>
-                <option value="June">June</option>
-                <option value="July">July</option>
-                <option value="August">August</option>
-                <option value="September">September</option>
-                <option value="October">October</option>
-                <option value="November">November</option>
-                <option value="December">December</option>
-              </select>
-            </div>
+          <form class="p-3" method="post" th:action="@{/Addpayroll}" modelAttribute="Addpayroll" th:object="(${payroll})">
             <div class="col-12 mt-3">
               <label for="InputDescription">Week:</label>
               <select class="form-select" id="InputDescription" name="description" required>
@@ -49,14 +31,8 @@
               <label for="InputEndDate">End Date:</label>
               <input type="date" class="form-control" id="InputEndDate" name="enddate" required>
             </div>
-            <div class="row mt-4">
-              <div class="col text-center">
-                <button type="submit" class="btn btn-primary col-5 mx-2">Create</button>
-                <a href="/listschedules" class="btn btn-primary col-5 mx-2">Cancel</a>
-              </div>
-            </div>
+            <button type="submit" class="btn btn-primary col-10 mx-5 mt-4" style="margin-bottom: 10px;">Create</button>
           </form>
-        </div>
         </div>
       </div>
     </div>

@@ -1,17 +1,15 @@
-<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" th:fragment="homeadminlayoutsecond(template, menu)">
-<head>
+<!-- <!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:fragment="homeadminlayoutsecond(template, menu)"> -->
+<!-- <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard</title>
-    <!-- <link rel="stylesheet" th:href="@{/stylesheets/homepageadmin.css}"> -->
     <link th:href="@{https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css}" rel="stylesheet"
           integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        /* Custom styles for the navigation bar */
         .navbar {
             background-color: black;
             position: fixed;
@@ -35,8 +33,8 @@
             padding-top: 3.5rem;
             display: block;
             transition: width 0.3s;
-            display: flex; /* Use flexbox */
-            flex-direction: column; /* Arrange items vertically */
+            display: flex; 
+            flex-direction: column; 
         }
 
         .sidebar a {
@@ -47,9 +45,9 @@
             display: flex;
             align-items: center;
             transition: background 0.3s;
-            display: flex; /* Use flexbox */
-            align-items: center; /* Align items vertically */
-            margin-bottom: 20px; /* Add space between icons */
+            display: flex; 
+            align-items: center; 
+            margin-bottom: 20px; 
         }
 
         .sidebar a:hover {
@@ -66,21 +64,21 @@
         }
 
         .content {
-            margin-left: 250px; /* Width of the sidebar */
+            margin-left: 250px; 
             margin-top: 56px;
             padding: 20px;
-            width: calc(100% - 250px); /* Calculate width excluding sidebar */
+            width: calc(100% - 250px); 
         }
 
         .dataTables_wrapper {
-            width: 100% !important; /* Ensure DataTables takes full width */
-            margin: 0 auto; /* Center-align DataTables */
+            width: 100% !important; 
+            margin: 0 auto; 
         }
         
 
         body {
             padding-top: 56px;
-            padding-left: 250px; /* Ensure content doesn't overlap with sidebar */
+            padding-left: 250px; 
             background-color: whitesmoke;
         }
 
@@ -91,7 +89,7 @@
 
             .content {
                 margin-left: 0;
-                width: 100%; /* Full width when sidebar collapsed */
+                width: 100%; 
             }
 
             body {
@@ -164,5 +162,178 @@
         integrity="sha384-fbbOQedDUMZZ5KreZpsbe1LCZPVmfTnH7ois6mU1QK+m14rQ1l2bGBq41eYeM/fS" crossorigin="anonymous"></script>
 <script th:src="@{https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js}"
         integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+</body>
+</html> -->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:fragment="homeadminlayoutsecond(template, menu)">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <style>
+        body {
+            background-color: #ecf0f1;
+            color: #34495e;
+            font-family: 'Arial', sans-serif;
+            padding-top: 56px; /* Ensure space for the fixed navbar */
+            padding-left: 250px; /* Ensure space for the fixed sidebar */
+        }
+
+        .navbar {
+            background-color: #2c3e50;
+            border-bottom: 3px solid #e74c3c;
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+            top: 0;
+            left: 0;
+        }
+
+        .navbar a {
+            color: #ecf0f1 !important;
+        }
+
+        .sidebar {
+            height: 100%;
+            width: 250px;
+            position: fixed;
+            top: 56px; /* Ensure it is below the navbar */
+            left: 0;
+            background-color: #2c3e50;
+            padding-top: 1rem;
+            display: flex;
+            flex-direction: column;
+            z-index: 1000;
+        }
+
+        .sidebar a {
+            padding: 15px 20px;
+            text-decoration: none;
+            font-size: 18px;
+            color: #ecf0f1;
+            display: flex;
+            align-items: center;
+            transition: background 0.3s;
+        }
+
+        .sidebar a:hover {
+            background-color: #34495e;
+        }
+
+        .sidebar a.active {
+            border-left: 4px solid #e74c3c;
+            background-color: #34495e;
+        }
+
+        .sidebar a .icon {
+            margin-right: 20px;
+        }
+
+        .content {
+            margin-left: 250px;
+            margin-top: 56px;
+            padding: 20px;
+            background-color: #ffffff;
+            color: #34495e;
+            min-height: calc(100vh - 56px);
+        }
+
+        .content h1 {
+            color: #2c3e50;
+        }
+
+        .btn-primary {
+            background-color: #e74c3c;
+            border-color: #e74c3c;
+        }
+
+        .btn-primary:hover {
+            background-color: #c0392b;
+            border-color: #c0392b;
+        }
+
+        .btn-outline-primary {
+            border-color: #c0392b;
+            color: orangered;
+        }
+
+        .dataTables_wrapper {
+            width: 100% !important;
+            margin: 0 auto;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding-top: 56px;
+                padding-left: 0;
+            }
+
+            .sidebar {
+                width: 0;
+            }
+
+            .content {
+                margin-left: 0;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">
+            <img src="/logo.jpg" alt="Logo" class="rounded-circle" style="width: 40px; height: 40px;">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/Homepageadmin}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/login}">Logout</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        <i class="fas fa-user-circle" style="font-size: 24px;"></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="d-flex">
+    <nav class="sidebar">
+        <a th:href="@{/Homepageadmin}" class="active">
+            <i class="fas fa-home icon"></i> Home
+        </a>
+        <a th:href="@{/Liststaff}">
+            <i class="fas fa-users icon"></i> Staff
+        </a>
+        <a th:href="@{/listschedules}">
+            <i class="fas fa-calendar-alt icon"></i> Schedule
+        </a>
+        <a th:href="@{/listattendance}">
+            <i class="fas fa-calendar-check icon"></i> Attendance
+        </a>
+        <a th:href="@{/listpayroll}">
+            <i class="fas fa-dollar-sign icon"></i> Payroll
+        </a>
+    </nav>
+</div>
+
+<div class="content" th:replace="${template}">
+</div>
+
+<script th:src="@{https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js}" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+<script th:src="@{https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js}" integrity="sha384-fbbOQedDUMZZ5KreZpsbe1LCZPVmfTnH7ois6mU1QK+m14rQ1l2bGBq41eYeM/fS" crossorigin="anonymous"></script>
+<script th:src="@{https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js}" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
 </body>
 </html>

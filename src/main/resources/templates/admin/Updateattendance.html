@@ -23,7 +23,7 @@
         <div class="offset-0.5" style="margin-top: 15%;">
           <div class="card col-12">
             <div class="card-body">
-              <h2 class="text-center">Sign Attendance</h2>
+              <h2 class="text-center">Approve Attendance</h2>
               <form>
                 <div class="col-12 mt-3">
                     <label for="employee_name">Staff Name</label>
@@ -41,10 +41,18 @@
                     <label for="signout_time">Sign-out Time</label>
                     <input type="time" id="signout_time" name="signout_time" required class="form-control">
                 </div>
+                <div class="col-12 mt-3">
+                    <label for="status">Status</label>
+                    <select id="status" name="status" class="form-select" required>
+                        <option value="">Select Status</option>
+                        <option value="present">Present</option>
+                        <option value="absent">Absent</option>
+                    </select>
+                </div>
                 <div class="row mt-4">
                   <div class="col text-center">
-                    <button type="submit" class="btn btn-primary col-5 mx-2">Sign Attendance</button>
-                    <a href="/listattendancestaff" class="btn btn-primary col-5 mx-2">Cancel</a>
+                    <button type="submit" class="btn btn-primary col-5 mx-2">Approve</button>
+                    <a href="/listattendance" class="btn btn-primary col-5 mx-2">Cancel</a>
                   </div>
                 </div>
               </form>
