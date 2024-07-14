@@ -17,7 +17,7 @@
                     <form class="p-3" method="post" th:action="@{/Updatestaff}" modelAttribute="Updatestaff" th:object="${staff}" onsubmit="return validateForm()"> 
                         <input type="hidden" th:value="${staff.id}" name="id">
                         <div class="col-12 mt-3"> 
-                            <label for="InputSecurityName">Staff Name</label> 
+                            <label for="InputSecurityName">Full Name</label> 
                             <input type="text" class="form-control" id="InputSecurityName" name="name" th:value="${staff.name}" required> 
                         </div> 
 
@@ -46,7 +46,7 @@
 
                         <div class="row mt-3">  
                             <div class="col"> 
-                                <label for="Inputic">Security IC</label> 
+                                <label for="Inputic">Identity Card Number</label> 
                                 <input type="text" class="form-control" id="Inputic" aria-describedby="icHelp" name="icnumber" th:value="${staff.icnumber}" required> 
                                 <small id="icHelp">Enter the 12-digit IC number without dashes (-)</small> 
                             </div>
@@ -60,7 +60,7 @@
 
                             <div class="col"> 
                                 <label for="InputPassword">Password</label> 
-                                <input type="password" class="form-control" placeholder="#####" name="password" disabled> 
+                                <input type="password" class="form-control" placeholder="#####" name="password" th:value="${staff.password}" required> 
                             </div>
                         </div>
 

@@ -16,7 +16,7 @@
                     <h2 class="text-center">Create Staff Account</h2>
                     <form class="p-3" method="post" th:action="@{/Addstaff}" modelAttribute="Addstaff" th:object="${staff}" onsubmit="return validateForm()"> 
                         <div class="col-12 mt-3"> 
-                            <label for="InputSecurityName">Staff Name</label> 
+                            <label for="InputSecurityName">Security Guard Full Name</label> 
                             <input type="text" class="form-control" id="InputSecurityName" name="name" required> 
                         </div> 
 
@@ -44,7 +44,7 @@
 
                         <div class="row mt-3">  
                             <div class="col"> 
-                                <label for="Inputic">Security IC</label> 
+                                <label for="Inputic">Identity Card Number</label> 
                                 <input type="text" class="form-control" id="Inputic" aria-describedby="icHelp" name="icnumber" required> 
                                 <small id="icHelp">Enter the 12-digit IC number without dashes (-)</small> 
                             </div>

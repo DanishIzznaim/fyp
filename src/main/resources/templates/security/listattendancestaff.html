@@ -14,110 +14,42 @@
     <div class="container mt-5">
         <div class="row">
             <div class="col-md-6">
-                <a href="javascript:history.back()" class="btn btn-outline-secondary mb-3">
+                <a href="javascript:history.back()" class="btn btn-outline-primary mb-3">
                     <i class="fas fa-arrow-left"></i> 
                 </a>
             </div>
             <div class="col-md-6 text-end">
-                <a href="/attendance" class="btn btn-primary">Sign Today</a>
+                <a href="/attendance" class="btn btn-primary">Sign In Today</a>
             </div>
         </div>
 
         <table id="example" class="table table-bordered table-hover" style="width:100%">
             <thead>
                 <tr>
-                    <th>Staff Name</th>
+                    <th>Full Name</th>
                     <th>Attendance Date</th>
                     <th>Sign-in Time</th>
                     <th>Sign-out Time</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>John Doe</td>
+                <tr th:for="{listAttendanceStaff}">
+                    <td>danish</td>
                     <td>2024-07-01</td>
-                    <td>08:00 AM</td>
-                    <td>05:00 PM</td>
-                    
-                    
-                </tr>
-                <tr>
-                    <td>Jane Smith</td>
-                    <td>2024-07-01</td>
-                    <td>09:00 AM</td>
-                    <td>06:00 PM</td>
-                    
-                    
-                </tr>
-                <tr>
-                    <td>Michael Brown</td>
-                    <td>2024-07-01</td>
-                    <td>08:30 AM</td>
-                    <td>05:30 PM</td>
-                    
-                    
-                </tr>
-                <tr>
-                    <td>Emily Johnson</td>
-                    <td>2024-07-01</td>
-                    <td>07:45 AM</td>
-                    <td>04:45 PM</td>
-                    
-                    
-                </tr>
-                <tr>
-                    <td>William Lee</td>
-                    <td>2024-07-01</td>
-                    <td>10:00 AM</td>
-                    <td>07:00 PM</td>
+                    <td>8:00 AM</td>
+                    <td></td>
                    
                     <td>
                         <div class="btn-group" role="group" aria-label="Action buttons">
-                            <a  class="btn btn-success">
-                            <i class="fas fa-pencil icon"></i> 
-                            </a>
+                            <a  class="btn btn-success">Sign out</a>
                         
                         <!-- Remove button -->
-                            <button type="button" class="btn btn-danger">
+                            <!-- <button type="button" class="btn btn-danger">
                             <i class="fas fa-trash icon"></i>  
-                            </button>
+                            </button> -->
                         </div>
                     </td>
-                </tr>
-                <tr>
-                    <td>Linda Taylor</td>
-                    <td>2024-07-01</td>
-                    <td>08:15 AM</td>
-                    <td>05:15 PM</td>
-                   
-                    
-                </tr>
-                <tr>
-                    <td>David Wilson</td>
-                    <td>2024-07-01</td>
-                    <td>09:30 AM</td>
-                    <td>06:30 PM</td>
-                   
-                    <td>
-                        <div class="btn-group" role="group" aria-label="Action buttons">
-                            <a  class="btn btn-success">
-                            <i class="fas fa-pencil icon"></i> 
-                            </a>
-                        
-                        <!-- Remove button -->
-                            <button type="button" class="btn btn-danger">
-                            <i class="fas fa-trash icon"></i>  
-                            </button>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Sarah Davis</td>
-                    <td>2024-07-01</td>
-                    <td>08:45 AM</td>
-                    <td>05:45 PM</td>
-                    
-                    
                 </tr>
             </tbody>
         </table>

@@ -3,6 +3,7 @@ package com.heroku.java;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.jms.JmsProperties.Listener.Session;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -74,15 +75,20 @@ public class GettingStartedApplication {
         return "security/schedule";
     }
 
-    @GetMapping("/attendance")
-    public String attendance() {
-        return "security/attendance";
-    }
+    // @GetMapping("/attendance")
+    // public String attendance(HttpSession session) {
+    //     System.out.println("id :" + (String) session.getAttribute("id"));
+    //     return "security/attendance";
+    // }
 
-    @GetMapping("/listattendancestaff")
-    public String listattendancestaff() {
-        return "security/listattendancestaff";
-    }
+    // @GetMapping("/listattendancestaff")
+    // public String listattendancestaff(HttpSession session, Model model) {
+    //     System.out.println(" listattendancestaffid :" + session.getAttribute("id"));
+    //     int userid = (Integer) session.getAttribute("id");
+    //     // StaffList<List> staffList = Dao.staff(userid);
+    //     // model.addAttribute("listAttendanceStaff", StaffList);
+    //     return "security/listattendancestaff";
+    // }
 
     @GetMapping("/Updateattendance")
     public String Updateattendance() {

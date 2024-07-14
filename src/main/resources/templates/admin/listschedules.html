@@ -14,12 +14,12 @@
     <div class="container mt-5">
         <div class="row">
             <div class="col-md-6">
-                <a href="javascript:history.back()" class="btn btn-outline-secondary mb-3">
-                    <i class="fas fa-arrow-left"></i> 
+                <a href="javascript:history.back()" class="btn btn-outline-primary mb-3">
+                    <i class="fas fa-arrow-left"></i> Back
                 </a>
             </div>
             <div class="col-md-6 text-end">
-                <a href="/Addschedule" class="btn btn-outline-primary">+ NEW SCHEDULE</a>
+                <a href="/Addschedule" class="btn btn-primary">+ NEW SCHEDULE</a>
             </div>
         </div>
 
@@ -30,6 +30,7 @@
                     <th>Description</th>
                     <th>Start Date</th>
                     <th>End Date</th>
+                    <th>Shift</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -41,9 +42,10 @@
                     <td th:text="${schedule.startdate}"></td>
                     <td th:text="${schedule.enddate}"></td>
                     <td>
-                        <a th:href="@{'/Addassign?scheduleid=' + ${schedule.scheduleid}}" class="btn btn-primary col-3 mx-1">Assign Shift</a>
                         <a th:href="@{'/listassigns?scheduleid=' + ${schedule.scheduleid}}" class="btn btn-primary col-3 mx-1">View</a>
-                        
+                        <a th:href="@{'/Addassign?scheduleid=' + ${schedule.scheduleid}}" class="btn btn-primary col-3 mx-1">Assign</a>
+                    </td>
+                    <td> 
                         <div class="btn-group" role="group" aria-label="Action buttons">
                             <a th:href="@{'/Updateschedule?scheduleid=' + ${schedule.scheduleid}}" class="btn btn-success">
                                 <i class="fas fa-pencil icon"></i>  <!-- Material icon for edit -->

@@ -23,28 +23,47 @@
         <div class="offset-0.5" style="margin-top: 15%;">
           <div class="card col-12">
             <div class="card-body">
-              <h2 class="text-center">Calculate Payroll</h2>
+              <h2 class="text-center">Update Payroll</h2>
               <form>
                 <div class="col-12 mt-3">
                     <label for="employee_name">Staff Name</label>
                     <input type="text" id="employee_name" name="employee_name" required class="form-control">
                 </div>
                 <div class="col-12 mt-3">
-                    <label for="attendance_date">Month</label>
-                    <input type="date" id="attendance_date" name="attendance_date" required class="form-control">
-                </div>
+                  <label for="attendance_date">Month</label>
+                  <select id="attendance_date" name="attendance_date" required class="form-control">
+                      <option value="">Select a month</option>
+                      <option value="January">January</option>
+                      <option value="February">February</option>
+                      <option value="March">March</option>
+                      <option value="April">April</option>
+                      <option value="May">May</option>
+                      <option value="June">June</option>
+                      <option value="July">July</option>
+                      <option value="August">August</option>
+                      <option value="September">September</option>
+                      <option value="October">October</option>
+                      <option value="November">November</option>
+                      <option value="December">December</option>
+                  </select>
+              </div>
+              
+               <div class="col-12 mt-3">
+                <label for="signin_time">Hours Worked</label>
+                <input type="text" id="signin_time" name="signin_time" required class="form-control">
+               </div>
+                
                 <div class="col-12 mt-3">
-                    <label for="signin_time">Hours Worked</label>
-                    <input type="time" id="signin_time" name="signin_time" required class="form-control">
+                  <label for="signout_time">Hourly Rate</label>
+                  <input type="text" id="signin_time" name="signin_time" required class="form-control" placeholder="8">
                 </div>
+
                 <div class="col-12 mt-3">
-                    <label for="signout_time">Hourly Rate</label>
-                    <input type="time" id="signout_time" name="signout_time" required class="form-control">
+                  <label for="signout_time">Total Pay</label>
+                  <input type="text" id="signin_time" name="signin_time" required class="form-control" placeholder="2496.00">
                 </div>
-                <div class="col-12 mt-3">
-                    <label for="signout_time">Total Pay</label>
-                    <input type="time" id="signout_time" name="signout_time" required class="form-control">
-                </div>
+
+
                 <div class="row mt-4">
                   <div class="col text-center">
                     <button type="submit" class="btn btn-primary col-5 mx-2">Calculate</button>

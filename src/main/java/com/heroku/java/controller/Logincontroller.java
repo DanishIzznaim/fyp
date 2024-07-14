@@ -41,6 +41,7 @@ public class Logincontroller{
                 session.setAttribute("username", authenticatedUser.getUsername());
                 session.setAttribute("role", authenticatedUser.getRole());
                 session.setAttribute("id", authenticatedUser.getId());
+                System.out.println(session.getAttribute("id"));
                 System.out.println("user id is " + authenticatedUser.getId());
 
                 if ("admin".equals(authenticatedUser.getRole())) {
