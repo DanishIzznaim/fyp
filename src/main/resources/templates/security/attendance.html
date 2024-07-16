@@ -2,85 +2,57 @@
 <html lang="en" th:replace="~{fragments/homesecuritylayout :: homesecuritylayout (~{::body},'security/homepagesecurity')}">
 <head>
     <title>TPS Security</title>
-    <link th:href="@{https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css}" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link th:href="@{https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css}" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Set current date for attendance_date field
-            var currentDate = new Date().toISOString().slice(0, 10);
-            document.getElementById('attendance_date').value = currentDate;
-
-            // Set current time for signin_time field
-            var currentTime = new Date().toLocaleTimeString('en-US', { hour12: false });
-            document.getElementById('signin_time').value = currentTime;
-        });
-    </script>
+    <script th:src="@{https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js}"></script>
 </head>
-<!-- <body>
-    <div class="container-fluid" style="width: 70%">
-        <div class="offset-0.5" style="margin-top: 15%;">
-          <div class="card col-12">
-            <div class="card-body">
-              <h2 class="text-center">Sign Attendance</h2>
-              <form>
-                <div class="col-12 mt-3">
-                    <label for="employee_name">Full Name</label>
-                    <input type="text" id="employee_name" name="employee_name" placeholder="danish" class="form-control">
-                </div>
-                <div class="col-12 mt-3">
-                    <label for="attendance_date">Attendance Date</label>
-                    <input type="date" id="attendance_date" name="attendance_date" required class="form-control">
-                </div>
-                <div class="col-12 mt-3">
-                    <label for="signin_time">Sign-in Time</label>
-                    <input type="time" id="signin_time" name="signin_time" required class="form-control">
-                </div>
-                <div class="col-12 mt-3">
-                    <label for="signout_time">Sign-out Time</label>
-                    <input type="time" id="signout_time" name="signout_time" required class="form-control">
-                </div>
-                <div class="row mt-4">
-                  <div class="col text-center">
-                    <button type="submit" class="btn btn-primary col-5 mx-2">Sign Out</button>
-                    <a href="/listattendancestaff" class="btn btn-primary col-5 mx-2">Cancel</a>
-                  </div>
-                </div>
-              </form>
-            </div>
-            </div>
-          </div>
+<body>
+    <div class="container-fluid" style="width: 70%; margin-top: 20px;">
+        <h2 class="text-center">Security Guard Attendance</h2>
+
+        <!-- Display messages -->
+        <div id="message" class="alert alert-info" th:if="${message}" th:text="${message}"></div>
+
+        <div class="col-12 mt-3 text-center">
+            <form action="/attendance/signin" method="post">
+                <input type="hidden" name="id" th:value="${staffId}">
+                <button type="submit" class="btn btn-primary col-5 mx-2">Sign In</button>
+            </form>
+        </div>
+
+        <div class="col-12 mt-3 text-center">
+            <form action="/attendance/signout" method="post">
+                <input type="hidden" name="id" th:value="${staffId}">
+                <button type="submit" class="btn btn-primary col-5 mx-2">Sign Out</button>
+            </form>
+        </div>
+
+        <div class="table-responsive mt-5">
+            <table id="attendanceTable" class="display" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>Attendance Date</th>
+                        <th>Sign In Time</th>
+                        <th>Sign Out Time</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="attendance : ${attendances}">
+                        <td th:text="${attendance.attendanceDate}"></td>
+                        <td th:text="${attendance.signInTime}"></td>
+                        <td th:text="${attendance.signOutTime}"></td>
+                        <td th:text="${attendance.status}"></td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
-</body> -->
-<body>
-  <div class="container-fluid" style="width: 70%">
-      <div class="offset-0.5" style="margin-top: 8%;">
-          <div class="card col-12">
-              <div class="card-body">
-                  <h2 class="text-center">Security Guard Attendance</h2>
 
-                  <!-- Display messages -->
-                  <div id="message" class="alert alert-info" th:if="${message}" th:text="${message}"></div>
-
-                  <div class="col-12 mt-3 text-center">
-                      <form action="/attendance/signin" method="post">
-                          <input type="hidden" name="id" th:value="${staffId}">
-                          <button type="submit" class="btn btn-primary col-5 mx-2">Sign In</button>
-                      </form>
-                  </div>
-
-                  <div class="col-12 mt-3 text-center">
-                      <form action="/attendance/signout" method="post">
-                          <input type="hidden" name="id" th:value="${staffId}">
-                          <button type="submit" class="btn btn-primary col-5 mx-2">Sign Out</button>
-                      </form>
-                  </div>
-
-              </div>
-          </div>
-      </div>
-  </div>
+    <script>
+        $(document).ready(function() {
+            $('#attendanceTable').DataTable();
+        });
+    </script>
 </body>
 </html>

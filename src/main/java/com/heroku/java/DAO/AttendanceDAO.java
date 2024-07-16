@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 import javax.sql.DataSource;
 import java.sql.*;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,9 +25,9 @@ public class AttendanceDAO {
                 sql = "INSERT INTO attendance (id, attendance_date, sign_in_time, sign_out_time, status) VALUES (?,?,?,?,?)";
                 try (PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
                     statement.setInt(1, attendance.getId());
-                    statement.setTimestamp(2, Timestamp.valueOf(attendance.getAttendanceDate()));
-                    statement.setTimestamp(3, Timestamp.valueOf(attendance.getSignInTime()));
-                    statement.setTimestamp(4, attendance.getSignOutTime() != null ? Timestamp.valueOf(attendance.getSignOutTime()) : null);
+                    statement.setDate(2, Date.valueOf(attendance.getAttendanceDate()));
+                    statement.setTime(3, Time.valueOf(attendance.getSignInTime()));
+                    statement.setTime(4, attendance.getSignOutTime() != null ? Time.valueOf(attendance.getSignOutTime()) : null);
                     statement.setString(5, attendance.getStatus());
                     statement.executeUpdate();
                     ResultSet generatedKeys = statement.getGeneratedKeys();
@@ -37,8 +38,8 @@ public class AttendanceDAO {
             } else {
                 sql = "UPDATE attendance SET sign_in_time=?, sign_out_time=?, status=? WHERE attendanceid=?";
                 try (PreparedStatement statement = connection.prepareStatement(sql)) {
-                    statement.setTimestamp(1, Timestamp.valueOf(attendance.getSignInTime()));
-                    statement.setTimestamp(2, attendance.getSignOutTime() != null ? Timestamp.valueOf(attendance.getSignOutTime()) : null);
+                    statement.setTime(1, Time.valueOf(attendance.getSignInTime()));
+                    statement.setTime(2, attendance.getSignOutTime() != null ? Time.valueOf(attendance.getSignOutTime()) : null);
                     statement.setString(3, attendance.getStatus());
                     statement.setInt(4, attendance.getAttendanceId());
                     statement.executeUpdate();
@@ -47,6 +48,31 @@ public class AttendanceDAO {
         }
         return attendance;
     }
+
+    public List<Attendance> findByStaffId(int staffId) throws SQLException {
+        List<Attendance> attendances = new ArrayList<>();
+        try (Connection connection = dataSource.getConnection()) {
+            String sql = "SELECT * FROM attendance WHERE id = ?";
+            try (PreparedStatement statement = connection.prepareStatement(sql)) {
+                statement.setInt(1, staffId);
+                try (ResultSet resultSet = statement.executeQuery()) {
+                    while (resultSet.next()) {
+                        Attendance attendance = new Attendance();
+                        attendance.setAttendanceId(resultSet.getInt("attendanceid"));
+                        attendance.setId(resultSet.getInt("id"));
+                        attendance.setAttendanceDate(resultSet.getDate("attendance_date").toLocalDate());
+                        attendance.setSignInTime(resultSet.getTime("sign_in_time").toLocalTime());
+                        attendance.setSignOutTime(resultSet.getTime("sign_out_time") != null ? resultSet.getTime("sign_out_time").toLocalTime() : null);
+                        attendance.setStatus(resultSet.getString("status"));
+                        attendances.add(attendance);
+                    }
+                }
+            }
+        }
+        return attendances;
+    }
+    
+    
 
     public Attendance findById(int attendanceId) throws SQLException {
         Attendance attendance = null;
@@ -59,9 +85,9 @@ public class AttendanceDAO {
                         attendance = new Attendance();
                         attendance.setAttendanceId(resultSet.getInt("attendanceid"));
                         attendance.setId(resultSet.getInt("id"));
-                        attendance.setAttendanceDate(resultSet.getTimestamp("attendance_date").toLocalDateTime());
-                        attendance.setSignInTime(resultSet.getTimestamp("sign_in_time").toLocalDateTime());
-                        attendance.setSignOutTime(resultSet.getTimestamp("sign_out_time") != null ? resultSet.getTimestamp("sign_out_time").toLocalDateTime() : null);
+                        attendance.setAttendanceDate(resultSet.getDate("attendance_date").toLocalDate());
+                        attendance.setSignInTime(resultSet.getTime("sign_in_time").toLocalTime());
+                        attendance.setSignOutTime(resultSet.getTime("sign_out_time") != null ? resultSet.getTime("sign_out_time").toLocalTime() : null);
                         attendance.setStatus(resultSet.getString("status"));
                     }
                 }
@@ -73,7 +99,7 @@ public class AttendanceDAO {
     public List<Attendance> findByStaffAndDate(int staffId, LocalDate date) throws SQLException {
         List<Attendance> attendances = new ArrayList<>();
         try (Connection connection = dataSource.getConnection()) {
-            String sql = "SELECT * FROM attendance WHERE id = ? AND attendance_date::date = ?";
+            String sql = "SELECT * FROM attendance WHERE id = ? AND attendance_date = ?";
             try (PreparedStatement statement = connection.prepareStatement(sql)) {
                 statement.setInt(1, staffId);
                 statement.setDate(2, Date.valueOf(date));
@@ -82,9 +108,9 @@ public class AttendanceDAO {
                         Attendance attendance = new Attendance();
                         attendance.setAttendanceId(resultSet.getInt("attendanceid"));
                         attendance.setId(resultSet.getInt("id"));
-                        attendance.setAttendanceDate(resultSet.getTimestamp("attendance_date").toLocalDateTime());
-                        attendance.setSignInTime(resultSet.getTimestamp("sign_in_time").toLocalDateTime());
-                        attendance.setSignOutTime(resultSet.getTimestamp("sign_out_time") != null ? resultSet.getTimestamp("sign_out_time").toLocalDateTime() : null);
+                        attendance.setAttendanceDate(resultSet.getDate("attendance_date").toLocalDate());
+                        attendance.setSignInTime(resultSet.getTime("sign_in_time").toLocalTime());
+                        attendance.setSignOutTime(resultSet.getTime("sign_out_time") != null ? resultSet.getTime("sign_out_time").toLocalTime() : null);
                         attendance.setStatus(resultSet.getString("status"));
                         attendances.add(attendance);
                     }
@@ -104,9 +130,9 @@ public class AttendanceDAO {
                     Attendance attendance = new Attendance();
                     attendance.setAttendanceId(resultSet.getInt("attendanceid"));
                     attendance.setId(resultSet.getInt("id"));
-                    attendance.setAttendanceDate(resultSet.getTimestamp("attendance_date").toLocalDateTime());
-                    attendance.setSignInTime(resultSet.getTimestamp("sign_in_time").toLocalDateTime());
-                    attendance.setSignOutTime(resultSet.getTimestamp("sign_out_time") != null ? resultSet.getTimestamp("sign_out_time").toLocalDateTime() : null);
+                    attendance.setAttendanceDate(resultSet.getDate("attendance_date").toLocalDate());
+                    attendance.setSignInTime(resultSet.getTime("sign_in_time").toLocalTime());
+                    attendance.setSignOutTime(resultSet.getTime("sign_out_time") != null ? resultSet.getTime("sign_out_time").toLocalTime() : null);
                     attendance.setStatus(resultSet.getString("status"));
                     attendances.add(attendance);
                 }

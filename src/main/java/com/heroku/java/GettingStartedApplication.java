@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import com.heroku.java.DAO.AssignDAO;
+import com.heroku.java.model.Assign;
 import com.heroku.java.model.Staff;
 
 import jakarta.servlet.http.HttpSession;
@@ -18,6 +21,7 @@ import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 
@@ -71,7 +75,15 @@ public class GettingStartedApplication {
     }
 
     @GetMapping("/schedule")
-    public String schedule() {
+    public String schedule(Model model) {
+         AssignDAO assignDAO = new AssignDAO(dataSource);
+      try {
+          List<Assign> assignlist = assignDAO.listassigns();
+          model.addAttribute("assigns", assignlist);
+      } catch (SQLException e) {
+          e.printStackTrace();
+          return "error";
+      }
         return "security/schedule";
     }
 
