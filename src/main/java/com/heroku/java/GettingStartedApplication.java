@@ -49,10 +49,7 @@ public class GettingStartedApplication {
         return "admin/Profileadmin";
     }
 
-    @GetMapping("/listattendance")
-    public String listattendance() {
-        return "admin/listattendance";
-    }
+   
 
     @GetMapping("/listpayroll")
     public String listpayroll() {
@@ -87,20 +84,6 @@ public class GettingStartedApplication {
         return "security/schedule";
     }
 
-    // @GetMapping("/attendance")
-    // public String attendance(HttpSession session) {
-    //     System.out.println("id :" + (String) session.getAttribute("id"));
-    //     return "security/attendance";
-    // }
-
-    // @GetMapping("/listattendancestaff")
-    // public String listattendancestaff(HttpSession session, Model model) {
-    //     System.out.println(" listattendancestaffid :" + session.getAttribute("id"));
-    //     int userid = (Integer) session.getAttribute("id");
-    //     // StaffList<List> staffList = Dao.staff(userid);
-    //     // model.addAttribute("listAttendanceStaff", StaffList);
-    //     return "security/listattendancestaff";
-    // }
 
     @GetMapping("/Updateattendance")
     public String Updateattendance() {
