@@ -51,15 +51,15 @@ public class GettingStartedApplication {
 
    
 
-    @GetMapping("/listpayroll")
-    public String listpayroll() {
-        return "admin/listpayroll";
-    }
+    // @GetMapping("/listpayroll")
+    // public String listpayroll() {
+    //     return "admin/listpayroll";
+    // }
 
-    @GetMapping("/calculatepayroll")
-    public String calculatepayroll() {
-        return "admin/calculatepayroll";
-    }
+    // @GetMapping("/calculatepayroll")
+    // public String calculatepayroll() {
+    //     return "admin/calculatepayroll";
+    // }
 
     @GetMapping("/test")
     public String test() {
@@ -85,15 +85,12 @@ public class GettingStartedApplication {
     }
 
 
-    @GetMapping("/Updateattendance")
-    public String Updateattendance() {
-        return "admin/Updateattendance";
-    }
+    
 
-    @GetMapping("/payslip")
-    public String payslip() {
-        return "security/payslip";
-    }
+    // @GetMapping("/payroll")
+    // public String payroll() {
+    //     return "security/payroll";
+    // }
 
 
 

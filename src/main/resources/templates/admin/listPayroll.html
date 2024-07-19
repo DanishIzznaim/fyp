@@ -1,81 +1,115 @@
-    <!DOCTYPE html>
-    <html lang="en" th:replace="~{fragments/homeadminlayoutsecond :: homeadminlayoutsecond (~{::body},'admin/listschedules')}">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>List Attendance</title>
-        <!-- Bootstrap 5 CSS -->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
-        <!-- DataTables CSS for Bootstrap 5 -->
-        <link rel="stylesheet" href="https://cdn.datatables.net/1.11.4/css/dataTables.bootstrap5.min.css">
-    </head>
+<!-- <!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Payroll List</title>
+</head>
+<body>
+    <h1>Payroll List</h1>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Payroll ID</th>
+                <th>Staff ID</th>
+                <th>Staff Name</th>
+                <th>Month</th>
+                <th>Hours Worked</th>
+                <th>Hourly Rate</th>
+                <th>Total Pay</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="payroll : ${payrolls}">
+                <td th:text="${payroll.payrollId}"></td>
+                <td th:text="${payroll.sid}"></td>
+                <td th:text="${payroll.sname}"></td>
+                <td th:text="${payroll.month}"></td>
+                <td th:text="${payroll.hoursWorked}"></td>
+                <td th:text="${payroll.hourlyRate}"></td>
+                <td th:text="${payroll.totalPay}"></td>
+            </tr>
+        </tbody>
+    </table>
+    <a href="/Addpayroll">Add Payroll</a>
+</body>
+</html> -->
 
-    <body>
-        <div class="container mt-5">
-            <div class="row">
-                <div class="col-md-6">
-                    <a href="javascript:history.back()" class="btn btn-outline-secondary mb-3">
-                        <i class="fas fa-arrow-left"></i> 
-                    </a>
-                </div>
-                <!-- <div class="col-md-6 text-end">
-                    <a href="/Addschedule" class="btn btn-outline-primary">+ NEW SCHEDULE</a>
-                </div> -->
+
+
+<!DOCTYPE html>
+<html lang="en" th:replace="~{fragments/homeadminlayoutsecond :: homeadminlayoutsecond (~{::body},'admin/listschedules')}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>listpayroll</title>
+    <!-- Bootstrap 5 CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
+    <!-- DataTables CSS for Bootstrap 5 -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.4/css/dataTables.bootstrap5.min.css">
+</head>
+
+<body>
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-6">
+                <a href="javascript:history.back()" class="btn btn-outline-primary mb-3">
+                    <i class="fas fa-arrow-left"></i> Back
+                </a>
             </div>
-
-            <table id="example" class="table table-bordered table-hover" style="width:100%">
-                <thead>
-                    <tr>
-                        <th>Staff Name</th>
-                        <th>Hourly Rate</th>
-                        <th>Month</th>
-                        <th>Hours Worked</th>
-                        <th>Total Pay</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>danish</td>
-                        <td>RM 8.00</td>
-                        <td>July</td>
-                        <td>312</td>
-                        <td>RM 2496.00</td>
-                        <td>
-                            <div class="btn-group" role="group" aria-label="Action buttons">
-                                <a  href="/calculatepayroll" class="btn btn-success">
-                                <i class="fas fa-calculator icon"></i> 
-                                </a>
-                            </div>
-                        </td>
-                    </tr>
-                    
-                </tbody>
-            </table>
+            <div class="col-md-6 text-end">
+                <a href="/Addpayroll" class="btn btn-primary">+ NEW PAYROLL</a>
+            </div>
         </div>
 
-        <!-- Bootstrap 5 JS and Dependencies -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
-        <!-- DataTables JS for Bootstrap 5 -->
-        <script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
-        <script src="https://cdn.datatables.net/1.11.4/js/dataTables.bootstrap5.min.js"></script>
-        <!-- Custom JavaScript -->
-        <script>
-            $(document).ready(function() {
-                $('#example').DataTable({
-                    "lengthMenu": [ [4, 8, 12, -1], [4, 8, 12, "All"] ], // Entries per page dropdown
-                    "pageLength": 4, // Default number of rows per page
-                    "order": [], // Disable initial sorting (if needed)
-                    "searching": false, // Disable the search box
-                    "language": {
-                        "paginate": {
-                            "previous": "&laquo;", // Previous page button
-                            "next": "&raquo;" // Next page button
-                        }
+        <table id="example" class="table table-bordered table-hover" style="width:100%">
+            <thead>
+                <tr>
+                    <th>Payroll ID</th>
+                    <th>Staff ID</th>
+                    <th>Staff Name</th>
+                    <th>Month</th>
+                    <th>Hours Worked</th>
+                    <th>Hourly Rate</th>
+                    <th>Total Pay</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="payroll : ${payrolls}">
+                    <td th:text="${payroll.payrollId}"></td>
+                    <td th:text="${payroll.sid}"></td>
+                    <td th:text="${payroll.sname}"></td>
+                    <td th:text="${payroll.month}"></td>
+                    <td th:text="${payroll.hoursWorked}"></td>
+                    <td th:text="${payroll.hourlyRate}"></td>
+                    <td th:text="${payroll.totalPay}"></td>
+                </tr>
+            </tbody>
+            
+        </table>
+    </div>
+
+
+    <!-- Bootstrap 5 JS and Dependencies -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <!-- DataTables JS for Bootstrap 5 -->
+    <script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.4/js/dataTables.bootstrap5.min.js"></script>
+    <!-- Custom JavaScript -->
+    <script>
+        $(document).ready(function() {
+            $('#example').DataTable({
+                "lengthMenu": [ [4, 8, 12, -1], [4, 8, 12, "All"] ], // Entries per page dropdown
+                "pageLength": 4, // Default number of rows per page
+                "order": [], // Disable initial sorting (if needed)
+                "searching": true, // Disable the search box
+                "language": {
+                    "paginate": {
+                        "previous": "&laquo;", // Previous page button
+                        "next": "&raquo;" // Next page button
                     }
-                });
+                }
             });
-        </script>
-    </body>
-    </html>
+        });
+    </script>
+</body>
+</html>

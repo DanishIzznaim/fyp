@@ -1,52 +1,3 @@
-// package com.heroku.java.controller;
-
-// import com.heroku.java.DAO.AssignDAO;
-// import com.heroku.java.DAO.AttendanceDAO;
-// import com.heroku.java.DAO.StaffDAO;
-// import com.heroku.java.model.Assign;
-// import com.heroku.java.model.Attendance;
-// import com.heroku.java.model.Staff;
-// import org.springframework.beans.factory.annotation.Autowired;
-// import org.springframework.stereotype.Controller;
-// import org.springframework.ui.Model;
-// import org.springframework.web.bind.annotation.*;
-
-// import jakarta.servlet.http.HttpSession;
-// import java.sql.SQLException;
-// import java.time.LocalDate;
-// import java.time.LocalTime;
-// import java.util.List;
-
-// import javax.sql.DataSource;
-
-// @Controller
-
-// public class Attendanceadmincontroller {
-
-// private final AssignDAO assignDAO;
-// private final StaffDAO staffDAO;
-// private final DataSource dataSource;
-
-// @Autowired
-//     public Attendanceadmincontroller(AttendanceDAO attendanceDAO, StaffDAO staffDAO, DataSource dataSource) {
-//         this.attendanceDAO = attendanceDAO;
-//         this.staffDAO = staffDAO;
-//         this.dataSource = dataSource;
-//     }
-
-//     @GetMapping("/listattendance")
-//     public String listattendance(HttpSession session, Assign assign,Model model) {
-//       AttendanceDAO attendanceDAO = new AttendanceDAO(dataSource);
-//       try {
-//           List<Attendance> attendancelist = attendanceDAO.listattendance();
-//           model.addAttribute("attendances", attendancelist);
-//       } catch (SQLException e) {
-//           e.printStackTrace();
-//           return "error";
-//       }
-//     return "admin/listattendance";
-//     }
-// }
 package com.heroku.java.controller;
 
 import com.heroku.java.DAO.AttendanceDAO;
@@ -60,7 +11,6 @@ import java.sql.SQLException;
 import java.util.List;
 
 @Controller
-
 public class AttendanceAdmincontroller {
 
     private final AttendanceDAO attendanceDAO;
@@ -70,9 +20,8 @@ public class AttendanceAdmincontroller {
         this.attendanceDAO = attendanceDAO;
     }
 
-    // Display all attendance records for the admin
     @GetMapping("/listattendance")
-    public String listattendance(Model model) {
+    public String listAttendance(Model model) {
         try {
             List<Attendance> attendances = attendanceDAO.findAllWithStaffName();
             model.addAttribute("attendances", attendances);
@@ -83,7 +32,6 @@ public class AttendanceAdmincontroller {
         return "admin/listattendance";
     }
 
-    //// Handle attendance approval by the admin
     @PostMapping("/approve")
     public String approveAttendance(@RequestParam int attendanceId, Model model) {
         try {
@@ -91,7 +39,7 @@ public class AttendanceAdmincontroller {
             if (attendance == null) {
                 model.addAttribute("message", "Attendance record not found");
             } else {
-                attendance.setStatus("Present");  // Change status to "Present"
+                attendance.setStatus("Present");
                 attendanceDAO.save(attendance);
                 model.addAttribute("message", "Attendance approved successfully");
             }
@@ -101,11 +49,10 @@ public class AttendanceAdmincontroller {
         return "redirect:/listattendance";
     }
 
-    // Handle attendance deletion by the admin
-    @PostMapping("/delete/{attendanceId}")
-    public String deleteAttendance(@PathVariable int attendanceId, Model model) {
+    @PostMapping("/delete")
+    public String deleteAttendance(@RequestParam int attendanceId, Model model) {
         try {
-            attendanceDAO.delete(attendanceId);
+            attendanceDAO.deleteattendance(attendanceId);
             model.addAttribute("message", "Attendance deleted successfully");
         } catch (SQLException e) {
             model.addAttribute("message", "Error deleting attendance record");
@@ -113,4 +60,3 @@ public class AttendanceAdmincontroller {
         return "redirect:/listattendance";
     }
 }
-
