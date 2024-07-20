@@ -1,39 +1,3 @@
-<!-- <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title>Payroll List</title>
-</head>
-<body>
-    <h1>Payroll List</h1>
-    <table border="1">
-        <thead>
-            <tr>
-                <th>Payroll ID</th>
-                <th>Staff ID</th>
-                <th>Staff Name</th>
-                <th>Month</th>
-                <th>Hours Worked</th>
-                <th>Hourly Rate</th>
-                <th>Total Pay</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="payroll : ${payrolls}">
-                <td th:text="${payroll.payrollId}"></td>
-                <td th:text="${payroll.sid}"></td>
-                <td th:text="${payroll.sname}"></td>
-                <td th:text="${payroll.month}"></td>
-                <td th:text="${payroll.hoursWorked}"></td>
-                <td th:text="${payroll.hourlyRate}"></td>
-                <td th:text="${payroll.totalPay}"></td>
-            </tr>
-        </tbody>
-    </table>
-    <a href="/Addpayroll">Add Payroll</a>
-</body>
-</html> -->
-
-
 
 <!DOCTYPE html>
 <html lang="en" th:replace="~{fragments/homeadminlayoutsecond :: homeadminlayoutsecond (~{::body},'admin/listschedules')}">
@@ -51,15 +15,38 @@
     <div class="container mt-5">
         <div class="row">
             <div class="col-md-6">
-                <a href="javascript:history.back()" class="btn btn-outline-primary mb-3">
+                <a href="/Homepageadmin" class="btn btn-outline-primary mb-3">
                     <i class="fas fa-arrow-left"></i> Back
                 </a>
             </div>
             <div class="col-md-6 text-end">
-                <a href="/Addpayroll" class="btn btn-primary">+ NEW PAYROLL</a>
+                <a href="/Addpayroll" class="btn btn-primary">+ CALCULATE PAYROLL</a>
             </div>
         </div>
-
+        <h1 class="mt-5">Payroll Records</h1>
+        <div aria-live="polite" aria-atomic="true" class="position-relative">
+            <div class="toast-container position-fixed bottom-0 end-0 p-3">
+                <div
+                    class="toast"
+                    role="alert"
+                    aria-live="assertive"
+                    aria-atomic="true"
+                    th:classappend="${message} ? 'show' : ''"
+                >
+                    <div class="toast-header">
+                        <strong class="me-auto">Notification</strong>
+                        <button
+                            type="button"
+                            class="btn-close"
+                            data-bs-dismiss="toast"
+                            aria-label="Close"
+                        ></button>
+                    </div>
+                    <div class="toast-body" th:text="${message}"></div>
+                </div>
+            </div>
+        </div>
+    
         <table id="example" class="table table-bordered table-hover" style="width:100%">
             <thead>
                 <tr>
@@ -70,6 +57,7 @@
                     <th>Hours Worked</th>
                     <th>Hourly Rate</th>
                     <th>Total Pay</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -81,6 +69,12 @@
                     <td th:text="${payroll.hoursWorked}"></td>
                     <td th:text="${payroll.hourlyRate}"></td>
                     <td th:text="${payroll.totalPay}"></td>
+                    <td>
+                        <a th:href="@{'/updatePayroll?payrollid=' + ${payroll.payrollId}}" class="btn btn-success">
+                            <!-- <i class="fas fa-pencil icon"></i>  Material icon for edit -->
+                             Publish
+                        </a>     
+                    </td>
                 </tr>
             </tbody>
             
@@ -109,6 +103,20 @@
                     }
                 }
             });
+        });
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+          var toastEl = document.querySelector(".toast");
+          if (toastEl.classList.contains("show")) {
+            var toast = new bootstrap.Toast(toastEl);
+            toast.show();
+  
+            // Clear toast message after display
+            setTimeout(function () {
+              toast.hide();
+            }, 3000); // Adjust the duration as needed
+          }
         });
     </script>
 </body>

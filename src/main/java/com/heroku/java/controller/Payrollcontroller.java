@@ -4,6 +4,9 @@ import com.heroku.java.DAO.PayrollDAO;
 import com.heroku.java.DAO.StaffDAO;
 import com.heroku.java.model.Payroll;
 import com.heroku.java.model.Staff;
+
+import jakarta.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +20,7 @@ import java.time.LocalTime;
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -69,7 +73,7 @@ public class Payrollcontroller {
             double totalPay = totalHours * 8.0; // RM8 per hour
             System.out.println("Total pay: " + totalPay);
             Payroll payroll = new Payroll();
-            payroll.setAttendanceId(staffId);
+            payroll.setSid(staffId);
             payroll.setMonth(month);
             payroll.setHoursWorked(totalHours);
             payroll.setHourlyRate(8.0);
@@ -85,7 +89,7 @@ public class Payrollcontroller {
     }
 
     @GetMapping("/listpayroll")
-    public String listPayroll(Model model) {
+    public String listPayroll(Model model, HttpSession session) {
         try {
             List<Payroll> payrolls = payrollDAO.findAll();
             model.addAttribute("payrolls", payrolls);
@@ -93,6 +97,50 @@ public class Payrollcontroller {
             model.addAttribute("message", "Error retrieving payroll records");
             e.printStackTrace();
         }
+
+        // Retrieve the message from the session and add it to the model
+        String message = (String) session.getAttribute("message");
+        if (message != null) {
+            model.addAttribute("message", message);
+            // session.removeAttribute("message"); 
+            System.out.println("Added message" + message);
+        }
+
         return "admin/listpayroll";
     }
+
+    @GetMapping("/updatePayroll")
+    public String updatePayroll(Model model, @RequestParam int payrollid, HttpSession session) {
+        try {
+            boolean isUpdated = payrollDAO.updatePayroll(payrollid);
+            System.out.println("value: " + isUpdated);
+            if (isUpdated) {
+                session.setAttribute("message", "Payroll updated successfully.");
+            } else {
+                session.setAttribute("message", "Failed to update payroll. Please check the payroll ID.");
+            }
+        } catch (SQLException e) {
+            session.setAttribute("message", "An error occurred while updating payroll.");
+            e.printStackTrace();
+        }
+        return "redirect:/listpayroll";
+    }
+
+    //staff//
+    @GetMapping("/payroll")
+    public String payroll(Model model, @RequestParam int id) {
+        List<Payroll> payrolls = new ArrayList<Payroll>();
+        payrolls = payrollDAO.getPayrollsById(id);
+        model.addAttribute("payrolls", payrolls);  
+        return "security/payroll";
+    }
+
+    
+    @GetMapping("/viewpayslip")
+    public String viewpayslip(@RequestParam int payrollId, @RequestParam String month, Model model) {
+        Payroll payroll = payrollDAO.getPayrollByPayrollId(payrollId,month);
+        model.addAttribute("payroll", payroll);
+        return "security/viewpayslip";
+    }
+
 }

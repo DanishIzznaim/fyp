@@ -102,10 +102,12 @@ public class AttendanceDAO {
     public List<Attendance> findByStaffAndDate(int staffId, LocalDate date) throws SQLException {
         List<Attendance> attendances = new ArrayList<>();
         try (Connection connection = dataSource.getConnection()) {
-            String sql = "SELECT * FROM attendance WHERE id = ? AND attendance_date = ?";
+            System.out.println("staffid=" + staffId + " date=" + date + "date2=" + Date.valueOf(date.minusDays(1)));
+            String sql = "SELECT * FROM attendance WHERE id = ? AND (attendance_date = ? OR attendance_date = ?)";
             try (PreparedStatement statement = connection.prepareStatement(sql)) {
                 statement.setInt(1, staffId);
                 statement.setDate(2, Date.valueOf(date));
+                statement.setDate(3, Date.valueOf(date.minusDays(1))); // Check previous day as well
                 try (ResultSet resultSet = statement.executeQuery()) {
                     while (resultSet.next()) {
                         Attendance attendance = new Attendance();

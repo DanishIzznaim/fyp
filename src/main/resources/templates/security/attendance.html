@@ -2,12 +2,13 @@
 <html lang="en" th:replace="~{fragments/homesecuritylayout :: homesecuritylayout (~{::body},'security/homepagesecurity')}">
 <head>
     <title>TPS Security</title>
-    <link th:href="@{https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css}" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script th:src="@{https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js}"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.4/css/dataTables.bootstrap5.min.css">
+    <!-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script th:src="@{https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js}"></script> -->
 </head>
 <body>
-    <div class="container-fluid" style="width: 70%; margin-top: 20px;">
+    <div class="container mt-5" style="width: 70%; margin-top: 20px;">
         <h2 class="text-center">Security Guard Attendance</h2>
 
         <!-- Display messages -->
@@ -16,19 +17,19 @@
         <div class="col-12 mt-3 text-center">
             <form action="/attendance/signin" method="post">
                 <input type="hidden" name="id" th:value="${staffId}">
-                <button type="submit" class="btn btn-primary col-5 mx-2">Sign In</button>
+                <button type="submit" class="btn btn-primary col-5 mx-2">PUNCH IN</button>
             </form>
         </div>
 
         <div class="col-12 mt-3 text-center">
             <form action="/attendance/signout" method="post">
                 <input type="hidden" name="id" th:value="${staffId}">
-                <button type="submit" class="btn btn-primary col-5 mx-2">Sign Out</button>
+                <button type="submit" class="btn btn-primary col-5 mx-2">PUNCH OUT</button>
             </form>
         </div>
 
         <div class="table-responsive mt-5">
-            <table id="attendanceTable" class="display" style="width:100%">
+            <table id="example" class="table table-bordered table-hover" style="width:100%">
                 <thead>
                     <tr>
                         <th>Attendance Date</th>
@@ -49,10 +50,30 @@
         </div>
     </div>
 
+    <!-- Bootstrap 5 JS and Dependencies -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <!-- DataTables JS for Bootstrap 5 -->
+    <script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.4/js/dataTables.bootstrap5.min.js"></script>
+    <!-- Custom JavaScript -->
     <script>
         $(document).ready(function() {
-            $('#attendanceTable').DataTable();
+            $('#example').DataTable({
+                "lengthMenu": [ [4, 8, 12, -1], [4, 8, 12, "All"] ], // Entries per page dropdown
+                "pageLength": 4, // Default number of rows per page
+                "order": [], // Disable initial sorting (if needed)
+                "searching": true, // Disable the search box
+                "language": {
+                    "paginate": {
+                        "previous": "&laquo;", // Previous page button
+                        "next": "&raquo;" // Next page button
+                    }
+                }
+            });
         });
     </script>
 </body>
 </html>
+
+

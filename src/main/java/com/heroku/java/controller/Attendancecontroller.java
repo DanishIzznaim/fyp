@@ -409,24 +409,66 @@ public class Attendancecontroller {
             model.addAttribute("message", "Session expired. Please log in again.");
             return "redirect:/login";
         }
-        try {
+        try {   
             Staff staff = staffDAO.getstaffById(id);
             if (staff == null) {
                 model.addAttribute("message", "Staff not found");
                 updateModelWithAttendanceData(id, model);
                 return "security/attendance";
             }
+            LocalDate today = LocalDate.now();
             List<Attendance> attendances = attendanceDAO.findByStaffAndDate(id, LocalDate.now());
-            if (attendances.isEmpty() || attendances.stream().noneMatch(a -> a.getSignInTime() != null && a.getSignOutTime() == null)) {
-                model.addAttribute("message", "No sign-in record found for today or already signed out");
-            } else {
-                Attendance attendance = attendances.stream().filter(a -> a.getSignInTime() != null && a.getSignOutTime() == null).findFirst().orElse(null);
-                if (attendance != null) {
-                    attendance.setSignOutTime(LocalTime.now());
-                    attendanceDAO.save(attendance);
-                    model.addAttribute("message", "Signed out successfully at " + attendance.getSignOutTime());
-                }
+            // if (attendances.isEmpty()
+            //         || attendances.stream().noneMatch(a -> a.getSignInTime() != null && a.getSignOutTime() == null)) {
+            //     model.addAttribute("message", "No sign-in record found for today or already signed out");
+            // } else {
+            //     Attendance attendance = attendances.stream()
+            //             .filter(a -> a.getSignInTime() != null && a.getSignOutTime() == null).findFirst().orElse(null);
+            //     if (attendance != null) {
+            //         attendance.setSignOutTime(LocalTime.now());
+            //         attendanceDAO.save(attendance);
+            //         model.addAttribute("message", "Signed out successfully at " + attendance.getSignOutTime());
+            //     }
+            // }
+             // Filter attendances to include only those valid for sign-out (today or previous day's overnight shift)
+        boolean foundValidSignIn = attendances.stream().anyMatch(a -> {
+            LocalDate attendanceDate = a.getAttendanceDate();
+            LocalTime signInTime = a.getSignInTime();
+            LocalTime signOutTime = a.getSignOutTime();
+
+            // Check if the staff signed in and has not signed out yet
+            boolean isSignedIn = signInTime != null && signOutTime == null;
+            // Check if the attendance date and time match an overnight shift criteria
+            // boolean isValidShift = attendanceDate.equals(today) || 
+            //                        (attendanceDate.equals(today.minusDays(1)) && signInTime.isAfter(LocalTime.of(20, 0)));
+            boolean isValidShift = attendanceDate.equals(today) || 
+                                   (attendanceDate.equals(today.minusDays(1)) || signInTime.isAfter(LocalTime.of(20, 0)) || LocalTime.now().isBefore(LocalTime.of(8, 0)));
+            System.out.println("isSignedIn: " + isSignedIn + ", isValidShift: " + isValidShift);
+            return isSignedIn && isValidShift;
+        });
+
+        if (!foundValidSignIn) {
+            model.addAttribute("message", "No sign-in record found for today or already signed out");
+        } else {
+            // Find the specific attendance record to update
+            Attendance attendance = attendances.stream().filter(a -> {
+                LocalDate attendanceDate = a.getAttendanceDate();
+                LocalTime signInTime = a.getSignInTime();
+                LocalTime signOutTime = a.getSignOutTime();
+                
+                boolean isSignedIn = signInTime != null && signOutTime == null;
+                boolean isValidShift = attendanceDate.equals(today) || 
+                                       (attendanceDate.equals(today.minusDays(1)) || signInTime.isAfter(LocalTime.of(20, 0)));
+                System.out.println("isSignedIn: " + isSignedIn + ", isValidShift: " + isValidShift);
+                return isSignedIn && isValidShift;
+            }).findFirst().orElse(null);
+
+            if (attendance != null) {
+                attendance.setSignOutTime(LocalTime.now());
+                attendanceDAO.save(attendance);
+                model.addAttribute("message", "Signed out successfully at " + attendance.getSignOutTime());
             }
+        }
         } catch (SQLException e) {
             model.addAttribute("message", e.getMessage());
         }

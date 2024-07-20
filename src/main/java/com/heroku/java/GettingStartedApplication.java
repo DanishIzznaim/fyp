@@ -67,8 +67,15 @@ public class GettingStartedApplication {
     }
 
     @GetMapping("/homepagesecurity")
-    public String homepagesecurity() {
-        return "security/homepagesecurity";
+    public String homepagesecurity(HttpSession session, Model model) {
+        Integer id = (Integer) session.getAttribute("id");
+        if (id != null) {
+            model.addAttribute("id",id);
+            return "security/homepagesecurity";
+        }
+        else {
+            return "redirect:/login";
+        }    
     }
 
     @GetMapping("/schedule")
@@ -85,12 +92,7 @@ public class GettingStartedApplication {
     }
 
 
-    
 
-    // @GetMapping("/payroll")
-    // public String payroll() {
-    //     return "security/payroll";
-    // }
 
 
 

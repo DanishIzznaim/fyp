@@ -16,27 +16,16 @@
     <div class="container mt-5">
         <div class="row">
             <div class="col-md-6">
-                <form th:action="@{/Searchstaff}" method="get">
-                    <div class="input-group mb-3">
-                        <input id="securitySearchInput" name="searchValue" type="text" class="form-control" placeholder="Search Security Name" aria-label="Search" aria-describedby="basic-addon2">
-                        <div class="input-group-append">
-                            <button class="btn btn-primary" type="submit">Search</button>
-                        </div>
-                    </div>
-                </form>
+                <a href="/Homepageadmin" class="btn btn-outline-primary mb-3">
+                    <i class="fas fa-arrow-left"></i> Back
+                </a>
             </div>
             <div class="col-md-6 text-end">
-                <a href="/Addstaff" class="btn btn-primary">+ Register</a>
+                <a href="/Addstaff" class="btn btn-primary">+ REGISTER</a>
             </div>
         </div>
-    
-        <div>
-            <h1 style="text-align: left; margin-top: 5%;">Security Guards
-                <a href="/Liststaff" class="btn btn-outline-primary" style="margin-left: 3%;">Show all
-                </a>
-            </h1>   
-        </div>
-        <div class="d-flex justify-content-end align-items-center"></div><br>
+
+        <h1 class="mt-5">Staff Records</h1>
         <table id="example" class="table table-bordered" style="width:100%">
             <thead>
                 <tr>
@@ -111,7 +100,7 @@
                 "lengthMenu": [ [4, 8, 12, -1], [4, 8, 12, "All"] ],
                 "pageLength": 4,
                 "order": [],
-                "searching": false,
+                "searching": true,
                 "language": {
                     "paginate": {
                         "previous": "&laquo;",

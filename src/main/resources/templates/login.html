@@ -34,6 +34,14 @@
         .card-title {
             font-size: 24px;
         }
+
+        .alert-danger {
+            margin-bottom: 15px;
+            font-size: 1rem;
+            color: #ff0000;
+            background-color: #ffe6e6;
+            border-color: #ffcccc;
+        }
     </style>
 </head>
 <header>
@@ -59,14 +67,18 @@
                     <h5 class="card-title text-center">Login</h5>
                 </div>
                 <div class="card-body">
-                    <form method="post" th:action="@{/login}" modelAttribute="Staffs" th:object="${Staff}">
+                    <form method="post" th:action="@{/login}" th:object="${Staff}">
+
+                        <!-- Error Message -->
+                        <div th:if="${errorMessage}" class="alert alert-danger" role="alert" th:text="${errorMessage}"></div>
+
                         <div class="form-group mb-3">
                             <label for="username">Username</label>
                             <div class="input-group">
                                 <span class="input-group-text">
                                     <span class="material-symbols-outlined">assignment_ind</span>
                                 </span>
-                                <input type="text" class="form-control" id="username" name="username" th:value="${username}" placeholder="Username" required>
+                                <input type="text" class="form-control" id="username" name="username" th:value="*{username}" placeholder="Username" required>
                             </div>
                         </div>
                         <div class="form-group mb-3">
@@ -75,7 +87,7 @@
                                 <span class="input-group-text">
                                     <span class="material-symbols-outlined">lock</span>
                                 </span>
-                                <input type="password" class="form-control" id="password" name="password" th:value="${password}" placeholder="Password" required>
+                                <input type="password" class="form-control" id="password" name="password" th:value="*{password}" placeholder="Password" required>
                                 <button class="btn btn-outline-secondary" type="button" id="passwordToggleBtn">
                                     <span class="material-symbols-outlined">visibility</span>
                                 </button>
@@ -89,27 +101,6 @@
             </div>
         </div>
     </div>
-</div>
-
-<div class="modal fade" id="invalidCredentialsModal" tabindex="-1" role="dialog" aria-labelledby="invalidCredentialsModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="invalidCredentialsModalLabel">Invalid Username or Password</h5>
-            </div>
-            <div class="modal-body">
-                <p>The username or password you entered is invalid. Please try again.</p>
-            </div>
-        </div>
-    </div>
-</div>
-<input type="hidden" id="errorFlag" th:value="${error}" />
-<div th:if="${error}">
-    <script th:inline="javascript">
-        $(document).ready(function() {
-            $('#invalidCredentialsModal').modal('show');
-        });
-    </script>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

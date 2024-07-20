@@ -7,14 +7,16 @@ public class Payroll {
     private int hoursWorked;
     private double hourlyRate;
     private double totalPay;
-
+    private boolean publish;
     private String sname;
     private int sid;
+    private String saddress;
+    private String sic;
 
     public Payroll() {
     }
 
-    public Payroll(int payrollId, int attendanceId, String month, int hoursWorked, double hourlyRate, double totalPay, String sname, int sid) {
+    public Payroll(int payrollId, int attendanceId, String month, int hoursWorked, double hourlyRate, double totalPay, String sname, int sid, boolean publish) {
         this.payrollId = payrollId;
         this.attendanceId = attendanceId;
         this.month = month;
@@ -23,10 +25,48 @@ public class Payroll {
         this.totalPay = totalPay;
         this.sname = sname;
         this.sid = sid;
+        this.publish = publish;
     }
 
     // Getters and Setters
     
+    public Payroll(int payrollId, int attendanceId, String month, int hoursWorked, double hourlyRate, double totalPay,
+            boolean publish, String sname, int sid, String saddress, String sic) {
+        this.payrollId = payrollId;
+        this.attendanceId = attendanceId;
+        this.month = month;
+        this.hoursWorked = hoursWorked;
+        this.hourlyRate = hourlyRate;
+        this.totalPay = totalPay;
+        this.publish = publish;
+        this.sname = sname;
+        this.sid = sid;
+        this.saddress = saddress;
+        this.sic = sic;
+    }
+
+    public Payroll(int payrollId, int attendanceId, String month, int hoursWorked, double hourlyRate, double totalPay,
+            boolean publish, String sname, int sid, String saddress) {
+        this.payrollId = payrollId;
+        this.attendanceId = attendanceId;
+        this.month = month;
+        this.hoursWorked = hoursWorked;
+        this.hourlyRate = hourlyRate;
+        this.totalPay = totalPay;
+        this.publish = publish;
+        this.sname = sname;
+        this.sid = sid;
+        this.saddress = saddress;
+    }
+
+    public String getSaddress() {
+        return saddress;
+    }
+
+    public void setSaddress(String saddress) {
+        this.saddress = saddress;
+    }
+
     public int getPayrollId() {
         return payrollId;
     }
@@ -90,4 +130,23 @@ public class Payroll {
     public void setTotalPay(double totalPay) {
         this.totalPay = totalPay;
     }
+
+    public boolean getPublish() {
+        return publish;
+    }
+
+    public void setPublish(boolean publish) {
+        this.publish = publish;
+    }
+
+    public String getSic() {
+        return sic;
+    }
+
+    public void setSic(String sic) {
+        this.sic = sic;
+    }
+
+    
+
 }

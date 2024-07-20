@@ -20,7 +20,7 @@ public class PayrollDAO {
 
     public List<LocalTime[]> findSignInSignOutTimesByStaffAndMonth(int staffId, LocalDate startDate, LocalDate endDate) throws SQLException {
         List<LocalTime[]> timesList = new ArrayList<>();
-        String query = "SELECT sign_in_time, sign_out_time FROM attendance WHERE id = ? AND attendance_date BETWEEN ? AND ?";
+        String query = "SELECT sign_in_time, sign_out_time FROM attendance WHERE id = ? AND attendance_date BETWEEN ? AND ? AND Status = 'Present'";
         Connection connection = dataSource.getConnection();
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setInt(1, staffId);
@@ -37,10 +37,10 @@ public class PayrollDAO {
     }
 
     public void save(Payroll payroll) throws SQLException {
-        String query = "INSERT INTO payroll (attendanceid, month, hours_worked, hourly_rate, total_pay) VALUES (?, ?, ?, ?, ?)";
+        String query = "INSERT INTO payroll (id, month, hours_worked, hourly_rate, total_pay) VALUES (?, ?, ?, ?, ?)";
         Connection connection = dataSource.getConnection();
         try (PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setInt(1, payroll.getAttendanceId());
+            statement.setInt(1, payroll.getSid());
             statement.setString(2, payroll.getMonth());
             statement.setInt(3, payroll.getHoursWorked());
             statement.setDouble(4, payroll.getHourlyRate());
@@ -73,21 +73,14 @@ public class PayrollDAO {
     public List<Payroll> findAll() throws SQLException {
         List<Payroll> payrolls = new ArrayList<>();
         try (Connection connection = dataSource.getConnection()) {
-            String sql = "SELECT payroll.*, staff.id,staff.staffname " +
-                                "FROM " +
-                                "    payroll " +
-                                "JOIN " +
-                                "    attendance ON payroll.attendanceid = attendance.attendanceid " +
-                                "JOIN " +
-                                "    staff ON attendance.id = staff.id " +
-                                "WHERE " +
-                                "    attendance.status = 'Present'";
+            String sql = "Select s.id, s.staffname, p.payrollid, p.month, p.hours_worked, p.hourly_rate, p.total_pay " + 
+                                "            FROM staff s " + 
+                                "            JOIN payroll p ON p.id = s.id";
             try (PreparedStatement statement = connection.prepareStatement(sql);
                  ResultSet resultSet = statement.executeQuery()) {
                 while (resultSet.next()) {
                     Payroll payroll = new Payroll();
                     payroll.setPayrollId(resultSet.getInt("payrollid"));
-                    payroll.setAttendanceId(resultSet.getInt("attendanceid"));
                     payroll.setMonth(resultSet.getString("month"));
                     payroll.setHoursWorked(resultSet.getInt("hours_worked"));
                     payroll.setHourlyRate(resultSet.getDouble("hourly_rate"));
@@ -99,5 +92,83 @@ public class PayrollDAO {
             }
         }
         return payrolls;
+    }
+
+
+    public boolean updatePayroll(int payrollid) throws SQLException {
+        String sql = "UPDATE payroll SET publish = TRUE WHERE payrollid = ?";
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, payrollid);
+            int affectedRows = pstmt.executeUpdate();
+            return affectedRows > 0;
+        }
+    }
+
+    public List<Payroll> getPayrollsById(int id) {
+        List<Payroll> payrolls = new ArrayList<>();
+
+        String sql = "SELECT s.id, s.staffname, p.payrollid, p.month, p.hours_worked, p.hourly_rate, p.total_pay " +
+                     "FROM staff s " +
+                     "JOIN payroll p ON p.id = s.id " +
+                     "WHERE s.id = ?";
+
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, id);
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    Payroll payroll = new Payroll();
+                    payroll.setSid(rs.getInt("id"));
+                    payroll.setSname(rs.getString("staffname"));
+                    payroll.setPayrollId(rs.getInt("payrollid"));
+                    payroll.setMonth(rs.getString("month"));
+                    payroll.setHoursWorked(rs.getInt("hours_worked"));
+                    payroll.setHourlyRate(rs.getDouble("hourly_rate"));
+                    payroll.setTotalPay(rs.getDouble("total_pay"));
+                    payrolls.add(payroll);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return payrolls;
+    }
+
+    public Payroll getPayrollByPayrollId(int payrollId, String month) {
+        Payroll payroll = null;
+        System.out.println("month"  + month);
+        String sql = "SELECT s.id, s.staffname, s.staffaddress, s.staffic, p.payrollid, p.month, p.hours_worked, p.hourly_rate, p.total_pay " +
+                     "FROM staff s " +
+                     "JOIN payroll p ON p.id = s.id " +
+                     "WHERE p.payrollid = ? " +
+                     "AND p.month = ?";
+
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, payrollId);
+            stmt.setString(2, month);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    payroll = new Payroll();
+                    payroll.setSid(rs.getInt("id"));
+                    payroll.setSname(rs.getString("staffname"));
+                    payroll.setSaddress(rs.getString("staffaddress"));
+                    payroll.setSic(rs.getString("staffic"));
+                    payroll.setPayrollId(rs.getInt("payrollid"));
+                    payroll.setMonth(rs.getString("month"));
+                    payroll.setHoursWorked(rs.getInt("hours_worked"));
+                    payroll.setHourlyRate(rs.getDouble("hourly_rate"));
+                    payroll.setTotalPay(rs.getDouble("total_pay"));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return payroll;
     }
 }
