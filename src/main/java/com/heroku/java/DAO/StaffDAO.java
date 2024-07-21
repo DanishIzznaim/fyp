@@ -207,6 +207,26 @@ public class StaffDAO {
 
         return securityStaff;
     }
+
+    public String getStaffName(int id) throws SQLException {
+        String staffName = "Unknown Staff";
+        try (Connection connection = dataSource.getConnection()) {
+            String sql = "SELECT staffname FROM staff WHERE id=?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, id);
+            ResultSet resultSet = statement.executeQuery();
+    
+            if (resultSet.next()) {
+                staffName = resultSet.getString("staffname");
+                System.out.println("DAO - Retrieved staff name: " + staffName); // Debugging
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw e;
+        }
+        return staffName;
+    }
+    
     
     
 }

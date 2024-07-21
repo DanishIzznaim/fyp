@@ -21,6 +21,10 @@
         .payslip-details th, .payslip-details td {
             padding: 10px;
         }
+        .download-button {
+            margin-top: 20px;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
@@ -36,14 +40,13 @@
                     <td th:text="${payroll.sname}"></td>
                 </tr>
                 <tr>
-                    <th>Address</th>
-                    <td th:text="${payroll.saddress}"></td>
-                </tr>
-                <tr>
                     <th>IC</th>
                     <td th:text="${payroll.sic}"></td>
                 </tr>
-                
+                <tr>
+                    <th>Address</th>
+                    <td th:text="${payroll.saddress}"></td>
+                </tr>
                 <tr>
                     <th>Hours Worked</th>
                     <td th:text="${payroll.hoursWorked}"></td>
@@ -57,6 +60,12 @@
                     <td th:text="${payroll.totalPay}"></td>
                 </tr>
             </table>
+            
+            <form th:action="@{/export-to-pdf}" method="post">
+                <input type="hidden" name="payrollid" th:value="${payroll.payrollId}">
+                <input type="hidden" name="month" th:value="${payroll.month}">
+                <button type="submit" class="btn btn-success">Download PDF</button>
+            </form>
         </div>
     </div>
 </body>

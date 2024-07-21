@@ -16,6 +16,19 @@ public class Payroll {
     public Payroll() {
     }
 
+    public Payroll(int payrollId, String month, int hoursWorked, double hourlyRate, double totalPay, String sname,
+            int sid, String saddress, String sic) {
+        this.payrollId = payrollId;
+        this.month = month;
+        this.hoursWorked = hoursWorked;
+        this.hourlyRate = hourlyRate;
+        this.totalPay = totalPay;
+        this.sname = sname;
+        this.sid = sid;
+        this.saddress = saddress;
+        this.sic = sic;
+    }
+
     public Payroll(int payrollId, int attendanceId, String month, int hoursWorked, double hourlyRate, double totalPay, String sname, int sid, boolean publish) {
         this.payrollId = payrollId;
         this.attendanceId = attendanceId;

@@ -171,4 +171,35 @@ public class PayrollDAO {
 
         return payroll;
     }
+
+    //downloadpdf//
+    public List<Payroll> getPayrolls(int payrollId, String month) throws SQLException {
+        List<Payroll> listofPayroll = new ArrayList<>();
+        String query = "SELECT s.id, s.staffname, s.staffaddress, s.staffic, p.payrollid, p.month, p.hours_worked, p.hourly_rate, p.total_pay " +
+                       "FROM staff s " +
+                       "JOIN payroll p ON p.id = s.id " +
+                       "WHERE p.payrollid = ? AND p.month = ?";
+        
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            
+            preparedStatement.setInt(1, payrollId);
+            preparedStatement.setString(2, month);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                int sid = resultSet.getInt("id");
+                String sname = resultSet.getString("staffname");
+                String sic = resultSet.getString("staffic");
+                String saddress = resultSet.getString("staffaddress");
+                int hoursWorked = resultSet.getInt("hours_worked");
+                double hourlyRate = resultSet.getDouble("hourly_rate");
+                double totalPay = resultSet.getDouble("total_pay");
+
+                Payroll payroll = new Payroll(payrollId, month, hoursWorked, hourlyRate, totalPay, sname, sid, saddress, sic);
+                listofPayroll.add(payroll);
+            }
+        }
+        return listofPayroll;
+    }
 }

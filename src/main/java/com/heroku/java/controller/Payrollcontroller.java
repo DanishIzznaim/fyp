@@ -4,7 +4,22 @@ import com.heroku.java.DAO.PayrollDAO;
 import com.heroku.java.DAO.StaffDAO;
 import com.heroku.java.model.Payroll;
 import com.heroku.java.model.Staff;
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Chunk;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.FontFactory;
+import com.itextpdf.text.PageSize;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.pdf.CMYKColor;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
 
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +34,12 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
+import java.io.IOException;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -143,4 +162,105 @@ public class Payrollcontroller {
         return "security/viewpayslip";
     }
 
+     @PostMapping("/export-to-pdf")
+    public void generatePdf(HttpServletResponse response,
+                            @RequestParam("payrollid") int payrollId,
+                            @RequestParam("month") String month) throws DocumentException, IOException, SQLException {
+
+        response.setContentType("application/pdf");
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd:HH:mm:ss");
+        String currentDateTime = dateFormat.format(new Date());
+        String headerkey = "Content-Disposition";
+        String headervalue = "attachment; filename=payroll_" + currentDateTime + ".pdf";
+        response.setHeader(headerkey, headervalue);
+
+        List<Payroll> listofPayroll = payrollDAO.getPayrolls(payrollId, month);
+
+        Document document = new Document(PageSize.A4);
+        PdfWriter.getInstance(document, response.getOutputStream());
+
+        document.open();
+        
+        // Add header
+        addHeader(document);
+        
+        // Add payslip details
+        for (Payroll record : listofPayroll) {
+            addPayslipDetails(document, record);
+        }
+
+        document.close();
+    }
+
+    private void addHeader(Document document) throws DocumentException {
+        // Company header section
+        Font fontTitle = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 14, BaseColor.BLACK);
+        Paragraph companyHeader = new Paragraph("TAMAN PELANGI SEMENYIH SECURITY", fontTitle);
+        companyHeader.setAlignment(Element.ALIGN_CENTER);
+        document.add(companyHeader);
+
+        // Address
+        Paragraph address = new Paragraph("Taman Pelangi Semenyih Fasa 6 & 7\nSemenyih, Selangor, 43500\nMalaysia", FontFactory.getFont(FontFactory.HELVETICA, 12, BaseColor.BLACK));
+        address.setAlignment(Element.ALIGN_CENTER);
+        document.add(address);
+        
+        // Spacer
+        document.add(Chunk.NEWLINE);
+    }
+
+    private void addPayslipDetails(Document document, Payroll record) throws DocumentException {
+        PdfPTable table = new PdfPTable(2);
+        table.setWidthPercentage(100);
+        table.setWidths(new int[]{2, 5});
+        
+        // Adding employee details
+        addTableHeader(table, "Employee Details");
+        addEmployeeDetails(table, record);
+        
+        // Adding earnings and deductions
+        addTableHeader(table, "Earnings & Deductions");
+        addEarningsAndDeductions(table, record);
+
+        document.add(table);
+
+        // Adding net pay
+        Paragraph netPay = new Paragraph("Net Pay: RM" + record.getTotalPay(), FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12, BaseColor.BLACK));
+        netPay.setAlignment(Element.ALIGN_RIGHT);
+        document.add(netPay);
+        
+        // Spacer
+        document.add(Chunk.NEWLINE);
+    }
+
+    private void addTableHeader(PdfPTable table, String headerTitle) {
+        PdfPCell cell = new PdfPCell(new Phrase(headerTitle, FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12, BaseColor.WHITE)));
+        cell.setColspan(2);
+        cell.setBackgroundColor(BaseColor.GRAY);
+        cell.setPadding(5);
+        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+        table.addCell(cell);
+    }
+
+    private void addEmployeeDetails(PdfPTable table, Payroll record) {
+        addCell(table, "Name", record.getSname());
+        addCell(table, "IC", record.getSic());
+        addCell(table, "Address", record.getSaddress());
+        addCell(table, "Month", record.getMonth());
+        addCell(table, "Hours Worked", String.valueOf(record.getHoursWorked()));
+        addCell(table, "Hourly Rate", String.valueOf(record.getHourlyRate()));
+    }
+
+    private void addEarningsAndDeductions(PdfPTable table, Payroll record) {
+        addCell(table, "Earnings", String.valueOf(record.getTotalPay()));
+        addCell(table, "Deductions", "None");
+    }
+
+    private void addCell(PdfPTable table, String header, String value) {
+        PdfPCell cell = new PdfPCell(new Phrase(header, FontFactory.getFont(FontFactory.HELVETICA, 12, BaseColor.BLACK)));
+        cell.setPadding(5);
+        table.addCell(cell);
+        cell = new PdfPCell(new Phrase(value, FontFactory.getFont(FontFactory.HELVETICA, 12, BaseColor.BLACK)));
+        cell.setPadding(5);
+        table.addCell(cell);
+    }
 }

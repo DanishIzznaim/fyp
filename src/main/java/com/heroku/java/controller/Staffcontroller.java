@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 //import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -141,17 +142,22 @@ private final DataSource dataSource;
     return "admin/Liststaff";
     }
 
-//     @GetMapping("/Homepageadmin")
-// public String homepageAdmin(Model model) {
-//     try {
-//         int totalStaffCount = staffDAO.getTotalStaffCount();
-//         model.addAttribute("totalStaffCount", totalStaffCount);
-//     } catch (SQLException e) {
-//         e.printStackTrace();
-//         // Handle the exception or display an error message as needed
-//     }
-//     return "admin/Homepageadmin";
-// }
+    @GetMapping("/homepagesecurity/{id}")
+    public String welcomeStaff(@PathVariable int id, Model model) {
+        String staffName = "Unknown Staff";
+        try {
+            staffName = staffDAO.getStaffName(id);
+            System.out.println("Controller - Successfully retrieved staff name: " + staffName); // Debugging
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Controller - Failed to retrieve staff name"); // Debugging
+        }
+        System.out.println("Controller - Staff Name added to model: " + staffName); // Debugging
+        model.addAttribute("staffName", staffName);
+        model.addAttribute("id", id);
+        return "security/homepagesecurity"; // Ensure the correct template name
+    }
+
     
     
     
