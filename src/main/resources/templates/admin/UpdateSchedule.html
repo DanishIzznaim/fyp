@@ -22,7 +22,7 @@
 
             <div class="col-12 mt-3">
               <label for="InputScheduleName">Month:</label>
-              <select class="form-select" id="InputScheduleName" name="schedulename">
+              <select class="form-select" id="InputScheduleName" name="month">
                 <option value="January" th:selected="${'January' == schedule.month}">January</option>
                 <option value="February" th:selected="${'February' == schedule.month}">February</option>
                 <option value="March" th:selected="${'March' == schedule.month}">March</option>
@@ -40,7 +40,7 @@
 
             <div class="col-12 mt-3">
               <label for="InputDescription">Week:</label>
-              <select class="form-select" id="InputDescription" name="description">
+              <select class="form-select" id="InputDescription" name="week">
                 <option value="Week 1" th:selected="${'Week 1' == schedule.week}">Week 1</option>
                 <option value="Week 2" th:selected="${'Week 2' == schedule.week}">Week 2</option>
                 <option value="Week 3" th:selected="${'Week 3' == schedule.week}">Week 3</option>

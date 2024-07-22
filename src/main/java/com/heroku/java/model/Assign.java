@@ -29,8 +29,8 @@ public class Assign {
         this.dt7 = "";
     }
 
-    public Assign(int assignid, int id,  String name, int scheduleid, String dt1, String dt2, String dt3, String dt4, String dt5,
-            String dt6, String dt7, Staff staff) {
+    public Assign(int assignid, int id, String name, int scheduleid, String dt1, String dt2, String dt3, String dt4, String dt5,
+                  String dt6, String dt7, Staff staff) {
         this.assignid = assignid;
         this.id = id;
         this.name = name;
@@ -68,7 +68,6 @@ public class Assign {
     public void setName(String name) {
         this.name = name;
     }
-
 
     public int getScheduleid() {
         return scheduleid;
@@ -171,19 +170,19 @@ public class Assign {
     public String getShift(int day) {
         switch (day) {
             case 1:
-                return this.dt1;
+                return this.dt1 != null ? this.dt1 : "";
             case 2:
-                return this.dt2;
+                return this.dt2 != null ? this.dt2 : "";
             case 3:
-                return this.dt3;
+                return this.dt3 != null ? this.dt3 : "";
             case 4:
-                return this.dt4;
+                return this.dt4 != null ? this.dt4 : "";
             case 5:
-                return this.dt5;
+                return this.dt5 != null ? this.dt5 : "";
             case 6:
-                return this.dt6;
+                return this.dt6 != null ? this.dt6 : "";
             case 7:
-                return this.dt7;
+                return this.dt7 != null ? this.dt7 : "";
             default:
                 return "";
         }
