@@ -15,7 +15,7 @@ import com.heroku.java.model.Staff;
 import jakarta.servlet.http.HttpSession;
 import java.sql.SQLException;
 
-@SpringBootApplication
+// @SpringBootApplication
 @Controller
 public class Logincontroller {
     private LoginDAO loginDAO;
@@ -54,5 +54,12 @@ public class Logincontroller {
             redirectAttributes.addFlashAttribute("errorMessage", "An error occurred. Please try again.");
         }
         return "redirect:/login"; // Redirect to /login to show the error message
+    }
+
+    
+    @GetMapping("/logout")
+    public String logout(HttpSession session) {
+        session.invalidate();
+        return "/index";
     }
 }

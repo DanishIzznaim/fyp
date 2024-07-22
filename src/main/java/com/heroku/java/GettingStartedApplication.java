@@ -49,18 +49,6 @@ public class GettingStartedApplication {
         return "admin/Profileadmin";
     }
 
-   
-
-    // @GetMapping("/listpayroll")
-    // public String listpayroll() {
-    //     return "admin/listpayroll";
-    // }
-
-    // @GetMapping("/calculatepayroll")
-    // public String calculatepayroll() {
-    //     return "admin/calculatepayroll";
-    // }
-
     @GetMapping("/test")
     public String test() {
         return "admin/test";
@@ -78,24 +66,18 @@ public class GettingStartedApplication {
         }    
     }
 
-    @GetMapping("/schedule")
-    public String schedule(Model model) {
-         AssignDAO assignDAO = new AssignDAO(dataSource);
-      try {
-          List<Assign> assignlist = assignDAO.listassigns();
-          model.addAttribute("assigns", assignlist);
-      } catch (SQLException e) {
-          e.printStackTrace();
-          return "error";
-      }
-        return "security/schedule";
-    }
-
-
-
-
-
-
+    // @GetMapping("/schedule")
+    // public String schedule(Model model) {
+    //      AssignDAO assignDAO = new AssignDAO(dataSource);
+    //   try {
+    //       List<Assign> assignlist = assignDAO.listassigns();
+    //       model.addAttribute("assigns", assignlist);
+    //   } catch (SQLException e) {
+    //       e.printStackTrace();
+    //       return "error";
+    //   }
+    //     return "security/schedule";
+    // }
 
     @GetMapping("/database")
     String database(Map<String, Object> model) {

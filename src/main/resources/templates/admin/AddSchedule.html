@@ -15,7 +15,7 @@
           <form class="p-3" method="post" th:action="@{/Addschedule}" modelAttribute="Addschedule" th:object="(${schedule})">
             <div class="col-12 mt-3">
               <label for="InputScheduleName">Month:</label>
-              <select class="form-select" id="InputScheduleName" name="schedulename" required>
+              <select class="form-select" id="InputMonth" name="month" required>
                 <option value="" disabled selected>Select Month</option>
                 <option value="January">January</option>
                 <option value="February">February</option>
@@ -33,7 +33,7 @@
             </div>
             <div class="col-12 mt-3">
               <label for="InputDescription">Week:</label>
-              <select class="form-select" id="InputDescription" name="description" required>
+              <select class="form-select" id="InputWeek" name="week" required>
                 <option value="" disabled selected>Select Week</option>
                 <option value="Week 1">Week 1</option>
                 <option value="Week 2">Week 2</option>
@@ -65,3 +65,67 @@
 
 </body>
 </html>
+<!-- <!DOCTYPE html>
+<html lang="en" th:replace="~{fragments/homeadminlayoutsecond :: homeadminlayoutsecond (~{::body},'admin/Addschedule')}">
+<head>
+  <title>TPS Security</title>
+  <link rel="stylesheet" href="stylesheets/homepageadmin.css">
+  <link th:href="@{https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css}" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+</head>
+<body>
+  <div class="container-fluid" style="width: 70%">
+    <div class="offset-0.5" style="margin-top: 15%;">
+      <div class="card col-12">
+        <div class="card-body">
+          <h2 class="text-center">Create New Schedule</h2>
+          <form class="p-3" method="post" th:action="@{/Addschedule}" th:object="${schedule}">
+            <div class="col-12 mt-3">
+              <label for="InputMonth">Month:</label>
+              <select class="form-select" id="InputMonth" name="month" required>
+                <option value="" disabled selected>Select Month</option>
+                <option value="January">January</option>
+                <option value="February">February</option>
+                <option value="March">March</option>
+                <option value="April">April</option>
+                <option value="May">May</option>
+                <option value="June">June</option>
+                <option value="July">July</option>
+                <option value="August">August</option>
+                <option value="September">September</option>
+                <option value="October">October</option>
+                <option value="November">November</option>
+                <option value="December">December</option>
+              </select>
+            </div>
+            <div class="col-12 mt-3">
+              <label for="InputWeek">Week:</label>
+              <select class="form-select" id="InputWeek" name="week" required>
+                <option value="" disabled selected>Select Week</option>
+                <option value="Week 1">Week 1</option>
+                <option value="Week 2">Week 2</option>
+                <option value="Week 3">Week 3</option>
+                <option value="Week 4">Week 4</option>
+              </select>
+            </div>
+            <div class="col-12 mt-3">
+              <label for="InputStartDate">Start Date:</label>
+              <input type="date" class="form-control" id="InputStartDate" name="startdate" required>
+            </div>
+            <div class="col-12 mt-3">
+              <label for="InputEndDate">End Date:</label>
+              <input type="date" class="form-control" id="InputEndDate" name="enddate" required>
+            </div>
+            <div class="row mt-4">
+              <div class="col text-center">
+                <button type="submit" class="btn btn-primary col-5 mx-2">Create</button>
+                <a href="/listschedules" class="btn btn-primary col-5 mx-2">Cancel</a>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html> -->

@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en" th:replace="~{fragments/homeadminlayoutsecond :: homeadminlayoutsecond (~{::body},'admin/listschedules')}">
 <head>
@@ -70,17 +69,16 @@
                     <td th:text="${payroll.hourlyRate}"></td>
                     <td th:text="${payroll.totalPay}"></td>
                     <td>
-                        <a th:href="@{'/updatePayroll?payrollid=' + ${payroll.payrollId}}" class="btn btn-success">
-                            <!-- <i class="fas fa-pencil icon"></i>  Material icon for edit -->
-                             Publish
-                        </a>     
+                        <form method="post" th:action="@{/updatePayroll}">
+                            <input type="hidden" name="payrollid" th:value="${payroll.payrollId}"/>
+                            <input type="hidden" name="month" th:value="${payroll.month}"/>
+                            <button type="submit" class="btn btn-success">Publish</button>
+                        </form>
                     </td>
                 </tr>
             </tbody>
-            
         </table>
     </div>
-
 
     <!-- Bootstrap 5 JS and Dependencies -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>

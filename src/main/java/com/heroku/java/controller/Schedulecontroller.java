@@ -120,3 +120,98 @@ private final DataSource dataSource;
         }
     }
 }
+// package com.heroku.java.controller;
+
+// import org.springframework.beans.factory.annotation.Autowired;
+// import org.springframework.stereotype.Controller;
+// import org.springframework.ui.Model;
+// import org.springframework.web.bind.annotation.GetMapping;
+// import org.springframework.web.bind.annotation.ModelAttribute;
+// import org.springframework.web.bind.annotation.PostMapping;
+// import org.springframework.web.bind.annotation.RequestParam;
+
+// import com.heroku.java.DAO.ScheduleDAO;
+// import com.heroku.java.model.Schedule;
+
+// import jakarta.servlet.http.HttpSession;
+
+// import java.sql.SQLException;
+// import java.util.List;
+
+// @Controller
+// public class Schedulecontroller {
+
+//     private final ScheduleDAO scheduleDAO;
+
+//     @Autowired
+//     public Schedulecontroller(ScheduleDAO scheduleDAO) {
+//         this.scheduleDAO = scheduleDAO;
+//     }
+
+//     // Add schedule
+//     @GetMapping("/Addschedule")
+//     public String Addschedule(Model model) {
+//         model.addAttribute("schedule", new Schedule());
+//         return "admin/Addschedule";
+//     }
+
+//     @PostMapping("/Addschedule")
+//     public String Addschedule(@ModelAttribute("schedule") Schedule schedule) {
+//         try {
+//             scheduleDAO.AddSchedule(schedule); // Correct method name
+//             return "redirect:/listschedules";
+//         } catch (SQLException e) {
+//             e.printStackTrace();
+//             return "admin/Addschedule";
+//         }
+//     }
+
+//     // List schedules
+//     @GetMapping("/listschedules")
+//     public String listSchedules(Model model) {
+//         try {
+//             List<Schedule> scheduleList = scheduleDAO.listSchedules();
+//             model.addAttribute("schedules", scheduleList);
+//         } catch (SQLException e) {
+//             e.printStackTrace();
+//             return "error";
+//         }
+//         return "admin/listschedules";
+//     }
+
+//     // Update schedule
+//     @GetMapping("/Updateschedule")
+//     public String Updateschedule(@RequestParam("scheduleid") int scheduleId, Model model) {
+//         try {
+//             Schedule schedule = scheduleDAO.getScheduleByScheduleid(scheduleId);
+//             model.addAttribute("schedule", schedule);
+//             return "admin/Updateschedule";
+//         } catch (SQLException e) {
+//             e.printStackTrace();
+//             return "error";
+//         }
+//     }
+
+//     @PostMapping("/Updateschedule")
+//     public String Updateschedule(@ModelAttribute("schedule") Schedule schedule) {
+//         try {
+//             scheduleDAO.updateSchedule(schedule); // Correct method name
+//             return "redirect:/listschedules";
+//         } catch (SQLException e) {
+//             e.printStackTrace();
+//             return "admin/Updateschedule";
+//         }
+//     }
+
+//     // Delete schedule
+//     @PostMapping("/Deleteschedule")
+//     public String Deleteschedule(@RequestParam("scheduleid") int scheduleId) {
+//         try {
+//             scheduleDAO.deleteSchedule(scheduleId); // Correct method name
+//             return "redirect:/listschedules";
+//         } catch (SQLException e) {
+//             e.printStackTrace();
+//             return "error";
+//         }
+//     }
+// }

@@ -1,9 +1,12 @@
 package com.heroku.java.controller;
 
+import com.heroku.java.DAO.EmailService;
 import com.heroku.java.DAO.PayrollDAO;
 import com.heroku.java.DAO.StaffDAO;
+
 import com.heroku.java.model.Payroll;
 import com.heroku.java.model.Staff;
+
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
@@ -47,11 +50,14 @@ public class Payrollcontroller {
 
     private final PayrollDAO payrollDAO;
     private final StaffDAO staffDAO;
+    private final EmailService emailService;
+   
 
     @Autowired
-    public Payrollcontroller(PayrollDAO payrollDAO, StaffDAO staffDAO) {
+    public Payrollcontroller(PayrollDAO payrollDAO, StaffDAO staffDAO, EmailService emailService) {
         this.payrollDAO = payrollDAO;
         this.staffDAO = staffDAO;
+        this.emailService = emailService;
     }
 
     @GetMapping("/Addpayroll")
@@ -145,12 +151,61 @@ public class Payrollcontroller {
         return "redirect:/listpayroll";
     }
 
+    @PostMapping("/updatePayroll")
+    public String updatePayroll(HttpSession session, @RequestParam("payrollid") int payrollId, String month, Payroll payroll, Model model) {
+        try {
+            // Set payroll ID and other necessary fields
+            payroll.setPayrollId(payrollId);
+
+            // Update payroll in the database
+            payrollDAO.updatePayroll(payrollId);
+
+            // Fetch updated payroll and staff details
+            Payroll updatedPayroll = payrollDAO.getPayrollByPayrollId(payrollId, month);
+            Staff staff = staffDAO.getstaffById(updatedPayroll.getSid());
+
+
+            // Prepare email content
+            String subject = "New Payroll Updated: " + updatedPayroll.getMonth();
+            String htmlContent = String.format(
+                    "<h1>Payroll Confirmation</h1>" +
+                    "<p>Dear %s,</p>" +
+                    "<p>You have successfully got a Monthly Statement. Login to your account to download it:</p>" +
+                    "<ul>" +
+                    "<li>Year Month: %s</li>" +
+                    "<li>Total Hours Worked: %d</li>" +
+                    "<li>Total Pay: %.2f</li>" +
+                    "</ul>" +
+                    "<p>Thank you for your service!</p>" +
+                    "<p>Sincerely,</p>" +
+                    "<p>TPS Security</p>",
+                    staff.getName(), updatedPayroll.getMonth(), updatedPayroll.getHoursWorked(), updatedPayroll.getTotalPay()
+            );
+            System.out.println("email volunteer: " + staff.getEmail());
+
+            // Send email
+            emailService.sendHtmlEmail(staff.getEmail(), subject, htmlContent);
+            
+            return "redirect:/listpayroll";
+        } catch (SQLException e) {
+            model.addAttribute("errorMessage", "An error occurred while updating the payroll.");
+            return "redirect:/listpayroll?payrollid=" + payrollId;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "redirect:/listpayroll";
+        }
+    }
+
+
     //staff//
     @GetMapping("/payroll")
-    public String payroll(Model model, @RequestParam int id) {
+    public String payroll(Model model, HttpSession session) {
+        Integer id = (Integer) session.getAttribute("id");
+        System.out.println("sid: " + id);
         List<Payroll> payrolls = new ArrayList<Payroll>();
         payrolls = payrollDAO.getPayrollsById(id);
-        model.addAttribute("payrolls", payrolls);  
+        model.addAttribute("payrolls", payrolls);
+        model.addAttribute("id", id);  
         return "security/payroll";
     }
 
