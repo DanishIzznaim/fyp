@@ -12,6 +12,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.heroku.java.DAO.LoginDAO;
 import com.heroku.java.model.Staff;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.sql.SQLException;
 
@@ -40,6 +42,7 @@ public class Logincontroller {
                 session.setAttribute("username", authenticatedUser.getUsername());
                 session.setAttribute("role", authenticatedUser.getRole());
                 session.setAttribute("id", authenticatedUser.getId());
+                System.out.println("Staff ID who login: " + authenticatedUser.getId());
 
                 if ("admin".equals(authenticatedUser.getRole())) {
                     return "redirect:/Homepageadmin";
@@ -58,8 +61,17 @@ public class Logincontroller {
 
     
     @GetMapping("/logout")
-    public String logout(HttpSession session) {
+    public String logout(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+        // System.out.println(">>>>(" + session.getAttribute("id") + ") = " + session.getAttribute("username") + " logged out");
+        
+        // Invalidate the session
         session.invalidate();
-        return "/index";
+        
+        // Set headers to prevent caching
+        response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+        response.setHeader("Pragma", "no-cache");
+        response.setDateHeader("Expires", 0);
+        
+        return "redirect:/login";
     }
 }

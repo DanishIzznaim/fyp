@@ -1,3 +1,181 @@
+
+// package com.heroku.java.controller;
+
+// import org.springframework.beans.factory.annotation.Autowired;
+// import org.springframework.stereotype.Controller;
+// import org.springframework.ui.Model;
+// import org.springframework.web.bind.annotation.GetMapping;
+// import org.springframework.web.bind.annotation.ModelAttribute;
+// import org.springframework.web.bind.annotation.PathVariable;
+// import org.springframework.web.bind.annotation.PostMapping;
+// import org.springframework.web.bind.annotation.RequestParam;
+
+// import jakarta.servlet.http.HttpSession;
+
+// import com.heroku.java.DAO.StaffDAO;
+// import com.heroku.java.model.Staff;
+
+// import javax.sql.DataSource;
+// import java.sql.SQLException;
+// import java.util.List;
+
+// @Controller
+// public class Staffcontroller {
+
+//     private final StaffDAO staffDAO;
+//     private final DataSource dataSource;
+
+//     @Autowired
+//     public Staffcontroller(StaffDAO staffDAO, DataSource dataSource) {
+//         this.staffDAO = staffDAO;
+//         this.dataSource = dataSource;
+//     }
+
+//     private boolean isSessionValid(HttpSession session) {
+//         String username = (String) session.getAttribute("username");
+//         return username != null;
+//     }
+
+//     // Add staff
+//     @GetMapping("/Addstaff")
+//     public String addStaff(Model model, HttpSession session) {
+//         if (!isSessionValid(session)) {
+//             return "redirect:/login";
+//         }
+//         model.addAttribute("staff", new Staff());
+//         return "admin/Addstaff";
+//     }
+
+//     @PostMapping("/Addstaff")
+//     public String addStaff(@ModelAttribute("staff") Staff staff, HttpSession session) {
+//         if (!isSessionValid(session)) {
+//             return "redirect:/login";
+//         }
+//         try {
+//             staffDAO.AddStaff(staff);
+//             return "redirect:/Liststaff";
+//         } catch (SQLException e) {
+//             e.printStackTrace();
+//             return "admin/Addstaff";
+//         }
+//     }
+
+//     // List staff
+//     @GetMapping("/Liststaff")
+//     public String listStaff(Model model, HttpSession session) {
+//         if (!isSessionValid(session)) {
+//             return "redirect:/login";
+//         }
+//         try {
+//             List<Staff> staffList = staffDAO.Liststaff();
+//             model.addAttribute("staffs", staffList);
+//         } catch (SQLException e) {
+//             e.printStackTrace();
+//             return "error";
+//         }
+//         return "admin/Liststaff";
+//     }
+
+//     // Update staff
+//     @GetMapping("/Updatestaff")
+//     public String updateStaff(@RequestParam("id") int staffId, Model model, HttpSession session) {
+//         if (!isSessionValid(session)) {
+//             return "redirect:/login";
+//         }
+//         try {
+//             Staff staff = staffDAO.getstaffById(staffId);
+//             model.addAttribute("staff", staff);
+//             return "admin/Updatestaff";
+//         } catch (SQLException e) {
+//             e.printStackTrace();
+//             return "error";
+//         }
+//     }
+
+//     @PostMapping("/Updatestaff")
+//     public String updateStaff(@ModelAttribute("Updatestaff") Staff staff, HttpSession session) {
+//         if (!isSessionValid(session)) {
+//             return "redirect:/login";
+//         }
+//         try {
+//             staffDAO.updatestaff(staff);
+//             return "redirect:/Liststaff";
+//         } catch (SQLException e) {
+//             e.printStackTrace();
+//             return "admin/Updatestaff";
+//         }
+//     }
+
+//     // Delete staff
+//     @PostMapping("/Deletestaff")
+//     public String deleteStaff(@RequestParam("id") int staffId, HttpSession session) {
+//         if (!isSessionValid(session)) {
+//             return "redirect:/login";
+//         }
+//         try {
+//             staffDAO.deletestaff(staffId);
+//             return "redirect:/Liststaff";
+//         } catch (SQLException e) {
+//             e.printStackTrace();
+//             return "error";
+//         }
+//     }
+
+
+
+
+//     @GetMapping("/homepagesecurity")
+//     public String homepagesecurity(HttpSession session, Model model) {
+//         Integer id = (Integer) session.getAttribute("id");
+//         if (id != null) {
+//             try {
+//                 Staff staff = staffDAO.getstaffById(id);
+//                 model.addAttribute("staff", staff);
+//             } catch (SQLException e) {
+//                 e.printStackTrace();
+//                 return "error";
+//             }
+//             return "security/homepagesecurity";
+//         } else {
+//             return "redirect:/login";
+//         }
+//     }
+
+
+//     // Update profile staff
+//     @GetMapping("/profilestaff")
+//     public String updateProfileStaff(@RequestParam("id") int staffId, Model model, HttpSession session) {
+//         if (!isSessionValid(session)) {
+//             return "redirect:/login";
+//         }
+//         try {
+//             Staff staff = staffDAO.getstaffById(staffId);
+//             model.addAttribute("staff", staff);
+//             return "security/profilestaff";
+//         } catch (SQLException e) {
+//             e.printStackTrace();
+//             return "error";
+//         }
+//     }
+
+//     @PostMapping("/profilestaff")
+//     public String updateProfileStaff(@ModelAttribute Staff staff, HttpSession session) {
+//         if (!isSessionValid(session)) {
+//             return "redirect:/login";
+//         }
+//         try {
+//             staffDAO.updateProfilestaff(staff);
+//             session.setAttribute("staff", staff); // Update session attribute if necessary
+//             return "redirect:/homepagesecurity";
+//         } catch (SQLException e) {
+//             e.printStackTrace();
+//             return "error";
+//         }
+//     }
+
+
+// }
+
 package com.heroku.java.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +221,10 @@ private final DataSource dataSource;
         this.staffDAO = staffDAO;
         this.dataSource = dataSource;
     }
+    private boolean isSessionValid(HttpSession session) {
+                String username = (String) session.getAttribute("username");
+                return username != null;
+            }
     //Add staff//
     @GetMapping("/Addstaff")
     public String Addstaff(Model model) {
@@ -121,46 +303,74 @@ private final DataSource dataSource;
         }
     }
 
-    //search staff by name//
-    @GetMapping("/Searchstaff")
-    public String searchstaff(@RequestParam(name = "searchValue", required = false) String searchValue, Model model) {
-        try {
-            // Perform the search based on the searchValue
-            StaffDAO staffDAO = new StaffDAO(dataSource);
-            List<Staff> searchResults = staffDAO.searchstaffByName(searchValue);
     
-            // Add the search results and the searchValue to the model
-            model.addAttribute("staffs", searchResults);
-            model.addAttribute("searchValue", searchValue);
-        } catch (SQLException e) {
-            // Handle the SQLException, log it, or rethrow it as a RuntimeException if needed
-            e.printStackTrace(); // You may want to log the exception instead
-            // You can also redirect to an error page or handle it in a way that makes sense for your application
-            model.addAttribute("error", "An error occurred during the search: " + e.getMessage());
+    
+    @GetMapping("/homepagesecurity")
+    public String homepagesecurity(HttpSession session, Model model) {
+        Integer id = (Integer) session.getAttribute("id");
+        if (id != null) {
+            try {
+                Staff staff = staffDAO.getstaffById(id);
+                model.addAttribute("staff", staff);
+            } catch (SQLException e) {
+                e.printStackTrace();
+                return "error";
+            }
+            return "security/homepagesecurity";
+        } else {
+            return "redirect:/login";
         }
-    // Return the view name to display the search results
-    return "admin/Liststaff";
     }
 
-    @GetMapping("/homepagesecurity/{id}")
-    public String welcomeStaff(@PathVariable int id, Model model) {
-        String staffName = "Unknown Staff";
+    // @GetMapping("/homepagesecurity")
+    // public String homepagesecurity(HttpSession session, Model model) {
+    //     Integer id = (Integer) session.getAttribute("id");
+    //     if (id != null) {
+    //         try {
+    //             Staff staff = staffDAO.getstaffById(id);
+    //             model.addAttribute("staff", staff);
+    //         } catch (SQLException e) {
+    //             e.printStackTrace();
+    //             return "error";
+    //         }
+    //         return "security/homepagesecurity";
+    //     } else {
+    //         return "redirect:/login";
+    //     }
+    // }
+
+    // Update profile staff
+    @GetMapping("/profilestaff")
+public String showUpdateForm(@RequestParam("id") int id, Model model) {
+    try {
+        Staff staff = staffDAO.getstaff(id);
+        model.addAttribute("staff", staff);
+        return "security/profilestaff";
+    } catch (SQLException e) {
+        e.printStackTrace();
+        return "error";
+    } catch (NumberFormatException e) {
+        e.printStackTrace();
+        return "error";
+    }
+}
+
+     @PostMapping("/profilestaff")
+    public String updateProfilestaff(@ModelAttribute Staff staff, Model model) {
         try {
-            staffName = staffDAO.getStaffName(id);
-            System.out.println("Controller - Successfully retrieved staff name: " + staffName); // Debugging
+            staffDAO.updateProfilestaff(staff);
+            return "redirect:/profilestaff";
         } catch (SQLException e) {
             e.printStackTrace();
-            System.out.println("Controller - Failed to retrieve staff name"); // Debugging
+            model.addAttribute("errorMessage", "Error updating staff profile");
+            return "security/profilestaff";
         }
-        System.out.println("Controller - Staff Name added to model: " + staffName); // Debugging
-        model.addAttribute("staffName", staffName);
-        model.addAttribute("id", id);
-        return "security/homepagesecurity"; // Ensure the correct template name
     }
 
     
     
     
 }
+
 
 

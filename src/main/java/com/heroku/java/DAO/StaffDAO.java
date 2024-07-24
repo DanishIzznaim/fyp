@@ -117,7 +117,7 @@ public class StaffDAO {
         return staff;
     }
 
-    //update staff
+    //update staff for admin
     public void updatestaff(Staff staff) throws SQLException {
         try (Connection connection = dataSource.getConnection()) {
             String sql = "UPDATE staff SET staffname=?, staffaddress=?, staffemail=?, staffphone=?, staffic=? "
@@ -154,37 +154,7 @@ public class StaffDAO {
         }
     }
 
-    //search staff
-    public List<Staff> searchstaffByName(String name) throws SQLException{
-        List<Staff> staffs = new ArrayList<>();
     
-        try (Connection connection = dataSource.getConnection()) {
-            String sql = "SELECT * FROM staff WHERE staffname LIKE ?";
-            try (PreparedStatement statement = connection.prepareStatement(sql)) {
-                statement.setString(1, "%" + name + "%");
-                
-                try (ResultSet resultSet = statement.executeQuery()) {
-                    while (resultSet.next()) {
-                        Staff staff = new Staff();
-                        staff.setId(resultSet.getInt("id"));
-                        staff.setName(resultSet.getString("staffname"));
-                        staff.setAddress(resultSet.getString("staffaddress"));
-                        staff.setEmail(resultSet.getString("staffemail"));
-                        staff.setPhone(resultSet.getInt("staffphone"));
-                        staff.setUsername(resultSet.getString("staffusername"));
-                        staff.setPassword(resultSet.getString("staffpassword"));
-                        staff.setIcnumber(resultSet.getString("staffic"));
-    
-                        staffs.add(staff);
-                    }
-                }
-            }
-        } catch (SQLException e) {
-            throw new SQLException("Error retrieving staff: " + e.getMessage());
-        }
-        return staffs;
-        
-    }
 
     public List<Staff> getSecurityStaff() throws SQLException {
         List<Staff> securityStaff = new ArrayList<>();
@@ -208,25 +178,57 @@ public class StaffDAO {
         return securityStaff;
     }
 
-    public String getStaffName(int id) throws SQLException {
-        String staffName = "Unknown Staff";
+
+
+    //staff part//
+    public Staff getstaff(int staffId) throws SQLException {
+        Staff staff = null;
         try (Connection connection = dataSource.getConnection()) {
-            String sql = "SELECT staffname FROM staff WHERE id=?";
+            String sql = "SELECT * FROM staff WHERE id=?";
             PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setInt(1, id);
+            statement.setInt(1, staffId);
             ResultSet resultSet = statement.executeQuery();
-    
+
             if (resultSet.next()) {
-                staffName = resultSet.getString("staffname");
-                System.out.println("DAO - Retrieved staff name: " + staffName); // Debugging
+                staff = new Staff();
+                staff.setId(resultSet.getInt("id"));
+                staff.setName(resultSet.getString("staffname"));
+                staff.setAddress(resultSet.getString("staffaddress"));
+                staff.setEmail(resultSet.getString("staffemail"));
+                staff.setPhone(resultSet.getInt("staffphone"));
+                staff.setUsername(resultSet.getString("staffusername"));
+                staff.setPassword(resultSet.getString("staffpassword"));
+                staff.setIcnumber(resultSet.getString("staffic"));
             }
+            connection.close();
         } catch (SQLException e) {
             e.printStackTrace();
             throw e;
         }
-        return staffName;
+
+        return staff;
     }
     
+    public void updateProfilestaff(Staff staff) throws SQLException {
+        try (Connection connection = dataSource.getConnection()) {
+            String sql = "UPDATE staff SET staffname=?, staffaddress=?, staffemail=?, staffphone=?, staffic=?, staffusername=?, staffpassword=? WHERE id=?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, staff.getName());
+            statement.setString(2, staff.getAddress());
+            statement.setString(3, staff.getEmail());
+            statement.setInt(4, staff.getPhone());
+            statement.setString(5, staff.getIcnumber());
+            statement.setString(6, staff.getUsername());
+            statement.setString(7, staff.getPassword());
+            statement.setInt(8, staff.getId());
+    
+            statement.executeUpdate();
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw e;
+        }
+    }
     
     
 }

@@ -40,13 +40,15 @@ public class GettingStartedApplication {
         return "index";
     }
     @GetMapping("/Homepageadmin")
-    public String Homepageadmin() {
-        return "admin/Homepageadmin";
-    }
-
-    @GetMapping("/Profileadmin")
-    public String Profileadmin() {
-        return "admin/Profileadmin";
+    public String Homepageadmin(HttpSession session, Model model) {
+        Integer id = (Integer) session.getAttribute("id");
+        if (id != null) {
+            model.addAttribute("id",id);
+            return "admin/Homepageadmin";
+        }
+        else {
+            return "redirect:/login";
+        }    
     }
 
     @GetMapping("/test")
@@ -54,30 +56,10 @@ public class GettingStartedApplication {
         return "admin/test";
     }
 
-    @GetMapping("/homepagesecurity")
-    public String homepagesecurity(HttpSession session, Model model) {
-        Integer id = (Integer) session.getAttribute("id");
-        if (id != null) {
-            model.addAttribute("id",id);
-            return "security/homepagesecurity";
-        }
-        else {
-            return "redirect:/login";
-        }    
-    }
+   
+    
 
-    // @GetMapping("/schedule")
-    // public String schedule(Model model) {
-    //      AssignDAO assignDAO = new AssignDAO(dataSource);
-    //   try {
-    //       List<Assign> assignlist = assignDAO.listassigns();
-    //       model.addAttribute("assigns", assignlist);
-    //   } catch (SQLException e) {
-    //       e.printStackTrace();
-    //       return "error";
-    //   }
-    //     return "security/schedule";
-    // }
+
 
     @GetMapping("/database")
     String database(Map<String, Object> model) {

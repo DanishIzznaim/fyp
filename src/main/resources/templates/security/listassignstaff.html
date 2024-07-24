@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en" th:replace="~{fragments/homesecuritylayout :: homesecuritylayout (~{::body},'security/schedule')}">
+<html lang="en" th:replace="~{fragments/homesecuritylayout :: homesecuritylayout (~{::body},'security/listassignstaff')}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>List Schedules</title>
+    <title>List Assign</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.4/css/dataTables.bootstrap5.min.css">
 </head>
@@ -16,30 +16,35 @@
                 </a>
             </div>
         </div>
-        <h1 class="mt-5">Schedule Records</h1>
+        <h1 class="mt-5">Shift Records</h1>
         <table id="example" class="table table-bordered table-hover" style="width:100%">
             <thead>
                 <tr>
-                    <th>Month</th>
-                    <th>Week</th>
-                    <th>Start Date</th>
-                    <th>End Date</th>
-                    <th>Shift</th>
+                    <th>Staff Name</th>
+                    <th>Monday</th>
+                    <th>Tuesday</th>
+                    <th>Wednesday</th>
+                    <th>Thursday</th>
+                    <th>Friday</th>
+                    <th>Saturday</th>
+                    <th>Sunday</th>
                 </tr>
             </thead>
             <tbody>
-                <tr th:each="schedule : ${schedules}">
-                    <td th:text="${schedule.month}"></td>
-                    <td th:text="${schedule.week}"></td>
-                    <td th:text="${schedule.startdate}"></td>
-                    <td th:text="${schedule.enddate}"></td>
-                    <td>
-                        <a th:href="@{'/listassignstaff?scheduleid=' + ${schedule.scheduleid} + '&week=' + ${schedule.week} + '&month=' + ${schedule.month}}" class="btn btn-primary">View</a>
-                    </td>
+                <tr th:each="assign : ${assigns}">
+                    <td th:text="${assign.name}"></td>
+                    <td th:text="${assign.dt1}"></td>
+                    <td th:text="${assign.dt2}"></td>
+                    <td th:text="${assign.dt3}"></td>
+                    <td th:text="${assign.dt4}"></td>
+                    <td th:text="${assign.dt5}"></td>
+                    <td th:text="${assign.dt6}"></td>
+                    <td th:text="${assign.dt7}"></td>
                 </tr>
             </tbody>
         </table>
     </div>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
@@ -47,14 +52,14 @@
     <script>
         $(document).ready(function() {
             $('#example').DataTable({
-                "lengthMenu": [ [4, 8, 12, -1], [4, 8, 12, "All"] ],
-                "pageLength": 4,
-                "order": [],
-                "searching": true,
+                "lengthMenu": [ [4, 8, 12, -1], [4, 8, 12, "All"] ], 
+                "pageLength": 4, 
+                "order": [], 
+                "searching": true, 
                 "language": {
                     "paginate": {
-                        "previous": "&laquo;",
-                        "next": "&raquo;"
+                        "previous": "&laquo;", 
+                        "next": "&raquo;" 
                     }
                 }
             });
@@ -62,3 +67,8 @@
     </script>
 </body>
 </html>
+
+
+
+
+

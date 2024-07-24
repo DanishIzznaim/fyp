@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en" th:replace="~{fragments/homeadminlayoutsecond :: homeadminlayoutsecond (~{::body},'admin/Addassign')}">
 <head>
     <title>TPS Security</title>
@@ -52,7 +52,7 @@
               </tbody>
           </table>
           <div class="mt-3 text-end">
-              <button type="submit" class="btn btn-success mb-3">SAVE</button>
+              <button type="submit" class="btn btn-primary">SAVE</button>
           </div>
       </div>
   </form>
@@ -60,66 +60,90 @@
   
 </div>
 </body>
-</html>
-<!-- Addassign.html -->
-<!-- <!DOCTYPE html>
-<html lang="en" th:replace="~{fragments/homeadminlayoutsecond :: homeadminlayoutsecond (~{::body},'admin/Addassign')}">
+</html> -->
 
-  <head>
+<!DOCTYPE html>
+<html lang="en" th:replace="~{fragments/homeadminlayoutsecond :: homeadminlayoutsecond (~{::body},'admin/listassigns')}">
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Assign Shift</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.5.0/font/bootstrap-icons.min.css">
-  </head>
-  <body>
-    <div class="container mt-4">
-      <a href="/listschedules" class="btn btn-outline-primary mb-3">
-          <i class="bi bi-arrow-left"></i> Back
-      </a>
-      <h2>Assign Shift</h2>
-      <form class="p-3" method="post" action="/Addassign">
-        <input type="hidden" th:value="${scheduleid}" name="scheduleid"/>
-        <input type="hidden" th:value="${week}" name="week"/>
-        <input type="hidden" th:value="${month}" name="month"/>
-        <div class="table-responsive mt-4">
-          <table class="table table-bordered table-hover">
-            <thead class="thead-light">
-              <tr>
-                <th scope="col">Staff ID</th>
-                <th scope="col">Staff Name</th>
-                <th scope="col">Monday</th>
-                <th scope="col">Tuesday</th>
-                <th scope="col">Wednesday</th>
-                <th scope="col">Thursday</th>
-                <th scope="col">Friday</th>
-                <th scope="col">Saturday</th>
-                <th scope="col">Sunday</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr th:each="assign : ${assigns}">
-                <td><span th:text="${assign.id}" th:remove="tag"></span><input type="hidden" th:value="${assign.id}" name="id"/></td>
-                <td th:text="${assign.name}"></td>
-                <td><input type="text" th:value="${assign.dt1}" name="dt1_${assign.id}"/></td>
-                <td><input type="text" th:value="${assign.dt2}" name="dt2_${assign.id}"/></td>
-                <td><input type="text" th:value="${assign.dt3}" name="dt3_${assign.id}"/></td>
-                <td><input type="text" th:value="${assign.dt4}" name="dt4_${assign.id}"/></td>
-                <td><input type="text" th:value="${assign.dt5}" name="dt5_${assign.id}"/></td>
-                <td><input type="text" th:value="${assign.dt6}" name="dt6_${assign.id}"/></td>
-                <td><input type="text" th:value="${assign.dt7}" name="dt7_${assign.id}"/></td>
-              </tr>
-            </tbody>
-          </table>
+    <title>List Assign</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.4/css/dataTables.bootstrap5.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-6">
+                <a href="javascript:history.back()" class="btn btn-outline-primary mb-3">
+                    <i class="fas fa-arrow-left"></i> Back
+                </a>
+            </div>
         </div>
-        <div class="text-end">
-          <button type="submit" class="btn btn-success">Save Assign</button>
-        </div>
-      </form>
+        <h1 class="mt-5">Shift Records</h1>
+        <form class="p-3" method="post" th:action="@{/Addassign}">
+            <input type="hidden" name="scheduleid" th:value="${scheduleid}" />
+            <input type="hidden" name="week" th:value="${week}" />
+            <input type="hidden" name="month" th:value="${month}" />
+            <div class="table-responsive">
+                <table id="example" class="table table-bordered table-hover" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>Staff ID</th>
+                            <th>Staff Name</th>
+                            <th>Monday</th>
+                            <th>Tuesday</th>
+                            <th>Wednesday</th>
+                            <th>Thursday</th>
+                            <th>Friday</th>
+                            <th>Saturday</th>
+                            <th>Sunday</th>
+                      
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="assign : ${assigns}">
+                              <td>
+                                  <span th:text="${assign.id}" th:remove="tag"></span>
+                                  <input type="hidden" th:value="${assign.id}" name="id" />
+                              </td>
+                              <td th:text="${assign.name}"></td>
+                              <td><input type="text" th:value="${assign.dt1}" name="dt1_${assign.id}" /></td>
+                              <td><input type="text" th:value="${assign.dt2}" name="dt2_${assign.id}" /></td>
+                              <td><input type="text" th:value="${assign.dt3}" name="dt3_${assign.id}" /></td>
+                              <td><input type="text" th:value="${assign.dt4}" name="dt4_${assign.id}" /></td>
+                              <td><input type="text" th:value="${assign.dt5}" name="dt5_${assign.id}" /></td>
+                              <td><input type="text" th:value="${assign.dt6}" name="dt6_${assign.id}" /></td>
+                              <td><input type="text" th:value="${assign.dt7}" name="dt7_${assign.id}" /></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="mt-3 text-end">
+                <button type="submit" class="btn btn-primary">SAVE</button>
+            </div>
+        </form>
     </div>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-  </body>
-  </html> -->
-  
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.4/js/dataTables.bootstrap5.min.js"></script>
+    <!-- <script>
+        $(document).ready(function() {
+            $('#example').DataTable({
+                "lengthMenu": [ [4, 8, 12, -1], [4, 8, 12, "All"] ], 
+                "pageLength": 4, 
+                "order": [], 
+                "searching": false, 
+                "language": {
+                    "paginate": {
+                        "previous": "&laquo;", 
+                        "next": "&raquo;" 
+                    }
+                }
+            });
+        });
+    </script> -->
+</body>
+</html>

@@ -1,114 +1,10 @@
-<!-- <!DOCTYPE html>
-<html lang="en" th:replace="~{fragments/homeadminlayoutsecond :: homeadminlayoutsecond (~{::body},'admin/listschedules')}">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>listassigns</title>
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
-  
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.4/css/dataTables.bootstrap5.min.css">
-</head>
-<body>
-    <div class="container mt-5">
-       
-        <table id="example" class="table table-bordered" style="width:100%">
-            <thead>
-                <tr>
-                    <th scope="col">Staff ID</th>
-                    <th scope="col">Staff Name</th>
-                    <th scope="col">Monday</th>
-                    <th scope="col">Tuesday</th>
-                    <th scope="col">Wednesday</th>
-                    <th scope="col">Thursday</th>
-                    <th scope="col">Friday</th>
-                    <th scope="col">Saturday</th>
-                    <th scope="col">Sunday</th>
-                    <th scope="col">Action</th>
-                </tr>
-            </thead>
-            <tbody>
-               
-                <tr th:each="assign : ${assigns}">
-                    <td th:text="${assign.id}"></td>
-                    <td th:text="${assign.name}" name="staffName" readonly></td>
-                    <td th:text="${assign.dt1}"></td>
-                    <td th:text="${assign.dt2}"></td>
-                    <td th:text="${assign.dt3}"></td>
-                    <td th:text="${assign.dt4}"></td>
-                    <td th:text="${assign.dt5}"></td>
-                    <td th:text="${assign.dt6}"></td>
-                    <td th:text="${assign.dt7}"></td>
-                    <td>
-                        <div class="btn-group" role="group" aria-label="Action buttons">
-                            <a th:href="@{'/Updateassign?assignid=' + ${assign.assignid}}" class="btn btn-success">
-                                <i class="fas fa-pencil icon"></i>  
-                            </a>
-                            <button type="button" class="btn btn-danger delete-button" data-bs-toggle="modal" th:data-bs-target="'#exampleModal-' + ${assign.assignid}">
-                                <i class="fas fa-trash icon"></i> 
-                            </button>
-                        </div>
-        
-                      
-                        <div class="modal fade" th:id="'exampleModal-' + ${assign.assignid}" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="deleteModalLabel">Delete Shift</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <p>Are you sure you want to delete this shift?</p>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                        <form action="/Deleteassign" method="post">
-                                            <input type="hidden" th:value="${assign.assignid}" name="assignid"/>
-                                            <button type="submit" class="btn btn-danger">Delete</button>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.11.4/js/dataTables.bootstrap5.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            $('#example').DataTable({
-                "lengthMenu": [ [4, 8, 12, -1], [4, 8, 12, "All"] ], 
-                "pageLength": 4, 
-                "order": [], 
-                "searching": false, 
-                "language": {
-                    "paginate": {
-                        "previous": "&laquo;", 
-                        "next": "&raquo;" 
-                    }
-                }
-            });
-        });
-    </script>
-    
-</body>
-</html> -->
-<!-- Addassign.html -->
-<!-- listassigns.html -->
-<!-- listassigns.html -->
+<!-- 
 <!DOCTYPE html>
 <html lang="en" th:replace="~{fragments/homeadminlayoutsecond :: homeadminlayoutsecond (~{::body},'admin/listassigns')}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>List Assignments</title>
+    <title>List Assign</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.4/css/dataTables.bootstrap5.min.css">
 </head>
@@ -116,15 +12,12 @@
     <div class="container mt-5">
         <div class="row">
             <div class="col-md-6">
-                <a href="javascript:history.back()" class="btn btn-outline-primary mb-3">
+                <a href="/listschedules" class="btn btn-outline-primary mb-3">
                     <i class="fas fa-arrow-left"></i> Back
                 </a>
             </div>
-            <div class="col-md-6 text-end">
-                <a href="/Addassign?scheduleid=${scheduleid}" class="btn btn-primary">+ NEW ASSIGNMENT</a>
-            </div>
         </div>
-        <h1 class="mt-5">Assignment Records</h1>
+        <h1 class="mt-5">Shift Records</h1>
         <table id="example" class="table table-bordered table-hover" style="width:100%">
             <thead>
                 <tr>
@@ -150,34 +43,11 @@
                     <td th:text="${assign.dt6}"></td>
                     <td th:text="${assign.dt7}"></td>
                     <td>
-                        <div class="btn-group" role="group" aria-label="Action buttons">
-                            <a th:href="@{'/Updateassign?assignid=' + ${assign.assignid}}" class="btn btn-success">
-                                <i class="fas fa-pencil icon"></i>  
+                        <div class="btn" role="group" aria-label="Action buttons">
+                            <a th:href="@{'/Updateassign?assignid=' + ${assign.assignid} + '&week=' + ${week} + '&month=' + ${month} + '&scheduleid=' + ${scheduleid}}" class="btn btn-success">
+                                <i class="fas fa-pencil icon"></i>
                             </a>
-                            <button type="button" class="btn btn-danger delete-button" data-bs-toggle="modal" th:data-bs-target="'#exampleModal-' + ${assign.assignid}">
-                                <i class="fas fa-trash icon"></i> 
-                            </button>
                         </div>
-                        <div class="modal fade" th:id="'exampleModal-' + ${assign.assignid}" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="deleteModalLabel">Delete Assignment</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <p>Are you sure you want to delete this assignment?</p>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                        <form action="/Deleteassign" method="post">
-                                            <input type="hidden" th:value="${assign.assignid}" name="assignid"/>
-                                            <button type="submit" class="btn btn-danger">Delete</button>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>   
                     </td>
                 </tr>
             </tbody>
@@ -205,9 +75,79 @@
         });
     </script>
 </body>
+</html> -->
+<!DOCTYPE html>
+<html lang="en" th:replace="~{fragments/homeadminlayoutsecond :: homeadminlayoutsecond (~{::body},'admin/listassigns')}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>List Assign</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.4/css/dataTables.bootstrap5.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-6">
+                <a href="/listschedules" class="btn btn-outline-primary mb-3">
+                    <i class="fas fa-arrow-left"></i> Back
+                </a>
+            </div>
+            <div class="col-md-6 text-end">
+                <a th:href="@{'/Updateassign?week=' + ${week} + '&month=' + ${month} + '&scheduleid=' + ${scheduleid}}" class="btn btn-primary mb-3">
+                    <i class="fas fa-edit"></i> Bulk Update
+                </a>
+            </div>
+        </div>
+        <h1 class="mt-5">Shift Records</h1>
+        <table id="example" class="table table-bordered table-hover" style="width:100%">
+            <thead>
+                <tr>
+                    <th>Staff Name</th>
+                    <th>Monday</th>
+                    <th>Tuesday</th>
+                    <th>Wednesday</th>
+                    <th>Thursday</th>
+                    <th>Friday</th>
+                    <th>Saturday</th>
+                    <th>Sunday</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="assign : ${assigns}">
+                    <td th:text="${assign.name}"></td>
+                    <td th:text="${assign.dt1}"></td>
+                    <td th:text="${assign.dt2}"></td>
+                    <td th:text="${assign.dt3}"></td>
+                    <td th:text="${assign.dt4}"></td>
+                    <td th:text="${assign.dt5}"></td>
+                    <td th:text="${assign.dt6}"></td>
+                    <td th:text="${assign.dt7}"></td>
+                    
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.4/js/dataTables.bootstrap5.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#example').DataTable({
+                "lengthMenu": [ [4, 8, 12, -1], [4, 8, 12, "All"] ], 
+                "pageLength": 4, 
+                "order": [], 
+                "searching": true, 
+                "language": {
+                    "paginate": {
+                        "previous": "&laquo;", 
+                        "next": "&raquo;" 
+                    }
+                }
+            });
+        });
+    </script>
+</body>
 </html>
-
-
-
-
-

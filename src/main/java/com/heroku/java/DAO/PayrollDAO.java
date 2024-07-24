@@ -75,7 +75,8 @@ public class PayrollDAO {
         try (Connection connection = dataSource.getConnection()) {
             String sql = "Select s.id, s.staffname, p.payrollid, p.month, p.hours_worked, p.hourly_rate, p.total_pay " + 
                                 "            FROM staff s " + 
-                                "            JOIN payroll p ON p.id = s.id";
+                                "            JOIN payroll p ON p.id = s.id" +
+                                "            WHERE p.publish='FALSE'";
             try (PreparedStatement statement = connection.prepareStatement(sql);
                  ResultSet resultSet = statement.executeQuery()) {
                 while (resultSet.next()) {

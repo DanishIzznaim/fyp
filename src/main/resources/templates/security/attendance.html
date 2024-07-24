@@ -8,9 +8,15 @@
     <script th:src="@{https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js}"></script> -->
 </head>
 <body>
-    <div class="container mt-5" style="width: 70%; margin-top: 20px;">
-        <h2 class="text-center">Security Guard Attendance</h2>
-
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-6">
+                <a href="/homepagesecurity" class="btn btn-outline-primary mb-3">
+                    <i class="fas fa-arrow-left"></i> Back
+                </a>
+            </div>
+        </div>
+        <h1 class="mt-5">Sign Attendance</h1>
         <!-- Display messages -->
         <div id="message" class="alert alert-info" th:if="${message}" th:text="${message}"></div>
 
@@ -28,8 +34,8 @@
             </form>
         </div>
 
-        <div class="table-responsive mt-5">
-            <table id="example" class="table table-bordered table-hover" style="width:100%">
+        <div>
+            <table id="example" class="table table-bordered table-hover" style="width:100% mt-20">
                 <thead>
                     <tr>
                         <th>Attendance Date</th>
