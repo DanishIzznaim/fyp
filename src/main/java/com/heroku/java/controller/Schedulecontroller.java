@@ -84,17 +84,6 @@ public class Schedulecontroller {
         }
     }
 
-    // Delete schedule
-    // @PostMapping("/Deleteschedule")
-    // public String deleteSchedule(@RequestParam("scheduleid") int scheduleId) {
-    //     try {
-    //         scheduleDAO.deleteschedule(scheduleId);
-    //         return "redirect:/listschedules";
-    //     } catch (SQLException e) {
-    //         e.printStackTrace();
-    //         return "error";
-    //     }
-    // }
     @PostMapping("/Deleteschedule")
     public String deleteSchedule(@RequestParam("scheduleid") int scheduleId) {
         try {

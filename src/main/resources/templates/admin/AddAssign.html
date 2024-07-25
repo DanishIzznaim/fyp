@@ -80,7 +80,7 @@
                 </a>
             </div>
         </div>
-        <h1 class="mt-5">Shift Records</h1>
+        <h1 class="mt-5">Auto-Assign Shifts</h1>
         <form class="p-3" method="post" th:action="@{/Addassign}">
             <input type="hidden" name="scheduleid" th:value="${scheduleid}" />
             <input type="hidden" name="week" th:value="${week}" />
@@ -89,25 +89,29 @@
                 <table id="example" class="table table-bordered table-hover" style="width:100%">
                     <thead>
                         <tr>
-                            <th>Staff ID</th>
+                            <!-- <th>Staff ID</th> -->
                             <th>Staff Name</th>
+                            <th>Sunday</th>
                             <th>Monday</th>
                             <th>Tuesday</th>
                             <th>Wednesday</th>
                             <th>Thursday</th>
                             <th>Friday</th>
                             <th>Saturday</th>
-                            <th>Sunday</th>
-                      
                         </tr>
                     </thead>
                     <tbody>
                         <tr th:each="assign : ${assigns}">
-                              <td>
-                                  <span th:text="${assign.id}" th:remove="tag"></span>
+                             
+                                  <!-- <span th:text="${assign.id}" th:remove="tag"></span>
                                   <input type="hidden" th:value="${assign.id}" name="id" />
+                            
+                              <td th:text="${assign.name}"></td> -->
+                              <td>
+                                <span th:text="${assign.name}"></span>
+                                <!-- Keep the hidden input for Staff ID outside the table cells -->
+                                <input type="hidden" th:value="${assign.id}" name="id_${assign.id}" />
                               </td>
-                              <td th:text="${assign.name}"></td>
                               <td><input type="text" th:value="${assign.dt1}" name="dt1_${assign.id}" /></td>
                               <td><input type="text" th:value="${assign.dt2}" name="dt2_${assign.id}" /></td>
                               <td><input type="text" th:value="${assign.dt3}" name="dt3_${assign.id}" /></td>

@@ -322,38 +322,23 @@ private final DataSource dataSource;
         }
     }
 
-    // @GetMapping("/homepagesecurity")
-    // public String homepagesecurity(HttpSession session, Model model) {
-    //     Integer id = (Integer) session.getAttribute("id");
-    //     if (id != null) {
-    //         try {
-    //             Staff staff = staffDAO.getstaffById(id);
-    //             model.addAttribute("staff", staff);
-    //         } catch (SQLException e) {
-    //             e.printStackTrace();
-    //             return "error";
-    //         }
-    //         return "security/homepagesecurity";
-    //     } else {
-    //         return "redirect:/login";
-    //     }
-    // }
+
 
     // Update profile staff
     @GetMapping("/profilestaff")
-public String showUpdateForm(@RequestParam("id") int id, Model model) {
-    try {
-        Staff staff = staffDAO.getstaff(id);
-        model.addAttribute("staff", staff);
-        return "security/profilestaff";
-    } catch (SQLException e) {
-        e.printStackTrace();
-        return "error";
-    } catch (NumberFormatException e) {
-        e.printStackTrace();
-        return "error";
+    public String showUpdateForm(@RequestParam("id") int id, Model model) {
+        try {
+            Staff staff = staffDAO.getstaff(id);
+            model.addAttribute("staff", staff);
+            return "security/profilestaff";
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return "error";
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+            return "error";
+        }
     }
-}
 
      @PostMapping("/profilestaff")
     public String updateProfilestaff(@ModelAttribute Staff staff, Model model) {
