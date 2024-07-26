@@ -193,7 +193,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import jakarta.servlet.http.HttpSession;
 
-
+import com.heroku.java.DAO.EmailService;
 import com.heroku.java.DAO.StaffDAO;
 import com.heroku.java.model.Staff;
 
@@ -215,11 +215,13 @@ public class Staffcontroller {
 
 private final StaffDAO staffDAO;
 private final DataSource dataSource;
+private final EmailService emailService;
 
 @Autowired
-    public Staffcontroller(StaffDAO staffDAO, DataSource dataSource) {
+    public Staffcontroller(StaffDAO staffDAO, DataSource dataSource, EmailService emailService) {
         this.staffDAO = staffDAO;
         this.dataSource = dataSource;
+        this.emailService = emailService;
     }
     private boolean isSessionValid(HttpSession session) {
                 String username = (String) session.getAttribute("username");
@@ -232,18 +234,57 @@ private final DataSource dataSource;
         return "admin/Addstaff";
     }
 
+    // @PostMapping("/Addstaff")
+    // public String Addstaff(@ModelAttribute("staff") Staff staff) {
+    //     try {
+    //         staffDAO.AddStaff(staff);
+    //         // Redirect to a success page or another appropriate page
+    //         return "redirect:/Liststaff";
+    //     } catch (SQLException e) {
+    //         e.printStackTrace();
+    //         // Handle database exception
+    //         return "admin/Addstaff";
+    //     }
+    // }
+
     @PostMapping("/Addstaff")
-    public String Addstaff(@ModelAttribute("staff") Staff staff) {
-        try {
-            staffDAO.AddStaff(staff);
-            // Redirect to a success page or another appropriate page
-            return "redirect:/Liststaff";
-        } catch (SQLException e) {
-            e.printStackTrace();
-            // Handle database exception
-            return "admin/Addstaff";
-        }
+public String Addstaff(@ModelAttribute("staff") Staff staff, Model model) {
+    try {
+        // Add the new staff to the database
+        staffDAO.AddStaff(staff);
+
+        // Prepare email content
+        String subject = "Welcome to TPS Security";
+        String htmlContent = String.format(
+            "<h1>Welcome to TPS Security</h1>" +
+            "<p>Dear %s,</p>" +
+            "<p>You have been registered to TPS Security. Please log in to your account using the following credentials:</p>" +
+            "<ul>" +
+            "<li>Username: %s</li>" +
+            "<li>Password: %s</li>" +
+            "</ul>" +
+            "<p>Thank you for joining us!</p>" +
+            "<p>Sincerely,</p>" +
+            "<p>TPS Security</p>",
+            staff.getName(), staff.getUsername(), staff.getPassword()
+        );
+        System.out.println("Email sent to: " + staff.getEmail());
+
+        // Send email
+        emailService.sendHtmlEmail(staff.getEmail(), subject, htmlContent);
+
+        // Redirect to the staff list page or another appropriate page
+        return "redirect:/Liststaff";
+    } catch (SQLException e) {
+        e.printStackTrace();
+        // Handle database exception
+        model.addAttribute("errorMessage", "An error occurred while adding the staff.");
+        return "admin/Addstaff";
+    } catch (Exception e) {
+        e.printStackTrace();
+        return "redirect:/Liststaff";
     }
+}
 
     //list staff//
     @GetMapping("/Liststaff")

@@ -174,7 +174,7 @@ public class Payrollcontroller {
                     "<ul>" +
                     "<li>Year Month: %s</li>" +
                     "<li>Total Hours Worked: %d</li>" +
-                    "<li>Total Pay: %.2f</li>" +
+                    "<li>Total Pay:RM %.2f</li>" +
                     "</ul>" +
                     "<p>Thank you for your service!</p>" +
                     "<p>Sincerely,</p>" +
@@ -300,7 +300,7 @@ public class Payrollcontroller {
         addCell(table, "Name", record.getSname());
         addCell(table, "IC", record.getSic());
         addCell(table, "Address", record.getSaddress());
-        addCell(table, "Month", record.getMonth());
+        addCell(table, "Year/Month", record.getMonth());
         addCell(table, "Hours Worked", String.valueOf(record.getHoursWorked()));
         addCell(table, "Hourly Rate", String.valueOf(record.getHourlyRate()));
     }

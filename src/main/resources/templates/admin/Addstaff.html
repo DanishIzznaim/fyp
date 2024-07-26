@@ -86,6 +86,8 @@
             }
             if (!emailDomainPattern.test(email)) {
                 alert('Email must end with ".com".');
+              
+
                 return false;
             }
             return true;
@@ -93,7 +95,7 @@
 
         function validatePhone() {
             const phone = document.getElementById('Inputphone').value;
-            const phonePattern = /^\d{9,10}$/;
+            const phonePattern = /^\d{10,11}$/;
             if (!phonePattern.test(phone)) {
                 alert('Please enter a valid phone number with 9 to 10 digits (without spaces or special characters).');
                 return false;

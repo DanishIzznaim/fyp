@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en" th:replace="~{fragments/homeadminlayoutsecond :: homeadminlayoutsecond (~{::body},'admin/Addschedule')}">
 <head>
   <title>TPS Security</title>
@@ -65,8 +65,8 @@
 
 
 </body>
-</html>
-<!-- <!DOCTYPE html>
+</html> -->
+<!DOCTYPE html>
 <html lang="en" th:replace="~{fragments/homeadminlayoutsecond :: homeadminlayoutsecond (~{::body},'admin/Addschedule')}">
 <head>
   <title>TPS Security</title>
@@ -80,9 +80,9 @@
       <div class="card col-12">
         <div class="card-body">
           <h2 class="text-center">Create New Schedule</h2>
-          <form class="p-3" method="post" th:action="@{/Addschedule}" th:object="${schedule}">
+          <form class="p-3" method="post" th:action="@{/Addschedule}" modelAttribute="Addschedule" th:object="(${schedule})">
             <div class="col-12 mt-3">
-              <label for="InputMonth">Month:</label>
+              <label for="InputScheduleName">Month:</label>
               <select class="form-select" id="InputMonth" name="month" required>
                 <option value="" disabled selected>Select Month</option>
                 <option value="January">January</option>
@@ -100,13 +100,14 @@
               </select>
             </div>
             <div class="col-12 mt-3">
-              <label for="InputWeek">Week:</label>
+              <label for="InputDescription">Week:</label>
               <select class="form-select" id="InputWeek" name="week" required>
                 <option value="" disabled selected>Select Week</option>
                 <option value="Week 1">Week 1</option>
                 <option value="Week 2">Week 2</option>
                 <option value="Week 3">Week 3</option>
                 <option value="Week 4">Week 4</option>
+                <option value="Week 5">Week 5</option>
               </select>
             </div>
             <div class="col-12 mt-3">
@@ -115,7 +116,7 @@
             </div>
             <div class="col-12 mt-3">
               <label for="InputEndDate">End Date:</label>
-              <input type="date" class="form-control" id="InputEndDate" name="enddate" required>
+              <input type="date" class="form-control" id="InputEndDate" name="enddate" readonly>
             </div>
             <div class="row mt-4">
               <div class="col text-center">
@@ -128,5 +129,56 @@
       </div>
     </div>
   </div>
+
+  <script>
+    function getSunday(date) {
+      const d = new Date(date);
+      const day = d.getDay();
+      const diff = d.getDate() - day;
+      return new Date(d.setDate(diff));
+    }
+
+    function getSaturday(sunday) {
+      const d = new Date(sunday);
+      d.setDate(d.getDate() + 6);
+      return d;
+    }
+
+    function formatDateString(date) {
+      const d = new Date(date);
+      const month = (d.getMonth() + 1).toString().padStart(2, '0');
+      const day = d.getDate().toString().padStart(2, '0');
+      return `${d.getFullYear()}-${month}-${day}`;
+    }
+
+    function setMinDate() {
+      const today = new Date();
+      const yyyy = today.getFullYear();
+      const mm = String(today.getMonth() + 1).padStart(2, '0');
+      const dd = String(today.getDate()).padStart(2, '0');
+      const minDate = `${yyyy}-${mm}-${dd}`;
+      document.getElementById('InputStartDate').setAttribute('min', minDate);
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      setMinDate();
+
+      document.getElementById('InputStartDate').addEventListener('change', function() {
+        const startDate = this.value;
+        const sunday = getSunday(startDate);
+        const saturday = getSaturday(sunday);
+
+        if (sunday.toISOString().split('T')[0] !== startDate) {
+          alert('Start date must be a Sunday.');
+          this.value = '';
+          document.getElementById('InputEndDate').value = '';
+          return;
+        }
+
+        document.getElementById('InputEndDate').value = formatDateString(saturday);
+      });
+    });
+  </script>
+
 </body>
-</html> -->
+</html>

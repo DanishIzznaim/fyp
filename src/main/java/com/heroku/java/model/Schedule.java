@@ -9,7 +9,7 @@ public class Schedule {
     private String week;
     private Date startdate;
     private Date enddate;
-    private boolean isAssigned; // New field
+    private boolean isAssigned; 
 
     public Schedule() {
     }

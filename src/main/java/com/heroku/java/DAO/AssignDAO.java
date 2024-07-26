@@ -167,7 +167,8 @@ public class AssignDAO {
         if (currentDay > 1) {
             String previousShift = shiftMatrix[staffIndex][currentDay - 1];
             if ((shiftType.equals(Assign.DAY_SHIFT) && previousShift.equals(Assign.NIGHT_SHIFT)) ||
-                (shiftType.equals(Assign.NIGHT_SHIFT) && previousShift.equals(Assign.DAY_SHIFT))) {
+                (shiftType.equals(Assign.NIGHT_SHIFT) && previousShift.equals(Assign.DAY_SHIFT)) ||
+                shiftOverlap(previousShift, shiftType)) {
                 return false;
             }
         }
@@ -180,6 +181,20 @@ public class AssignDAO {
             }
         }
         return true;
+    }
+
+    private boolean shiftOverlap(String shift1, String shift2) {
+        // Assuming shift1 is the current shift and shift2 is the previous or next shift
+        if (shift1.equals(Assign.NIGHT_SHIFT) && shift2.equals(Assign.DAY_SHIFT)) {
+            // Night shift from previous day ends at 8:00 AM, day shift starts at 8:00 AM
+            return true;
+        }
+        if (shift1.equals(Assign.DAY_SHIFT) && shift2.equals(Assign.NIGHT_SHIFT)) {
+            // Day shift from previous day ends at 8:00 PM, night shift starts at 8:00 PM
+            return true;
+        }
+        return false;
+    
     }
 
     public List<Assign> listassigns(String week, String month, int scheduleid) throws SQLException {

@@ -51,10 +51,7 @@ public class GettingStartedApplication {
         }    
     }
 
-    @GetMapping("/test")
-    public String test() {
-        return "admin/test";
-    }
+   
 
    
     
