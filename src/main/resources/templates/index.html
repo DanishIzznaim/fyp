@@ -39,7 +39,7 @@
 </body>
 </html> -->
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Taman Pelangi Semenyih Security</title>
@@ -135,10 +135,10 @@
 
     <div class="main-container">
         <div class="jumbotron">
-            <img alt="Logo" src="/logo.jpg">
+            <img alt="Logo" th:src="@{logo.jpg}">
             <h1>Taman Pelangi Semenyih Security</h1>
             <h2>Unite in Harmony</h2>
-            <a type="button" class="btn btn-custom" href="/login">
+            <a type="button" class="btn btn-custom" th:href="@{/login}">
                 <span class="glyphicon glyphicon-flash"></span> Login
             </a>
         </div>
