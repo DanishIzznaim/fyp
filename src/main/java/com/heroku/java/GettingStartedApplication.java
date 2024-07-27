@@ -44,7 +44,7 @@ public class GettingStartedApplication {
         Integer id = (Integer) session.getAttribute("id");
         if (id != null) {
             model.addAttribute("id",id);
-            return "admin/Homepageadmin";
+            return "admin/homepageadmin";
         }
         else {
             return "redirect:/login";
