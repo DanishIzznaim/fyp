@@ -55,7 +55,7 @@ public class AttendanceDAO {
     public List<Attendance> findByStaffId(int staffId) throws SQLException {
         List<Attendance> attendances = new ArrayList<>();
         try (Connection connection = dataSource.getConnection()) {
-            String sql = "SELECT * FROM attendance WHERE id = ?";
+            String sql = "SELECT * FROM attendance WHERE id = ? ORDER BY attendance_date DESC";
             try (PreparedStatement statement = connection.prepareStatement(sql)) {
                 statement.setInt(1, staffId);
                 try (ResultSet resultSet = statement.executeQuery()) {

@@ -51,13 +51,6 @@ public class GettingStartedApplication {
         }    
     }
 
-   
-
-   
-    
-
-
-
     @GetMapping("/database")
     String database(Map<String, Object> model) {
         try (Connection connection = dataSource.getConnection()) {

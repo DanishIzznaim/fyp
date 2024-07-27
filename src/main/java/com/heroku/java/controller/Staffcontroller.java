@@ -229,68 +229,68 @@ private final EmailService emailService;
             }
     //Add staff//
     @GetMapping("/Addstaff")
-    public String Addstaff(Model model) {
+    public String Addstaff(HttpSession session, Model model) {
+        Integer id = (Integer) session.getAttribute("id");
+        if (id == null) {
+        return "redirect:/login"; // Redirect to login page if session id is null
+    }
         model.addAttribute("staff", new Staff());
         return "admin/Addstaff";
     }
 
-    // @PostMapping("/Addstaff")
-    // public String Addstaff(@ModelAttribute("staff") Staff staff) {
-    //     try {
-    //         staffDAO.AddStaff(staff);
-    //         // Redirect to a success page or another appropriate page
-    //         return "redirect:/Liststaff";
-    //     } catch (SQLException e) {
-    //         e.printStackTrace();
-    //         // Handle database exception
-    //         return "admin/Addstaff";
-    //     }
-    // }
 
     @PostMapping("/Addstaff")
-public String Addstaff(@ModelAttribute("staff") Staff staff, Model model) {
-    try {
-        // Add the new staff to the database
-        staffDAO.AddStaff(staff);
+    public String Addstaff(@ModelAttribute("staff") Staff staff, Model model, HttpSession session) {
+        Integer id = (Integer) session.getAttribute("id");
+        if (id == null) {
+            return "redirect:/login"; // Redirect to login page if session id is null
+        }
+        try {
+            // Add the new staff to the database
+            staffDAO.AddStaff(staff);
 
-        // Prepare email content
-        String subject = "Welcome to TPS Security";
-        String htmlContent = String.format(
-            "<h1>Welcome to TPS Security</h1>" +
-            "<p>Dear %s,</p>" +
-            "<p>You have been registered to TPS Security. Please log in to your account using the following credentials:</p>" +
-            "<ul>" +
-            "<li>Username: %s</li>" +
-            "<li>Password: %s</li>" +
-            "</ul>" +
-            "<p>Thank you for joining us!</p>" +
-            "<p>Sincerely,</p>" +
-            "<p>TPS Security</p>",
-            staff.getName(), staff.getUsername(), staff.getPassword()
-        );
-        System.out.println("Email sent to: " + staff.getEmail());
+            // Prepare email content
+            String subject = "Welcome to TPS Security";
+            String htmlContent = String.format(
+                "<h1>Welcome to TPS Security</h1>" +
+                "<p>Dear %s,</p>" +
+                "<p>You have been registered to TPS Security. Please log in to your account using the following credentials:</p>" +
+                "<ul>" +
+                "<li>Username: %s</li>" +
+                "<li>Password: %s</li>" +
+                "</ul>" +
+                "<p>Thank you for joining us!</p>" +
+                "<p>Sincerely,</p>" +
+                "<p>TPS Security</p>",
+                staff.getName(), staff.getUsername(), staff.getPassword()
+            );
+            System.out.println("Email sent to: " + staff.getEmail());
 
-        // Send email
-        emailService.sendHtmlEmail(staff.getEmail(), subject, htmlContent);
+            // Send email
+            emailService.sendHtmlEmail(staff.getEmail(), subject, htmlContent);
 
-        // Redirect to the staff list page or another appropriate page
-        return "redirect:/Liststaff";
-    } catch (SQLException e) {
-        e.printStackTrace();
-        // Handle database exception
-        model.addAttribute("errorMessage", "An error occurred while adding the staff.");
-        return "admin/Addstaff";
-    } catch (Exception e) {
-        e.printStackTrace();
-        return "redirect:/Liststaff";
+            // Redirect to the staff list page or another appropriate page
+            return "redirect:/Liststaff";
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Handle database exception
+            model.addAttribute("errorMessage", "An error occurred while adding the staff.");
+            return "admin/Addstaff";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "redirect:/Liststaff";
+        }
     }
-}
 
     //list staff//
     @GetMapping("/Liststaff")
     public String Liststaff(HttpSession session, Staff staff,Model model) {
-      StaffDAO staffDAO = new StaffDAO(dataSource);
+        Integer id = (Integer) session.getAttribute("id");
+        if (id == null) {
+            return "redirect:/login"; // Redirect to login page if session id is null
+        }
       try {
+          StaffDAO staffDAO = new StaffDAO(dataSource);
           List<Staff> stafflist = staffDAO.Liststaff();
           model.addAttribute("staffs", stafflist);
       } catch (SQLException e) {
@@ -304,7 +304,11 @@ public String Addstaff(@ModelAttribute("staff") Staff staff, Model model) {
 
     //Update staff//
     @GetMapping("/Updatestaff")
-    public String Updatestaff(@RequestParam("id") int staffId,Model model) {
+    public String Updatestaff(HttpSession session, @RequestParam("id") int staffId,Model model) {
+     Integer id = (Integer) session.getAttribute("id");
+     if (id == null) {
+            return "redirect:/login"; // Redirect to login page if session id is null
+     }
       try {
         StaffDAO staffDAO = new StaffDAO(dataSource);
         Staff staff = staffDAO.getstaffById(staffId);

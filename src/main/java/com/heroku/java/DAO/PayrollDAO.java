@@ -138,18 +138,52 @@ public class PayrollDAO {
         return payrolls;
     }
 
+    // public Payroll getPayrollByPayrollId(int payrollId, String month) {
+    //     Payroll payroll = null;
+    //     System.out.println("month"  + month);
+    //     String sql = "SELECT s.id, s.staffname, s.staffaddress, s.staffic, p.payrollid, p.month, p.hours_worked, p.hourly_rate, p.total_pay " +
+    //                  "FROM staff s " +
+    //                  "JOIN payroll p ON p.id = s.id " +
+    //                  "WHERE p.payrollid = ? " +
+    //                  "AND p.month = ?";
+
+    //     try (Connection conn = dataSource.getConnection();
+    //          PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+    //         stmt.setInt(1, payrollId);
+    //         stmt.setString(2, month);
+    //         try (ResultSet rs = stmt.executeQuery()) {
+    //             if (rs.next()) {
+    //                 payroll = new Payroll();
+    //                 payroll.setSid(rs.getInt("id"));
+    //                 payroll.setSname(rs.getString("staffname"));
+    //                 payroll.setSaddress(rs.getString("staffaddress"));
+    //                 payroll.setSic(rs.getString("staffic"));
+    //                 payroll.setPayrollId(rs.getInt("payrollid"));
+    //                 payroll.setMonth(rs.getString("month"));
+    //                 payroll.setHoursWorked(rs.getInt("hours_worked"));
+    //                 payroll.setHourlyRate(rs.getDouble("hourly_rate"));
+    //                 payroll.setTotalPay(rs.getDouble("total_pay"));
+    //             }
+    //         }
+    //     } catch (SQLException e) {
+    //         e.printStackTrace();
+    //     }
+
+    //     return payroll;
+    // }
+
     public Payroll getPayrollByPayrollId(int payrollId, String month) {
         Payroll payroll = null;
-        System.out.println("month"  + month);
         String sql = "SELECT s.id, s.staffname, s.staffaddress, s.staffic, p.payrollid, p.month, p.hours_worked, p.hourly_rate, p.total_pay " +
                      "FROM staff s " +
                      "JOIN payroll p ON p.id = s.id " +
                      "WHERE p.payrollid = ? " +
                      "AND p.month = ?";
-
+    
         try (Connection conn = dataSource.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
-
+    
             stmt.setInt(1, payrollId);
             stmt.setString(2, month);
             try (ResultSet rs = stmt.executeQuery()) {
@@ -164,14 +198,17 @@ public class PayrollDAO {
                     payroll.setHoursWorked(rs.getInt("hours_worked"));
                     payroll.setHourlyRate(rs.getDouble("hourly_rate"));
                     payroll.setTotalPay(rs.getDouble("total_pay"));
+                } else {
+                    System.out.println("No payroll record found for payrollId: " + payrollId + " and month: " + month);
                 }
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
+    
         return payroll;
     }
+    
 
     //downloadpdf//
     public List<Payroll> getPayrolls(int payrollId, String month) throws SQLException {

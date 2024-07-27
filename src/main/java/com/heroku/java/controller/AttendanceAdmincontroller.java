@@ -7,21 +7,31 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import jakarta.servlet.http.HttpSession;
+
 import java.sql.SQLException;
 import java.util.List;
+
+import javax.sql.DataSource;
 
 @Controller
 public class AttendanceAdmincontroller {
 
     private final AttendanceDAO attendanceDAO;
+    private final DataSource dataSource;
 
     @Autowired
-    public AttendanceAdmincontroller(AttendanceDAO attendanceDAO) {
+    public AttendanceAdmincontroller(AttendanceDAO attendanceDAO, DataSource dataSource) {
         this.attendanceDAO = attendanceDAO;
+        this.dataSource = dataSource;
     }
 
     @GetMapping("/listattendance")
-    public String listAttendance(Model model) {
+    public String listAttendance(HttpSession session, Model model) {
+        Integer id = (Integer) session.getAttribute("id");
+        if (id == null) {
+        return "redirect:/login"; // Redirect to login page if session id is null
+        }
         try {
             List<Attendance> attendances = attendanceDAO.findAllWithStaffName();
             model.addAttribute("attendances", attendances);

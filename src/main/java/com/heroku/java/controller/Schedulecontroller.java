@@ -33,7 +33,11 @@ public class Schedulecontroller {
 
     // Add schedule
     @GetMapping("/Addschedule")
-    public String addSchedule(Model model) {
+    public String addSchedule(HttpSession session,Model model) {
+        Integer id = (Integer) session.getAttribute("id");
+        if (id == null) {
+        return "redirect:/login"; // Redirect to login page if session id is null
+    }
         model.addAttribute("schedule", new Schedule());
         return "admin/Addschedule";
     }
@@ -52,7 +56,11 @@ public class Schedulecontroller {
 
     // List schedules
     @GetMapping("/listschedules")
-    public String listSchedules(Model model) {
+    public String listSchedules(HttpSession session, Model model) {
+        Integer id = (Integer) session.getAttribute("id");
+        if (id == null) {
+        return "redirect:/login"; // Redirect to login page if session id is null
+    }
         try {
             List<Schedule> scheduleList = scheduleDAO.listschedules();
             model.addAttribute("schedules", scheduleList);
@@ -65,7 +73,11 @@ public class Schedulecontroller {
 
     // Update schedule
     @GetMapping("/Updateschedule")
-    public String updateSchedule(@RequestParam("scheduleid") int scheduleId, Model model) {
+    public String updateSchedule(HttpSession session, @RequestParam("scheduleid") int scheduleId, Model model) {
+        Integer id = (Integer) session.getAttribute("id");
+        if (id == null) {
+        return "redirect:/login"; // Redirect to login page if session id is null
+    }
         try {
             Schedule schedule = scheduleDAO.getscheduleByScheduleid(scheduleId);
             model.addAttribute("schedule", schedule);
@@ -103,7 +115,11 @@ public class Schedulecontroller {
     //FOR STAFF//
 
     @GetMapping("/schedule")
-    public String listSchedulesStaff(Model model) {
+    public String listSchedulesStaff(HttpSession session, Model model) {
+        Integer id = (Integer) session.getAttribute("id");
+        if (id == null) {
+        return "redirect:/login"; // Redirect to login page if session id is null
+    }
         try {
             List<Schedule> scheduleList = scheduleDAO.listschedules();
             model.addAttribute("schedules", scheduleList);

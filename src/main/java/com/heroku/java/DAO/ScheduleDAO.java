@@ -57,7 +57,7 @@ public class ScheduleDAO {
         List<Schedule> schedulelist = new ArrayList<>();
     
         try (Connection connection = dataSource.getConnection()) {
-            String sql = "SELECT schedule.*, EXISTS (SELECT 1 FROM assign WHERE assign.scheduleid = schedule.scheduleid) as isAssigned FROM schedule";
+            String sql = "SELECT schedule.*, EXISTS (SELECT 1 FROM assign WHERE assign.scheduleid = schedule.scheduleid) as isAssigned FROM schedule ORDER BY scheduleid DESC";
             PreparedStatement statement = connection.prepareStatement(sql);
             ResultSet resultSet = statement.executeQuery();
     

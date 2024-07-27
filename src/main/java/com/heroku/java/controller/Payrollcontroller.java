@@ -61,7 +61,11 @@ public class Payrollcontroller {
     }
 
     @GetMapping("/Addpayroll")
-    public String addPayrollForm(Model model) {
+    public String addPayrollForm(HttpSession session, Model model) {
+        Integer id = (Integer) session.getAttribute("id");
+        if (id == null) {
+        return "redirect:/login"; // Redirect to login page if session id is null
+    }
         try {
             List<Staff> staffList = staffDAO.Liststaff();
             model.addAttribute("staffList", staffList);
@@ -115,6 +119,10 @@ public class Payrollcontroller {
 
     @GetMapping("/listpayroll")
     public String listPayroll(Model model, HttpSession session) {
+        Integer id = (Integer) session.getAttribute("id");
+        if (id == null) {
+        return "redirect:/login"; // Redirect to login page if session id is null
+    }
         try {
             List<Payroll> payrolls = payrollDAO.findAll();
             model.addAttribute("payrolls", payrolls);
@@ -136,6 +144,7 @@ public class Payrollcontroller {
 
     @GetMapping("/updatePayroll")
     public String updatePayroll(Model model, @RequestParam int payrollid, HttpSession session) {
+        
         try {
             boolean isUpdated = payrollDAO.updatePayroll(payrollid);
             System.out.println("value: " + isUpdated);
@@ -201,6 +210,9 @@ public class Payrollcontroller {
     @GetMapping("/payroll")
     public String payroll(Model model, HttpSession session) {
         Integer id = (Integer) session.getAttribute("id");
+        if (id == null) {
+        return "redirect:/login"; // Redirect to login page if session id is null
+    }
         System.out.println("sid: " + id);
         List<Payroll> payrolls = new ArrayList<Payroll>();
         payrolls = payrollDAO.getPayrollsById(id);
@@ -208,14 +220,36 @@ public class Payrollcontroller {
         model.addAttribute("id", id);  
         return "security/payroll";
     }
+    
 
     
+    // @GetMapping("/viewpayslip")
+    // public String viewpayslip(HttpSession session, @RequestParam int payrollId, @RequestParam String month, Model model) {
+    //     Integer id = (Integer) session.getAttribute("id");
+    //     if (id == null) {
+    //     return "redirect:/login"; // Redirect to login page if session id is null
+    // }
+    //     Payroll payroll = payrollDAO.getPayrollByPayrollId(payrollId,month);
+    //     model.addAttribute("payroll", payroll);
+    //     return "security/viewpayslip";
+    // }
+
     @GetMapping("/viewpayslip")
-    public String viewpayslip(@RequestParam int payrollId, @RequestParam String month, Model model) {
-        Payroll payroll = payrollDAO.getPayrollByPayrollId(payrollId,month);
+    public String viewpayslip(HttpSession session, @RequestParam int payrollId, @RequestParam String month, Model model) {
+        Integer id = (Integer) session.getAttribute("id");
+        if (id == null) {
+            System.out.println("Session ID is null. Redirecting to login.");
+            return "redirect:/login"; // Redirect to login page if session id is null
+        }
+        Payroll payroll = payrollDAO.getPayrollByPayrollId(payrollId, month);
+        if (payroll == null) {
+            System.out.println("No payroll found for payrollId: " + payrollId + " and month: " + month);
+            return "redirect:/error"; // Redirect to error page if payroll is not found
+        }
         model.addAttribute("payroll", payroll);
         return "security/viewpayslip";
     }
+
 
      @PostMapping("/export-to-pdf")
     public void generatePdf(HttpServletResponse response,
