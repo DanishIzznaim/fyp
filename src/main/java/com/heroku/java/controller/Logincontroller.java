@@ -47,7 +47,7 @@ public class Logincontroller {
                 if ("admin".equals(authenticatedUser.getRole())) {
                     return "redirect:/Homepageadmin";
                 } else if ("security".equals(authenticatedUser.getRole())) {
-                    return "redirect:/homepagesecurity";
+                    return "redirect:/Homepagesecurity";
                 }
             } else {
                 redirectAttributes.addFlashAttribute("errorMessage", "Invalid username or password.");

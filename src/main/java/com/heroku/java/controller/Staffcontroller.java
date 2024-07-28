@@ -347,7 +347,7 @@ private final EmailService emailService;
 
     
     
-    @GetMapping("/homepagesecurity")
+    @GetMapping("/Homepagesecurity")
     public String homepagesecurity(HttpSession session, Model model) {
         Integer id = (Integer) session.getAttribute("id");
         if (id != null) {
@@ -358,7 +358,7 @@ private final EmailService emailService;
                 e.printStackTrace();
                 return "error";
             }
-            return "security/homepagesecurity";
+            return "security/Homepagesecurity";
         } else {
             return "redirect:/login";
         }
