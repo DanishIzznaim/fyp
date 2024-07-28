@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" th:replace="~{fragments/homeadminlayoutsecond :: homeadminlayoutsecond (~{::body},'admin/Addassign')}">
+<html lang="en" th:replace="~{fragments/homeadminlayoutsecond :: homeadminlayoutsecond (~{::body},'admin/AddAssign')}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,7 +17,7 @@
             </div>
         </div>
         <h1 class="mt-5">Auto-Assign Shifts</h1>
-        <form class="p-3" method="post" th:action="@{/Addassign}">
+        <form class="p-3" method="post" th:action="@{/AddAssign}">
             <input type="hidden" name="scheduleid" th:value="${scheduleid}" />
             <input type="hidden" name="week" th:value="${week}" />
             <input type="hidden" name="month" th:value="${month}" />
