@@ -114,10 +114,10 @@ public class Payrollcontroller {
             model.addAttribute("message", "Error adding payroll record");
             e.printStackTrace();
         }
-        return "redirect:/listpayroll";
+        return "redirect:/Listpayroll";
     }
 
-    @GetMapping("/listpayroll")
+    @GetMapping("/Listpayroll")
     public String listPayroll(Model model, HttpSession session) {
         Integer id = (Integer) session.getAttribute("id");
         if (id == null) {
@@ -139,7 +139,7 @@ public class Payrollcontroller {
             System.out.println("Added message" + message);
         }
 
-        return "admin/listpayroll";
+        return "admin/Listpayroll";
     }
 
     @GetMapping("/updatePayroll")
@@ -157,7 +157,7 @@ public class Payrollcontroller {
             session.setAttribute("message", "An error occurred while updating payroll.");
             e.printStackTrace();
         }
-        return "redirect:/listpayroll";
+        return "redirect:/Listpayroll";
     }
 
     @PostMapping("/updatePayroll")
@@ -195,13 +195,13 @@ public class Payrollcontroller {
             // Send email
             emailService.sendHtmlEmail(staff.getEmail(), subject, htmlContent);
             
-            return "redirect:/listpayroll";
+            return "redirect:/Listpayroll";
         } catch (SQLException e) {
             model.addAttribute("errorMessage", "An error occurred while updating the payroll.");
             return "redirect:/listpayroll?payrollid=" + payrollId;
         } catch (Exception e) {
             e.printStackTrace();
-            return "redirect:/listpayroll";
+            return "redirect:/Listpayroll";
         }
     }
 
