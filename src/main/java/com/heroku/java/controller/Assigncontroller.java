@@ -418,7 +418,7 @@ public class Assigncontroller {
         this.staffDAO = staffDAO;
     }
 
-    @GetMapping("/Addassign")
+    @GetMapping("/AddAssign")
     public String addAssign(HttpSession session, Model model, @RequestParam("scheduleid") int scheduleid,
                             @RequestParam(value = "week", required = false, defaultValue = "defaultWeek") String week,
                             @RequestParam(value = "month", required = false, defaultValue = "defaultMonth") String month) {
@@ -450,10 +450,10 @@ public class Assigncontroller {
             e.printStackTrace();
             return "error";
         }
-        return "admin/Addassign";
+        return "admin/AddAssign";
     }
 
-    @PostMapping("/Addassign")
+    @PostMapping("/AddAssign")
     public String addAssign(@RequestParam("id") List<Integer> ids, @RequestParam("scheduleid") int scheduleid,
                             @RequestParam("week") String week, @RequestParam("month") String month, HttpServletRequest request) {
         System.out.println("Schedule id = " + scheduleid);
@@ -486,7 +486,7 @@ public class Assigncontroller {
             return "redirect:/listschedules";
         } catch (SQLException e) {
             e.printStackTrace();
-            return "admin/Addassign";
+            return "admin/AddAssign";
         }
     }
     
