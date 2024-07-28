@@ -29,7 +29,7 @@ public class StaffDAO {
 
             String staffname = staff.getName();
             String staffaddress = staff.getAddress();
-            String staffemail = staff.getEmail();
+            String staffemail = staff.getEmail();  
             int staffphone = staff.getPhone();
             String staffusername = staff.getUsername();
             String staffpassword = staff.getPassword();
@@ -48,13 +48,13 @@ public class StaffDAO {
             statement.setString(5, staffusername);
             statement.setString(6, staffpassword);
             statement.setString(7, staffic);
-            statement.setString(8, "security"); 
+            statement.setString(8, staff.getRole()); 
             statement.executeUpdate();
 
-            ResultSet generatedKeys = statement.getGeneratedKeys();
-            if (generatedKeys.next()) {
-                staff.setId(generatedKeys.getInt(1));
-            }
+            // ResultSet generatedKeys = statement.getGeneratedKeys();
+            // if (generatedKeys.next()) {
+            //     staff.setId(generatedKeys.getInt(1));
+            // }
         }
         return staff;
     }

@@ -276,9 +276,6 @@ private final EmailService emailService;
             // Handle database exception
             model.addAttribute("errorMessage", "An error occurred while adding the staff.");
             return "admin/Addstaff";
-        } catch (Exception e) {
-            e.printStackTrace();
-            return "redirect:/Liststaff";
         }
     }
 
