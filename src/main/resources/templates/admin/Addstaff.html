@@ -100,9 +100,9 @@
 
         function validatePhone() {
             const phone = document.getElementById('Inputphone').value;
-            const phonePattern = /^\d{10,11}$/;
+            const phonePattern = /^\d{9,10}$/;
             if (!phonePattern.test(phone)) {
-                alert('Please enter a valid phone number with 9 to 10 digits (without spaces or special characters).');
+                alert('Please enter a valid phone number with 9 to 11 digits (without spaces or special characters).');
                 return false;
             }
             return true;
