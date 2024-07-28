@@ -32,24 +32,24 @@ public class Schedulecontroller {
     }
 
     // Add schedule
-    @GetMapping("/Addschedule")
+    @GetMapping("/AddSchedule")
     public String addSchedule(HttpSession session,Model model) {
         Integer id = (Integer) session.getAttribute("id");
         if (id == null) {
         return "redirect:/login"; // Redirect to login page if session id is null
     }
         model.addAttribute("schedule", new Schedule());
-        return "admin/Addschedule";
+        return "admin/AddSchedule";
     }
 
-    @PostMapping("/Addschedule")
+    @PostMapping("/AddSchedule")
     public String addSchedule(@ModelAttribute("schedule") Schedule schedule) {
         try {
             scheduleDAO.AddSchedule(schedule);
             return "redirect:/listschedules";
         } catch (SQLException e) {
             e.printStackTrace();
-            return "admin/Addschedule";
+            return "admin/AddSchedule";
         }
     }
    

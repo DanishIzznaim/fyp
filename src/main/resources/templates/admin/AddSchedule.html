@@ -67,7 +67,7 @@
 </body>
 </html> -->
 <!DOCTYPE html>
-<html lang="en" th:replace="~{fragments/homeadminlayoutsecond :: homeadminlayoutsecond (~{::body},'admin/Addschedule')}">
+<html lang="en" th:replace="~{fragments/homeadminlayoutsecond :: homeadminlayoutsecond (~{::body},'admin/AddSchedule')}">
 <head>
   <title>TPS Security</title>
   <link rel="stylesheet" href="stylesheets/homepageadmin.css">
@@ -80,7 +80,7 @@
       <div class="card col-12">
         <div class="card-body">
           <h2 class="text-center">Create New Schedule</h2>
-          <form class="p-3" method="post" th:action="@{/Addschedule}" modelAttribute="Addschedule" th:object="(${schedule})">
+          <form class="p-3" method="post" th:action="@{/AddSchedule}" modelAttribute="Addschedule" th:object="(${schedule})">
             <div class="col-12 mt-3">
               <label for="InputScheduleName">Month:</label>
               <select class="form-select" id="InputMonth" name="month" required>
