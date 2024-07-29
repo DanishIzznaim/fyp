@@ -23,6 +23,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.TimeZone;
 
 
 @SpringBootApplication
@@ -74,6 +75,10 @@ public class GettingStartedApplication {
     }
 
     public static void main(String[] args) {
+         // Set default timezone to your local timezone, e.g., "Asia/Kuala_Lumpur"
+        TimeZone.setDefault(TimeZone.getTimeZone("Asia/Kuala_Lumpur"));
         SpringApplication.run(GettingStartedApplication.class, args);
     }
+
+   
 }
