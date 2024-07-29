@@ -34,6 +34,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.Duration;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
@@ -78,6 +79,45 @@ public class Payrollcontroller {
         return "admin/Addpayroll";
     }
 
+    // @PostMapping("/Addpayroll")
+    // public String addPayroll(@RequestParam int staffId, @RequestParam String month, Model model) {
+    //     try {
+    //         // Parse the selected month
+    //         YearMonth yearMonth = YearMonth.parse(month);
+    //         LocalDate startDate = yearMonth.atDay(1);
+    //         LocalDate endDate = yearMonth.atEndOfMonth();
+
+    //         // Fetch sign-in and sign-out times
+    //         List<LocalTime[]> timesList = payrollDAO.findSignInSignOutTimesByStaffAndMonth(staffId, startDate, endDate);
+    //         int totalHours = 0;
+
+    //         // Calculate total hours worked
+    //         for (LocalTime[] times : timesList) {
+    //             LocalTime signInTime = times[0];
+    //             LocalTime signOutTime = times[1];
+    //             if (signInTime != null && signOutTime != null) {
+    //                 totalHours += Duration.between(signInTime, signOutTime).toHours();
+    //             }
+    //         }
+    //         System.out.println("Total hours: " + totalHours);
+    //         double totalPay = totalHours * 8.0; // RM8 per hour
+    //         System.out.println("Total pay: " + totalPay);
+    //         Payroll payroll = new Payroll();
+    //         payroll.setSid(staffId);
+    //         payroll.setMonth(month);
+    //         payroll.setHoursWorked(totalHours);
+    //         payroll.setHourlyRate(8.0);
+    //         payroll.setTotalPay(totalPay);
+
+    //         payrollDAO.save(payroll);
+    //         model.addAttribute("message", "Payroll added successfully");
+    //     } catch (SQLException e) {
+    //         model.addAttribute("message", "Error adding payroll record");
+    //         e.printStackTrace();
+    //     }
+    //     return "redirect:/listPayroll";
+    // }
+
     @PostMapping("/Addpayroll")
     public String addPayroll(@RequestParam int staffId, @RequestParam String month, Model model) {
         try {
@@ -95,12 +135,21 @@ public class Payrollcontroller {
                 LocalTime signInTime = times[0];
                 LocalTime signOutTime = times[1];
                 if (signInTime != null && signOutTime != null) {
-                    totalHours += Duration.between(signInTime, signOutTime).toHours();
+                    // Assuming signInTime and signOutTime are in the same day, otherwise, adjust the date accordingly
+                    LocalDateTime signInDateTime = LocalDateTime.of(startDate, signInTime);
+                    LocalDateTime signOutDateTime = LocalDateTime.of(startDate, signOutTime);
+
+                    // Handle overnight shifts
+                    if (signOutDateTime.isBefore(signInDateTime)) {
+                        signOutDateTime = signOutDateTime.plusDays(1);
+                    }
+
+                    long hoursWorked = Duration.between(signInDateTime, signOutDateTime).toHours();
+                    totalHours += hoursWorked;
                 }
             }
-            System.out.println("Total hours: " + totalHours);
+
             double totalPay = totalHours * 8.0; // RM8 per hour
-            System.out.println("Total pay: " + totalPay);
             Payroll payroll = new Payroll();
             payroll.setSid(staffId);
             payroll.setMonth(month);
@@ -116,6 +165,7 @@ public class Payrollcontroller {
         }
         return "redirect:/listPayroll";
     }
+
 
     @GetMapping("/listPayroll")
     public String listPayroll(Model model, HttpSession session) {
