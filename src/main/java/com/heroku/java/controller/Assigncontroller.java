@@ -484,6 +484,7 @@ public class Assigncontroller {
 
             // Redirect to listassigns with the provided week and month
             return "redirect:/listschedules";
+            
         } catch (SQLException e) {
             e.printStackTrace();
             return "admin/AddAssign";
