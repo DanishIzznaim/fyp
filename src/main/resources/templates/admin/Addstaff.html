@@ -38,7 +38,7 @@
                             </div>
                             <div class="col"> 
                                 <label for="Inputphone">Phone Number</label> 
-                                <input type="text" class="form-control" id="Inputphone" aria-describedby="phonenumberHelp" name="phone" required> 
+                                <input type="text" class="form-control" placeholder="176172470" id="Inputphone" aria-describedby="phonenumberHelp" name="phone" required> 
 
                             </div>
 
@@ -102,7 +102,7 @@
             const phone = document.getElementById('Inputphone').value;
             const phonePattern = /^\d{9,10}$/;
             if (!phonePattern.test(phone)) {
-                alert('Please enter a valid phone number with 9 to 11 digits (without spaces or special characters).');
+                alert('Please enter a valid phone number with 9 to 10 digits (without spaces or special characters).');
                 return false;
             }
             return true;
