@@ -249,11 +249,11 @@ public class Payrollcontroller {
         } catch (SQLException e) {
             model.addAttribute("errorMessage", "An error occurred while updating the payroll.");
             return "redirect:/listPayroll?payrollid=" + payrollId;
-        // } catch (Exception e) {
-        //     e.printStackTrace();
-        //     return "redirect:/listpayroll";
+        } catch (Exception e) {
+            e.printStackTrace();
+            model.addAttribute("errorMessage", "An unexpected error occurred while updating the payroll.");
+            return "redirect:/listPayroll?payrollid=" + payrollId;
         }
-
     }
 
 
