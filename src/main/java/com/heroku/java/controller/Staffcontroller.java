@@ -332,18 +332,19 @@ private final EmailService emailService;
 
     //Delete the staff//
     @PostMapping("/Deletestaff")
-    public String Deletestaff(@RequestParam("id") int staffId) {
+    public String deleteStaff(@RequestParam("id") int staffId, HttpSession session) {
+        if (!isSessionValid(session)) {
+            return "redirect:/login";
+        }
         try {
-            StaffDAO staffDAO = new StaffDAO(dataSource);
             staffDAO.deletestaff(staffId);
             return "redirect:/Liststaff";
         } catch (SQLException e) {
-            System.out.println("Error deleting employee: " + e.getMessage());
-            // Handle the exception or display an error message to the user
-            // You can redirect to an error page or display a meaningful message
+            e.printStackTrace();
             return "error";
         }
     }
+
 
     
     
